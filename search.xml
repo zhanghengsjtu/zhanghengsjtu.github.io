@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo+Github搭建个人博客记录</title>
+    <url>/2021/07/17/Hexo+Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>内容</p>
+<h2 id="Hexo博客搭建"><a href="#Hexo博客搭建" class="headerlink" title="Hexo博客搭建"></a>Hexo博客搭建</h2><p>内容</p>
+<h2 id="Hexo-Github线上运行"><a href="#Hexo-Github线上运行" class="headerlink" title="Hexo+Github线上运行"></a>Hexo+Github线上运行</h2><p>内容</p>
+<h2 id="Next主题配置"><a href="#Next主题配置" class="headerlink" title="Next主题配置"></a>Next主题配置</h2><p>内容</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2>]]></content>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Markdown语法学习</title>
     <url>/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h3 id="一、为什么选择Markdown"><a href="#一、为什么选择Markdown" class="headerlink" title="一、为什么选择Markdown"></a>一、为什么选择Markdown</h3><p>Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p>
@@ -56,10 +68,10 @@
 </tbody></table>
 </li>
 </ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>到这里，我的个人博客和对Markdown语法的了解初步完成了。Markdown语法比较简单，唯一比较麻烦一些的可能就是图床的制作，相信只要大家耐心一些，肯定能够完成的。下一篇记录一下Hexo+GitHub搭建个人博客的过程。</p>
 <h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
 <li><a href="https://www.jianshu.com/p/191d1e21f7ed">https://www.jianshu.com/p/191d1e21f7ed</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/69210764">https://zhuanlan.zhihu.com/p/69210764</a></li>
-<li><a href="https://www.jianshu.com/p/ea1eb11db63f">https://www.jianshu.com/p/ea1eb11db63f</a></li>
 <li><a href="https://www.jianshu.com/p/ea1eb11db63f">https://www.jianshu.com/p/ea1eb11db63f</a></li>
 <li><a href="https://www.cnblogs.com/ly-2019/p/11828790.html">https://www.cnblogs.com/ly-2019/p/11828790.html</a></li>
 <li><a href="https://blog.csdn.net/yefcion/article/details/88412025">https://blog.csdn.net/yefcion/article/details/88412025</a></li>
@@ -68,18 +80,6 @@
       <tags>
         <tag>技术</tag>
         <tag>Markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo+Github搭建个人博客记录</title>
-    <url>/2021/07/17/Hexo+Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p>内容</p>
-<h2 id="Hexo博客搭建"><a href="#Hexo博客搭建" class="headerlink" title="Hexo博客搭建"></a>Hexo博客搭建</h2><p>内容</p>
-<h2 id="Hexo-Github线上运行"><a href="#Hexo-Github线上运行" class="headerlink" title="Hexo+Github线上运行"></a>Hexo+Github线上运行</h2><p>内容</p>
-<h2 id="Next主题配置"><a href="#Next主题配置" class="headerlink" title="Next主题配置"></a>Next主题配置</h2><p>内容</p>
-<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2>]]></content>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
