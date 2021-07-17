@@ -47,10 +47,16 @@
 <li>修改基本信息</li>
 <li>修改头像</li>
 <li>修改语言</li>
+<li>菜单设置</li>
+<li>系统评论</li>
+<li>访问量和统计功能</li>
+<li>搜索功能</li>
 </ul>
 </li>
 </ul>
+<h3 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h3><p>经过以上几个步骤，就可以搭建一个正常使用的博客了，如果对博客的搭建本身很有兴趣，可以继续查阅相关资料，我的想法是，博客够用就好，努力记录科研生活中的点滴更加重要。</p>
 <h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a></li>
 <li><a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/</a></li>
 <li><a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/</a></li>
 </ol>
