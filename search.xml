@@ -24,8 +24,8 @@
 </ul>
 </li>
 <li><strong>图片和图床</strong>：基础语法<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![图注](图片地址 &#x27;&#x27;悬浮标题&#x27;&#x27;)</span><br><span class="line">图注就是显示在图片下面的文字，相当于对图片内容的解释。</span><br><span class="line">悬浮标题是图片的标题，当鼠标移到图片上时显示的内容。悬浮标题可加可不加</span><br></pre></td></tr></table></figure>
-比如<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![blockchain](https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=702257389,1274025419&amp;fm=27&amp;gp=0.jpg &quot;区块链&quot;)</span><br></pre></td></tr></table></figure>
-效果如下<br><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=702257389,1274025419&fm=27&gp=0.jpg" alt="blockchain" title="区块链"><br>需要注意的是，为了保证多平台统一，图片存储时需要使用图床，提供统一的外部链接<br><strong>GitHub+Picgo搭建图床主要步骤如下：</strong><ul>
+比如<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![NBA全明星](https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210717215222.png &quot;NBA全明星&quot;)</span><br></pre></td></tr></table></figure>
+效果如下<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210717215222.png" alt="NBA全明星" title="NBA全明星"><br>需要注意的是，为了保证多平台统一，图片存储时需要使用图床，提供统一的外部链接<br><strong>GitHub+Picgo搭建图床主要步骤如下：</strong><ul>
 <li>建立GitHub图片仓库</li>
 <li>创建并获取token</li>
 <li>下载Picgo客户端</li>
