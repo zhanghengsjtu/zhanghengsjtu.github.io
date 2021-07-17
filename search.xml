@@ -55,6 +55,9 @@
 <li><a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/</a></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
       <tags>
         <tag>Hexo</tag>
       </tags>
@@ -124,8 +127,10 @@
 <li><a href="https://blog.csdn.net/yefcion/article/details/88412025">https://blog.csdn.net/yefcion/article/details/88412025</a></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>Markdown</category>
+      </categories>
       <tags>
-        <tag>技术</tag>
         <tag>Markdown</tag>
       </tags>
   </entry>
