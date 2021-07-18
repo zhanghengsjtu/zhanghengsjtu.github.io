@@ -6,7 +6,7 @@
   <link href="http://zhanghengsjtu.github.io/atom.xml" rel="self"/>
   
   <link href="http://zhanghengsjtu.github.io/"/>
-  <updated>2021-07-18T08:48:42.350Z</updated>
+  <updated>2021-07-18T09:27:04.934Z</updated>
   <id>http://zhanghengsjtu.github.io/</id>
   
   <author>
@@ -21,15 +21,12 @@
     <link href="http://zhanghengsjtu.github.io/2021/07/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
     <id>http://zhanghengsjtu.github.io/2021/07/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</id>
     <published>2021-07-18T08:43:45.000Z</published>
-    <updated>2021-07-18T08:48:42.350Z</updated>
+    <updated>2021-07-18T09:27:04.934Z</updated>
     
-    <content type="html"><![CDATA[<p>刚好今天又是周末，又快赶上暑假，实验室也没几个人，不太想看论文，就温习一下ROS。今天主要看的是古月居的《ROS机器人开发实践》，这篇博客算是对其中内容的记录，主要是记录我自己觉着重要且比较模糊的知识点。详细的学习教程，大家可以参考原著或者ROS官网，比我这个详细很多。后续有时间会记录更多自己对于ROS的理解以及项目。</p>]]></content>
+    <content type="html"><![CDATA[<p>今天是周末，又快赶上暑假，实验室也没几个人，不太想看论文，就温习一下ROS。今天主要看的是古月居的《ROS机器人开发实践》。这篇博客算是对其中内容的记录，主要是记录我自己觉着重要且比较模糊的知识点。详细的学习教程，大家可以参考原著或者ROS官网，比我这个详细很多。后续有时间会记录更多自己对于ROS的理解以及项目。</p><h2 id="ROS基础和架构"><a href="#ROS基础和架构" class="headerlink" title="ROS基础和架构"></a>ROS基础和架构</h2><p>####基础理解<br>ROS为机器人开发提供硬件抽象、底层驱动、消息传递、程序管理、应用原型等功能和机制，同时整合了许多第三方的工具和库，帮助用户快速完成机器人应用的建立、编写和多机整合。在ROS中，每个进行都以一个节点的形式运行，可以分布于多个不同的主机。<br>####ROS架构<br>ROS的架构可以分为三个层次</p><ul><li><strong>OS层：</strong> 不需要过多关注，Linux熟练使用就行。</li><li><strong>中间层：</strong> ROS设计的核心，最主要的是基于TCPROS/UDPROS的通信系统，它基于TCP网络做了再次封装。通过松散的架构，减轻了模块之间的耦合，便于用户整合不同开发者的代码，这也是ROS能够被大家广泛接受深层次的原因。</li><li><strong>应用层：</strong> 这也是平时接触最多的部分，不同的开发者基于中间层、ROS开发接口和第三方库等实现了各种各样的应用。<h4 id="重要概念和名词"><a href="#重要概念和名词" class="headerlink" title="重要概念和名词"></a>重要概念和名词</h4></li><li>节点</li><li>消息</li><li>话题</li><li>服务</li><li>节点管理器</li><li>动作<h4 id="ROS通讯机制"><a href="#ROS通讯机制" class="headerlink" title="ROS通讯机制"></a>ROS通讯机制</h4>这块算是非常重要了，主要涉及到topic, service, action, rpc以及tcp和udp（<strong>日后详细学习一下底层实现，先占坑</strong>）。</li><li><strong>话题：</strong> 异步通讯，在ROS中广泛使用，如传感器数据传输等。底层依赖于rpc和tcp。步骤如下：<ol><li>talker注册（rpc）</li><li>listener注册（rpc）</li><li>ros master信息匹配，并将结果返回给listener（rpc）</li><li>listener请求topic（rpc地址请求）</li><li>talker确认连接请求（rpc回复，结果中包含talker的tcp地址）</li><li>listener与talker建立网络连接（tcp）</li><li>talker向listener发布数据（tcp）</li></ol></li><li><strong>服务：</strong> 同步通讯，实时性强一些，主要用在逻辑处理，步骤比话题少了上面的4，5，详细如下：<ol><li>talker注册（rpc）</li><li>listener注册（rpc）</li><li>ros master信息匹配，并将结果返回给listener（rpc）</li><li>listener与talker建立网络连接（tcp）</li><li>talker向listener发布数据（tcp）</li></ol></li><li><strong>参数管理机制：</strong> 可以理解成ROS中的全局变量，只需要rpc通讯，不用tcp，操作如下：<ol><li>talker设置参数</li><li>listener查询参数</li><li>master将查询结果返回给listener</li></ol></li><li><strong>动作：</strong> 带有响应机制的服务。相比于服务的阻塞特性，动作可以在服务端任务执行的过程中，反馈给客户端任务执行的状态，便于客户端查看进度并根据反馈结果作出合理响应。</li><li><strong>优缺点和坑：</strong> 整体来讲，topic适合数据传输，service适合逻辑处理，动作用需要监视的场景，如实际机器人的轨迹执行。一般使用时都不会有问题，毕竟ROS还是一个很好的工具。但是如果数据量比较大，比如传感器的点云数据，通讯的延时一般就不能忽略。比如设定了loop是50ms，假如传感器数据100ms才更新一次，有可能loop里面的代码执行就会出问题。</li></ul>]]></content>
     
     
-      
-      
-    <summary type="html">&lt;p&gt;刚好今天又是周末，又快赶上暑假，实验室也没几个人，不太想看论文，就温习一下ROS。今天主要看的是古月居的《ROS机器人开发实践》，这篇博客算是对其中内容的记录，主要是记录我自己觉着重要且比较模糊的知识点。详细的学习教程，大家可以参考原著或者ROS官网，比我这个详细很多。后续</summary>
-      
+    <summary type="html">ROS学习记录</summary>
     
     
     
