@@ -138,10 +138,43 @@
       </tags>
   </entry>
   <entry>
-    <title>ROS学习记录</title>
-    <url>/2021/07/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <title>launch文件学习</title>
+    <url>/2021/07/18/launch%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<ul>
+<li>记录launch文件学习细节</li>
+</ul>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS编程细节</title>
+    <url>/2021/07/18/ROS%E7%BC%96%E7%A8%8B%E7%BB%86%E8%8A%82/</url>
+    <content><![CDATA[<ul>
+<li>基础命令的使用</li>
+<li>工作空间的覆盖</li>
+<li>msg,srv编写时package.xml和CMakeLists.txt的更新</li>
+<li>spin和spinOnce的理解</li>
+<li>命名空间和命名映射</li>
+</ul>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS通讯</title>
+    <url>/2021/07/18/ROS%E9%80%9A%E8%AE%AF/</url>
     <content><![CDATA[<p>今天是周末，又快赶上暑假，实验室也没几个人，不太想看论文，就温习一下ROS。今天主要看的是古月居的《ROS机器人开发实践》。这篇博客算是对其中内容的记录，主要是记录我自己觉着重要且比较模糊的知识点。详细的学习教程，大家可以参考原著或者ROS官网，比我这个详细很多。后续有时间会记录更多自己对于ROS的理解以及项目。</p>
-<h2 id="ROS基础和架构"><a href="#ROS基础和架构" class="headerlink" title="ROS基础和架构"></a>ROS基础和架构</h2><p>####基础理解<br>ROS为机器人开发提供硬件抽象、底层驱动、消息传递、程序管理、应用原型等功能和机制，同时整合了许多第三方的工具和库，帮助用户快速完成机器人应用的建立、编写和多机整合。在ROS中，每个进行都以一个节点的形式运行，可以分布于多个不同的主机。<br>####ROS架构<br>ROS的架构可以分为三个层次</p>
+<h2 id="ROS基础和架构"><a href="#ROS基础和架构" class="headerlink" title="ROS基础和架构"></a>ROS基础和架构</h2><h4 id="基础理解"><a href="#基础理解" class="headerlink" title="基础理解"></a>基础理解</h4><p>ROS为机器人开发提供硬件抽象、底层驱动、消息传递、程序管理、应用原型等功能和机制，同时整合了许多第三方的工具和库，帮助用户快速完成机器人应用的建立、编写和多机整合。在ROS中，每个进行都以一个节点的形式运行，可以分布于多个不同的主机。</p>
+<h4 id="ROS架构"><a href="#ROS架构" class="headerlink" title="ROS架构"></a>ROS架构</h4><p>ROS的架构可以分为三个层次</p>
 <ul>
 <li><strong>OS层：</strong> 不需要过多关注，Linux熟练使用就行。</li>
 <li><strong>中间层：</strong> ROS设计的核心，最主要的是基于TCPROS/UDPROS的通信系统，它基于TCP网络做了再次封装。通过松散的架构，减轻了模块之间的耦合，便于用户整合不同开发者的代码，这也是ROS能够被大家广泛接受深层次的原因。</li>
