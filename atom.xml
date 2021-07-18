@@ -6,7 +6,7 @@
   <link href="http://zhanghengsjtu.github.io/atom.xml" rel="self"/>
   
   <link href="http://zhanghengsjtu.github.io/"/>
-  <updated>2021-07-18T01:56:52.075Z</updated>
+  <updated>2021-07-18T08:48:42.350Z</updated>
   <id>http://zhanghengsjtu.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ROS学习记录</title>
+    <link href="http://zhanghengsjtu.github.io/2021/07/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
+    <id>http://zhanghengsjtu.github.io/2021/07/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</id>
+    <published>2021-07-18T08:43:45.000Z</published>
+    <updated>2021-07-18T08:48:42.350Z</updated>
+    
+    <content type="html"><![CDATA[<p>刚好今天又是周末，又快赶上暑假，实验室也没几个人，不太想看论文，就温习一下ROS。今天主要看的是古月居的《ROS机器人开发实践》，这篇博客算是对其中内容的记录，主要是记录我自己觉着重要且比较模糊的知识点。详细的学习教程，大家可以参考原著或者ROS官网，比我这个详细很多。后续有时间会记录更多自己对于ROS的理解以及项目。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;刚好今天又是周末，又快赶上暑假，实验室也没几个人，不太想看论文，就温习一下ROS。今天主要看的是古月居的《ROS机器人开发实践》，这篇博客算是对其中内容的记录，主要是记录我自己觉着重要且比较模糊的知识点。详细的学习教程，大家可以参考原著或者ROS官网，比我这个详细很多。后续</summary>
+      
+    
+    
+    
+    <category term="ROS" scheme="http://zhanghengsjtu.github.io/categories/ROS/"/>
+    
+    
+    <category term="ROS" scheme="http://zhanghengsjtu.github.io/tags/ROS/"/>
+    
+  </entry>
   
   <entry>
     <title>Markdown语法学习</title>

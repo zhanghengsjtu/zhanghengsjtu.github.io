@@ -137,4 +137,16 @@
         <tag>Hexo</tag>
       </tags>
   </entry>
+  <entry>
+    <title>ROS学习记录</title>
+    <url>/2021/07/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>刚好今天又是周末，又快赶上暑假，实验室也没几个人，不太想看论文，就温习一下ROS。今天主要看的是古月居的《ROS机器人开发实践》，这篇博客算是对其中内容的记录，主要是记录我自己觉着重要且比较模糊的知识点。详细的学习教程，大家可以参考原著或者ROS官网，比我这个详细很多。后续有时间会记录更多自己对于ROS的理解以及项目。</p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
 </search>
