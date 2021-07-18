@@ -140,13 +140,8 @@
   <entry>
     <title>ROS通讯</title>
     <url>/2021/07/18/ROS%E9%80%9A%E8%AE%AF/</url>
-    <content><![CDATA[<h3 id="重要概念和名词"><a href="#重要概念和名词" class="headerlink" title="重要概念和名词"></a>重要概念和名词</h3><ul>
-<li>节点</li>
-<li>消息</li>
-<li>话题</li>
-<li>服务</li>
-<li>节点管理器</li>
-<li>动作<h3 id="ROS通讯机制"><a href="#ROS通讯机制" class="headerlink" title="ROS通讯机制"></a>ROS通讯机制</h3>这块算是非常重要了，主要涉及到topic, service, rpc, action, tcp和udp（<strong>日后详细学习一下底层实现，先占坑</strong>）。</li>
+    <content><![CDATA[<h3 id="ROS通讯机制"><a href="#ROS通讯机制" class="headerlink" title="ROS通讯机制"></a>ROS通讯机制</h3><p>这块算是非常重要了，主要涉及到topic, service, rpc, action, tcp和udp（<strong>日后补充底层实现，先占坑</strong>）。</p>
+<ul>
 <li><strong>话题：</strong> 异步通讯，在ROS中广泛使用，如传感器数据传输等。底层依赖于rpc和tcp。步骤如下：<ol>
 <li>talker注册（rpc）</li>
 <li>listener注册（rpc）</li>
