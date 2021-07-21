@@ -1,108 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo+Github搭建个人博客记录</title>
-    <url>/2021/07/17/Hexo+Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p>搭建博客的基本思路是先在本地创建，再部署到远端。首先本地创建时，使用Node.js + Hexo。然后远端部署时，这里使用GitHub。最后再利用比较流行的主题Next对个人博客进行美化，便于自己使用。</p>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>Hexo依赖于Node.js，下载地址为<a href="https://nodejs.org/en/download/">Download | Node.js</a>，不过win10默认已经安装了，可以先在命令行输入： node -V和 npm -V，如果已经安装成功，则该步骤可以跳过。node和npm就是安装Hexo的基础环境。</p>
-<h3 id="Hexo博客搭建"><a href="#Hexo博客搭建" class="headerlink" title="Hexo博客搭建"></a>Hexo博客搭建</h3><ol>
-<li><p>在D盘创建blog文件夹，然后在该文件夹下面运行：<code>npm install -g hexo-cli </code>即完成了Hexo的安装；</p>
-</li>
-<li><p>在D:\blog下面运行：<code>hexo init blog</code>，完成本地博客的初始化；</p>
-</li>
-<li><p>运行以下命令，并在浏览器输入<code>localhost:4000</code>即可看到最简单的博客</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g    # 生成博客</span><br><span class="line">hexo s    # 在服务端显示</span><br></pre></td></tr></table></figure></li>
-<li><p>到此为止，本地博客最简单的版本就算搭建完成了，此时会在blog文件下面生成一系列文件，主要文件有以下几个：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blog/_config.yml            # 站点配置文件，和后面同名的主题配置文件区分</span><br><span class="line">blog/source/_posts/*.md     # 生成博客的Markdown文件</span><br><span class="line">blog/themes                 # 主题文件夹，后面会介绍，可以更换并配置主题</span><br></pre></td></tr></table></figure></li>
-<li><p>另外，hexo常见的操作如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo -g #安装Hexo</span><br><span class="line">npm update hexo -g #升级</span><br><span class="line">hexo init #初始化博客</span><br><span class="line"># 上述命令基本上一次性使用</span><br><span class="line"># 下面四条最常用</span><br><span class="line">hexo n &quot;我的博客&quot; == hexo new &quot;我的博客&quot; #新建文章</span><br><span class="line">hexo g == hexo generate #生成</span><br><span class="line">hexo s == hexo server #启动服务预览</span><br><span class="line">hexo d == hexo deploy #部署</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Hexo-Github线上运行"><a href="#Hexo-Github线上运行" class="headerlink" title="Hexo+Github线上运行"></a>Hexo+Github线上运行</h3><p>我们搭建博客的目的肯定不是为了只在本地运行，所以需要通过一定的技术手段将博客上传到远端。具体操作时，可以花钱购买域名，也可以使用免费的版本，这里我使用了常见的GitHub作为远端服务器。<br>在这里多说一句，GitHub在国内有时候访问速度很不理想，比如我们实验室，平时下载东西的速度能到30Mb/s，但是访问GitHub有时候就很慢，所以推荐大家购买一个靠谱的vpn并且对GitHub的访问进行合理配置，科学上网。我经常使用的vpn是<a href="https://www.myunlu.com/signin">myunlu</a>，整体使用下来还是很稳定的，我的邀请码是 5A9334B8EA51BAC53A2F8561FB156427。最后在命令行配置GitHub代理即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy socks5://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy socks5://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
-<p>接下来就是正式的操作：</p>
-<ol>
-<li><p><strong>创建GitHub仓库</strong>，仓库名一定是<strong>username.github.io</strong></p>
-</li>
-<li><p><strong>安装git</strong>：win下直接下载客户端就行，其他系统同理，安装完成之后，在git bash中执行以下命令：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. git config --global user.name &quot;你的GitHub用户名&quot;</span><br><span class="line">2. git config --global user.email &quot;你的GitHub注册邮箱&quot;</span><br><span class="line">3. ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot;</span><br><span class="line">4. 复制生成的id_rsa.pub中的密匙，然后到GitHub-&gt;Setting-&gt;new SSH Key中配置</span><br><span class="line">5. ssh git@github.com   # Hi, ***! You&#x27;ve successfully authenticated, but*** 说明成功了</span><br></pre></td></tr></table></figure>
-<p> 上面的一通操作只要知道其目的就行，实质就是通过非对称加密的公钥与私钥来完成加密，公钥放置在GitHub上，私钥放置在自己的电脑里。GitHub要求每次推送代码都是合法用户，所以每次推送都需要输入账号密码验证推送用户是否是合法用户，为了省去每次输入密码的步骤，采用了ssh，当你推送的时候，git就会匹配你的私钥跟GitHub上面的公钥是否是配对的，若是匹配就认为你是合法用户，则允许推送。这样可以保证每次的推送都是正确合法的。</p>
-</li>
-<li><p><strong>安装git和Hexo联合部署工具</strong>：这个可以理解成GitHub对hexo的一个插件，这样使用简单的hexo命令，就可以完成GitHub部署了，该插件的安装命令为： <code>npm install hexo-deployer-git --save</code></p>
-</li>
-<li><p><strong>修改站点配置文件blog/_config.yam</strong></p>
-   <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: https://github.com/[yourusername]/[yourusername].github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></li>
-<li><p><strong>部署到远端</strong>：使用以下命令，即可将本地的博客内容部署到远端。此后，只需要用到下面的几条命令以及<a href="https://zhanghengsjtu.github.io/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/">Markdown语法</a>。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean  # 清理</span><br><span class="line">hexo g      # 生成</span><br><span class="line">hexo s      # 本地端口4000预览</span><br><span class="line">hexo d      # 推到远端，所以需要上面GitHub关联，和git+hexo联合部署工具</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Next主题配置"><a href="#Next主题配置" class="headerlink" title="Next主题配置"></a>Next主题配置</h3><p>上述三部分的功能是核心，保证了我们能够搭建最基础的博客。但是默认生成的博客页面大家可能不喜欢，在这里推荐一个比较常见的主题<a href="https://github.com/theme-next/hexo-theme-next">Next</a>。之所以推荐这个主题，和我当初选择Hexo的原因很类似：选择一个成熟好用的框架，这样有问题之后方便交流，毕竟我们的目的不是深入研究网页开发。</p>
-<ol>
-<li><p><strong>下载Next主题</strong>： 在blog目录下，运行命令<br><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code><br>即可将next主题下载到blog/themes/next下面，其中最重要的文件为blog/themes/next/_config.yam，我们把这个文件叫 <em><strong>主题配置文件</strong></em>，注意和上面的 <em><strong>站点配置文件</strong></em> 的区别。</p>
-</li>
-<li><p><strong>Next主题定制</strong><br>接下来就是根据个人喜好定制Next主题了，在这里推荐<a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">博客1</a>，<a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">博客2</a>，比较有用的操作主要有以下几个：</p>
-<ul>
-<li>修改基本信息</li>
-<li>修改头像</li>
-<li>修改语言</li>
-<li>菜单设置</li>
-<li>系统评论</li>
-<li>访问量和统计功能</li>
-<li>搜索功能</li>
-</ul>
-</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>经过以上几个步骤，就可以搭建一个正常使用的博客了，如果对博客的搭建本身很有兴趣，可以继续查阅相关资料。在我看来，够用就好，把更多的经历放在记录上。</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a></li>
-<li><a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/</a></li>
-<li><a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS通讯</title>
-    <url>/2021/07/18/ROS%E9%80%9A%E8%AE%AF/</url>
-    <content><![CDATA[<p>主要涉及到topic, service, rpc, action, tcp和udp（<strong>日后补充底层实现，先占坑</strong>）。</p>
-<h4 id="话题"><a href="#话题" class="headerlink" title="话题"></a>话题</h4><p>异步通讯，在ROS中广泛使用，如传感器数据传输等。底层依赖于rpc和tcp。步骤如下：</p>
-<ol>
-<li>talker注册（rpc）</li>
-<li>listener注册（rpc）</li>
-<li>ros master信息匹配，并将结果返回给listener（rpc）</li>
-<li>listener请求topic（rpc地址请求）</li>
-<li>talker确认连接请求（rpc回复，结果中包含talker的tcp地址）</li>
-<li>listener与talker建立网络连接（tcp）</li>
-<li>talker向listener发布数据（tcp）</li>
-</ol>
-<h4 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h4><p>同步通讯，实时性强一些，主要用在逻辑处理，步骤如下(比话题少了4和5)：</p>
-<ol>
-<li>talker注册（rpc）</li>
-<li>listener注册（rpc）</li>
-<li>ros master信息匹配，并将结果返回给listener（rpc）</li>
-<li>listener与talker建立网络连接（tcp）</li>
-<li>talker向listener发布数据（tcp）</li>
-</ol>
-<h4 id="参数管理机制"><a href="#参数管理机制" class="headerlink" title="参数管理机制"></a>参数管理机制</h4><p>可以理解成ROS中的全局变量，只需要rpc通讯，不用tcp，操作如下：</p>
-<ol>
-<li>talker设置参数</li>
-<li>listener查询参数</li>
-<li>master将查询结果返回给listener</li>
-</ol>
-<h4 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h4><p>带有响应机制的服务。相比于服务的阻塞特性，动作可以在服务端任务执行的过程中，反馈给客户端任务执行的状态，便于客户端查看进度并根据反馈结果作出合理响应。</p>
-<h4 id="优缺点和坑"><a href="#优缺点和坑" class="headerlink" title="优缺点和坑"></a>优缺点和坑</h4><p>整体来讲，topic适合数据传输，service适合逻辑处理，动作用需要监视的场景，如实际机器人的轨迹执行。一般使用时都不会有问题，毕竟ROS还是一个很好的工具。但是如果数据量比较大，比如传感器的点云数据，通讯的延时一般就不能忽略。比如设定了loop是50ms，假如传感器数据100ms才更新一次，有可能loop里面的代码执行就会出问题。</p>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Markdown语法学习</title>
     <url>/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h3 id="为什么选择Markdown"><a href="#为什么选择Markdown" class="headerlink" title="为什么选择Markdown"></a>为什么选择Markdown</h3><p>Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p>
@@ -175,11 +73,35 @@
       </tags>
   </entry>
   <entry>
-    <title>launch文件学习</title>
-    <url>/2021/07/18/launch%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</url>
-    <content><![CDATA[<ul>
-<li>记录launch文件学习细节</li>
-</ul>
+    <title>ROS通讯</title>
+    <url>/2021/07/18/ROS%E9%80%9A%E8%AE%AF/</url>
+    <content><![CDATA[<p>主要涉及到topic, service, rpc, action, tcp和udp（<strong>日后补充底层实现，先占坑</strong>）。</p>
+<h4 id="话题"><a href="#话题" class="headerlink" title="话题"></a>话题</h4><p>异步通讯，在ROS中广泛使用，如传感器数据传输等。底层依赖于rpc和tcp。步骤如下：</p>
+<ol>
+<li>talker注册（rpc）</li>
+<li>listener注册（rpc）</li>
+<li>ros master信息匹配，并将结果返回给listener（rpc）</li>
+<li>listener请求topic（rpc地址请求）</li>
+<li>talker确认连接请求（rpc回复，结果中包含talker的tcp地址）</li>
+<li>listener与talker建立网络连接（tcp）</li>
+<li>talker向listener发布数据（tcp）</li>
+</ol>
+<h4 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h4><p>同步通讯，实时性强一些，主要用在逻辑处理，步骤如下(比话题少了4和5)：</p>
+<ol>
+<li>talker注册（rpc）</li>
+<li>listener注册（rpc）</li>
+<li>ros master信息匹配，并将结果返回给listener（rpc）</li>
+<li>listener与talker建立网络连接（tcp）</li>
+<li>talker向listener发布数据（tcp）</li>
+</ol>
+<h4 id="参数管理机制"><a href="#参数管理机制" class="headerlink" title="参数管理机制"></a>参数管理机制</h4><p>可以理解成ROS中的全局变量，只需要rpc通讯，不用tcp，操作如下：</p>
+<ol>
+<li>talker设置参数</li>
+<li>listener查询参数</li>
+<li>master将查询结果返回给listener</li>
+</ol>
+<h4 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h4><p>带有响应机制的服务。相比于服务的阻塞特性，动作可以在服务端任务执行的过程中，反馈给客户端任务执行的状态，便于客户端查看进度并根据反馈结果作出合理响应。</p>
+<h4 id="优缺点和坑"><a href="#优缺点和坑" class="headerlink" title="优缺点和坑"></a>优缺点和坑</h4><p>整体来讲，topic适合数据传输，service适合逻辑处理，动作用需要监视的场景，如实际机器人的轨迹执行。一般使用时都不会有问题，毕竟ROS还是一个很好的工具。但是如果数据量比较大，比如传感器的点云数据，通讯的延时一般就不能忽略。比如设定了loop是50ms，假如传感器数据100ms才更新一次，有可能loop里面的代码执行就会出问题。</p>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -189,33 +111,131 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo+Github搭建个人博客记录</title>
+    <url>/2021/07/17/Hexo+Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>搭建博客的基本思路是先在本地创建，再部署到远端。首先本地创建时，使用Node.js + Hexo。然后远端部署时，这里使用GitHub。最后再利用比较流行的主题Next对个人博客进行美化，便于自己使用。</p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>Hexo依赖于Node.js，下载地址为<a href="https://nodejs.org/en/download/">Download | Node.js</a>，不过win10默认已经安装了，可以先在命令行输入： node -V和 npm -V，如果已经安装成功，则该步骤可以跳过。node和npm就是安装Hexo的基础环境。</p>
+<h3 id="Hexo博客搭建"><a href="#Hexo博客搭建" class="headerlink" title="Hexo博客搭建"></a>Hexo博客搭建</h3><ol>
+<li><p>在D盘创建blog文件夹，然后在该文件夹下面运行：<code>npm install -g hexo-cli </code>即完成了Hexo的安装；</p>
+</li>
+<li><p>在D:\blog下面运行：<code>hexo init blog</code>，完成本地博客的初始化；</p>
+</li>
+<li><p>运行以下命令，并在浏览器输入<code>localhost:4000</code>即可看到最简单的博客</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g    # 生成博客</span><br><span class="line">hexo s    # 在服务端显示</span><br></pre></td></tr></table></figure></li>
+<li><p>到此为止，本地博客最简单的版本就算搭建完成了，此时会在blog文件下面生成一系列文件，主要文件有以下几个：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blog/_config.yml            # 站点配置文件，和后面同名的主题配置文件区分</span><br><span class="line">blog/source/_posts/*.md     # 生成博客的Markdown文件</span><br><span class="line">blog/themes                 # 主题文件夹，后面会介绍，可以更换并配置主题</span><br></pre></td></tr></table></figure></li>
+<li><p>另外，hexo常见的操作如下：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo -g #安装Hexo</span><br><span class="line">npm update hexo -g #升级</span><br><span class="line">hexo init #初始化博客</span><br><span class="line"># 上述命令基本上一次性使用</span><br><span class="line"># 下面四条最常用</span><br><span class="line">hexo n &quot;我的博客&quot; == hexo new &quot;我的博客&quot; #新建文章</span><br><span class="line">hexo g == hexo generate #生成</span><br><span class="line">hexo s == hexo server #启动服务预览</span><br><span class="line">hexo d == hexo deploy #部署</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Hexo-Github线上运行"><a href="#Hexo-Github线上运行" class="headerlink" title="Hexo+Github线上运行"></a>Hexo+Github线上运行</h3><p>我们搭建博客的目的肯定不是为了只在本地运行，所以需要通过一定的技术手段将博客上传到远端。具体操作时，可以花钱购买域名，也可以使用免费的版本，这里我使用了常见的GitHub作为远端服务器。<br>在这里多说一句，GitHub在国内有时候访问速度很不理想，比如我们实验室，平时下载东西的速度能到30Mb/s，但是访问GitHub有时候就很慢，所以推荐大家购买一个靠谱的vpn并且对GitHub的访问进行合理配置，科学上网。我经常使用的vpn是<a href="https://www.myunlu.com/signin">myunlu</a>，整体使用下来还是很稳定的，我的邀请码是 5A9334B8EA51BAC53A2F8561FB156427。最后在命令行配置GitHub代理即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy socks5://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy socks5://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
+<p>接下来就是正式的操作：</p>
+<ol>
+<li><p><strong>创建GitHub仓库</strong>，仓库名一定是<strong>username.github.io</strong></p>
+</li>
+<li><p><strong>安装git</strong>：win下直接下载客户端就行，其他系统同理，安装完成之后，在git bash中执行以下命令：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. git config --global user.name &quot;你的GitHub用户名&quot;</span><br><span class="line">2. git config --global user.email &quot;你的GitHub注册邮箱&quot;</span><br><span class="line">3. ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot;</span><br><span class="line">4. 复制生成的id_rsa.pub中的密匙，然后到GitHub-&gt;Setting-&gt;new SSH Key中配置</span><br><span class="line">5. ssh git@github.com   # Hi, ***! You&#x27;ve successfully authenticated, but*** 说明成功了</span><br></pre></td></tr></table></figure>
+<p> 上面的一通操作只要知道其目的就行，实质就是通过非对称加密的公钥与私钥来完成加密，公钥放置在GitHub上，私钥放置在自己的电脑里。GitHub要求每次推送代码都是合法用户，所以每次推送都需要输入账号密码验证推送用户是否是合法用户，为了省去每次输入密码的步骤，采用了ssh，当你推送的时候，git就会匹配你的私钥跟GitHub上面的公钥是否是配对的，若是匹配就认为你是合法用户，则允许推送。这样可以保证每次的推送都是正确合法的。</p>
+</li>
+<li><p><strong>安装git和Hexo联合部署工具</strong>：这个可以理解成GitHub对hexo的一个插件，这样使用简单的hexo命令，就可以完成GitHub部署了，该插件的安装命令为： <code>npm install hexo-deployer-git --save</code></p>
+</li>
+<li><p><strong>修改站点配置文件blog/_config.yam</strong></p>
+   <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: https://github.com/[yourusername]/[yourusername].github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>部署到远端</strong>：使用以下命令，即可将本地的博客内容部署到远端。此后，只需要用到下面的几条命令以及<a href="https://zhanghengsjtu.github.io/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/">Markdown语法</a>。</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean  # 清理</span><br><span class="line">hexo g      # 生成</span><br><span class="line">hexo s      # 本地端口4000预览</span><br><span class="line">hexo d      # 推到远端，所以需要上面GitHub关联，和git+hexo联合部署工具</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Next主题配置"><a href="#Next主题配置" class="headerlink" title="Next主题配置"></a>Next主题配置</h3><p>上述三部分的功能是核心，保证了我们能够搭建最基础的博客。但是默认生成的博客页面大家可能不喜欢，在这里推荐一个比较常见的主题<a href="https://github.com/theme-next/hexo-theme-next">Next</a>。之所以推荐这个主题，和我当初选择Hexo的原因很类似：选择一个成熟好用的框架，这样有问题之后方便交流，毕竟我们的目的不是深入研究网页开发。</p>
+<ol>
+<li><p><strong>下载Next主题</strong>： 在blog目录下，运行命令<br><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code><br>即可将next主题下载到blog/themes/next下面，其中最重要的文件为blog/themes/next/_config.yam，我们把这个文件叫 <em><strong>主题配置文件</strong></em>，注意和上面的 <em><strong>站点配置文件</strong></em> 的区别。</p>
+</li>
+<li><p><strong>Next主题定制</strong><br>接下来就是根据个人喜好定制Next主题了，在这里推荐<a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">博客1</a>，<a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">博客2</a>，比较有用的操作主要有以下几个：</p>
+<ul>
+<li>修改基本信息</li>
+<li>修改头像</li>
+<li>修改语言</li>
+<li>菜单设置</li>
+<li>系统评论</li>
+<li>访问量和统计功能</li>
+<li>搜索功能</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>经过以上几个步骤，就可以搭建一个正常使用的博客了，如果对博客的搭建本身很有兴趣，可以继续查阅相关资料。在我看来，够用就好，把更多的经历放在记录上。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a></li>
+<li><a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/</a></li>
+<li><a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ROS编程细节</title>
     <url>/2021/07/18/ROS%E7%BC%96%E7%A8%8B%E7%BB%86%E8%8A%82/</url>
-    <content><![CDATA[<h3 id="基础命令的使用"><a href="#基础命令的使用" class="headerlink" title="基础命令的使用"></a>基础命令的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">rosrun tf tf_echo /frame1 /frame2   # 打印frame2相对frame1的变换</span><br><span class="line"></span><br><span class="line">其他想起来再加</span><br></pre></td></tr></table></figure>
-<h3 id="package-xml和CMakeLists-txt"><a href="#package-xml和CMakeLists-txt" class="headerlink" title="package.xml和CMakeLists.txt"></a><a href="http://docs.ros.org/en/indigo/api/catkin/html/howto/format2/catkin_library_dependencies.html">package.xml和CMakeLists.txt</a></h3><h4 id="package-xml基本结构"><a href="#package-xml基本结构" class="headerlink" title="package.xml基本结构"></a>package.xml基本结构</h4><p>一个典型的package.xml文件如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;package format=&quot;2&quot;&gt;</span><br><span class="line">  &lt;name&gt;BBL_robot_description&lt;/name&gt;</span><br><span class="line">  &lt;version&gt;0.0.0&lt;/version&gt;</span><br><span class="line">  &lt;description&gt;The BBL_robot_description package&lt;/description&gt;</span><br><span class="line">  &lt;maintainer email=&quot;leon@todo.todo&quot;&gt;leon&lt;/maintainer&gt;</span><br><span class="line">  &lt;license&gt;TODO&lt;/license&gt;</span><br><span class="line">  &lt;buildtool_depend&gt;catkin&lt;/buildtool_depend&gt;</span><br><span class="line">  &lt;depend&gt;roscpp&lt;/depend&gt;</span><br><span class="line">  &lt;depend&gt;rospy&lt;/depend&gt;</span><br><span class="line">  &lt;exec_depend&gt;roscpp&lt;/exec_depend&gt;</span><br><span class="line">  &lt;exec_depend&gt;rospy&lt;/exec_depend&gt;</span><br><span class="line">  &lt;!-- The export tag contains other, unspecified, tags --&gt;</span><br><span class="line">  &lt;export&gt;</span><br><span class="line">    &lt;!-- Other tools can request additional information be placed here --&gt;</span><br><span class="line">  &lt;/export&gt;</span><br><span class="line">&lt;/package&gt;</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h3 id="基础命令的使用"><a href="#基础命令的使用" class="headerlink" title="基础命令的使用"></a>基础命令的使用</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rosmsg show msg_type        # 查看消息类型</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rossrv show srv_type        # 查看服务类型</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">rosrun tf tf_echo /frame1 /frame2   # 打印frame2相对frame1的变换</span><br></pre></td></tr></table></figure>
+<h3 id="package-xml和CMakeLists-txt"><a href="#package-xml和CMakeLists-txt" class="headerlink" title="package.xml和CMakeLists.txt"></a><a href="http://docs.ros.org/en/indigo/api/catkin/html/howto/format2/index.html">package.xml和CMakeLists.txt</a></h3><p>ROS使用catkin来管理包，它是对CMake的扩展。一个catkin软件包必须要有package.xml和CMakeLists.txt两个文件，前者包括了包的描述和依赖信息，后者是构建包的cmake文件。实际工作中，catkin工具会调用CMakeLists.txt，而生成makefile等文件。</p>
+<h4 id="package-xml基本结构"><a href="#package-xml基本结构" class="headerlink" title="package.xml基本结构"></a>package.xml基本结构</h4><p>一个典型的package.xml文件如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;package format=&quot;2&quot;&gt;</span><br><span class="line">  &lt;name&gt;your_package&lt;/name&gt;</span><br><span class="line">  &lt;version&gt;1.2.4&lt;/version&gt;</span><br><span class="line">  &lt;description&gt;</span><br><span class="line">    This package adds extra features to rosawesome.</span><br><span class="line">  &lt;/description&gt;</span><br><span class="line">  &lt;maintainer email=&quot;you@example.com&quot;&gt;Your Name&lt;/maintainer&gt;</span><br><span class="line">  &lt;license&gt;BSD&lt;/license&gt;</span><br><span class="line">  &lt;buildtool_depend&gt;catkin&lt;/buildtool_depend&gt;</span><br><span class="line">  &lt;depend&gt;roscpp&lt;/depend&gt;</span><br><span class="line">  &lt;build_depend&gt;angles&lt;/build_depend&gt;</span><br><span class="line">  &lt;build_export_depend&gt;angles&lt;/build_export_depend&gt;</span><br><span class="line">  &lt;exec_depend&gt;openni_launch&lt;/exec_depend&gt;</span><br><span class="line">&lt;/package&gt;</span><br></pre></td></tr></table></figure>
 
 <p>几个重要的标签，解释如下：</p>
 <ol>
 <li><code>buildtool_depend</code>: 编译工具，默认<code>catkin</code>，一般不用修改。</li>
-<li><code>depend</code>：指定编译时的依赖项，具体又分为<code>build_depend</code>和<code>build_export_depend</code>，建议直接用<code>depend</code>标签。</li>
-<li><code>exec_depend</code>: 指定了共享库，可执行文件，Python模块，启动脚本和运行时包的依赖关系。</li>
+<li><code>depend</code>：指定编译时的依赖项，包含<code>build_depend</code>，<code>build_export_depend</code>和<code>exec_depend</code>。</li>
+<li><code>build_depend</code>: 指定编译功能包需要的依赖，例如<code>angle</code>包提供了C++头文件和编译文件；</li>
+<li><code>build_export_depend</code>: 指定对功能包构建库需要的依赖，例如本功能包导出的头文件依赖了<code>&lt;angles/angles.h&gt;</code>，那么第三方包使用导出的头文件时，仍然需要<code>&lt;build_depend&gt;angles&lt;/build_depend&gt;</code>；</li>
+<li><code>exec_depend</code>: 指定运行该功能包需要的依赖。</li>
+<li><strong>建议</strong>：简单情况直接使用<code>depend</code>标签即可（一个顶仨），也不容易出错；如果是依赖的系统项，则谨慎使用<code>depend</code>标签，可能会强制依赖开发中的包，这有时候可能不是我们想要的。</li>
 </ol>
-<h4 id="CMakeLists-txt基本结构"><a href="#CMakeLists-txt基本结构" class="headerlink" title="CMakeLists.txt基本结构"></a>CMakeLists.txt基本结构</h4><p>基本结构如下：<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210719093622.png" alt="CMakeLists.txt"><br>重要的模块解释如下：</p>
+<h4 id="CMakeLists-txt基本结构"><a href="#CMakeLists-txt基本结构" class="headerlink" title="CMakeLists.txt基本结构"></a>CMakeLists.txt基本结构</h4><p>CMake是不知道package.xml中的依赖关系的，但是catkin知道，因此在CMakeLists.txt中需要对catkin合理配置，便于处理包的依赖关系。<br>CMakeLists.txt基本结构如下：<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210719093622.png" alt="CMakeLists.txt"><br>重要的模块解释如下：</p>
 <ol>
-<li><code>find_package</code>: </li>
-<li><code>catkin_package</code></li>
-<li>其余为CMake自身语法</li>
+<li><code>find_package</code>: cmake宏，指定依赖的其他pacakge，实际是生成了一些环境变量，如 NAME_FOUND，NAME_INCLUDE_DIRS, NAME_LIBRARYIS，此处catkin是必备依赖 其余的syd_msgs…为组件，这个里面的包在package.xml中一定要有<code>build_depend</code>标签。</li>
+<li><code>catkin_package</code>：catkin宏，生成当前package的cmake配置，供依赖本包的其他软件包调用，同时这个命令必须在add_library()或者add_executable()之前调用；注意这个里面的包在package.xml一定要有<code>build_export_depend</code>标签。</li>
+<li>其余为CMake自身语法，具体可以参考<a href="https://github.com/Akagi201/learning-cmake/blob/master/docs/cmake-practice.pdf">CMake学习资料</a>。</li>
 </ol>
-<h4 id="创建msg的注意事项"><a href="#创建msg的注意事项" class="headerlink" title="创建msg的注意事项"></a>创建msg的注意事项</h4><h3 id="ROS多线程"><a href="#ROS多线程" class="headerlink" title="ROS多线程"></a>ROS多线程</h3><h4 id="spin和spinOnce"><a href="#spin和spinOnce" class="headerlink" title="spin和spinOnce"></a>spin和spinOnce</h4><p>简单来说spinOnce相当于查看一次回调函数队列，spin让节点进入循环，相当于while(ros::ok()){}</p>
+<h4 id="创建msg的注意事项"><a href="#创建msg的注意事项" class="headerlink" title="创建msg的注意事项"></a>创建msg的注意事项</h4><ul>
+<li>在package.xml中<ol>
+<li><code>&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</code></li>
+<li><code>&lt;build_export_depend&gt;message_runtime&lt;/build_export_depend&gt;</code></li>
+<li><code>&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</code></li>
+</ol>
+</li>
+<li>在CMakeLists.txt中<ol>
+<li>添加<code>find_package(messaga_generation)</code>，确保可以生成msg文件；</li>
+<li>添加<code>catkin_package(message_runtime)</code>：确保生成的msgs文件可以被外部使用；</li>
+<li>添加<code>add_message_file</code>，添加具体的文件名；</li>
+<li>添加<code>generate_message</code>中的依赖包，如依赖<code>std_msgs</code></li>
+</ol>
+</li>
+</ul>
+<h3 id="ROS多线程"><a href="#ROS多线程" class="headerlink" title="ROS多线程"></a>ROS多线程</h3><h4 id="spin和spinOnce"><a href="#spin和spinOnce" class="headerlink" title="spin和spinOnce"></a>spin和spinOnce</h4><p>简单来说spinOnce相当于查看一次回调函数队列，spin让节点进入循环，相当于while(ros::ok()){}</p>
 <h4 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h4><p>后续再加</p>
-<h3 id="命名空间和命名映射"><a href="#命名空间和命名映射" class="headerlink" title="命名空间和命名映射"></a>命名空间和命名映射</h3><h4 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h4><p>主要有三种命名方式，分为全局，相对和私有。</p>
+<h3 id="命名空间和命名映射"><a href="#命名空间和命名映射" class="headerlink" title="命名空间和命名映射"></a>命名空间和命名映射</h3><h4 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h4><p>主要有四种命名方式，分为基础，全局，相对和私有。</p>
 <ul>
+<li><strong>基础</strong>：用来描述资源自身，可以当做相对名称的一个子类；</li>
 <li><strong>全局</strong>：如<code>/joint_sates</code>中的<code>/</code>或者在launch文件中，通过<code>ns=&quot;sim1&quot;</code>设置；</li>
 <li><strong>相对</strong>：在节点<code>node1</code>下面的话题<code>topic1</code>，如果其全局空间为<code>sim1</code>，则变成<code>/sim1/topic1</code></li>
 <li><strong>私有</strong>：在节点<code>node1</code>下面的话题<code>~topic1</code>，如果其全局空间为<code>sim1</code>，则变成<code>/sim1/node1/topic1</code>，注意和相对的区别</li>
 </ul>
 <h4 id="命名映射"><a href="#命名映射" class="headerlink" title="命名映射"></a>命名映射</h4><p>命名映射的基本语法是： <code>name:=new_name</code>。同样的，重映射的规则与名称的全局和相对特性有关系。规则参考如下：<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210718223225.png" alt="ros命名映射"></p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>launch文件学习</title>
+    <url>/2021/07/18/launch%E6%96%87%E4%BB%B6%E5%AD%A6%E4%B9%A0/</url>
+    <content><![CDATA[<ul>
+<li>记录launch文件学习细节</li>
+</ul>
 ]]></content>
       <categories>
         <category>ROS</category>
