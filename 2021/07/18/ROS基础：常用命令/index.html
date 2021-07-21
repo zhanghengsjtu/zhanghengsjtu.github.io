@@ -22,18 +22,18 @@
 
   <meta name="description" content="ROS学习记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ROS通讯">
-<meta property="og:url" content="http://zhanghengsjtu.github.io/2021/07/18/ROS%E9%80%9A%E8%AE%AF/index.html">
+<meta property="og:title" content="ROS基础：常用命令">
+<meta property="og:url" content="http://zhanghengsjtu.github.io/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="张恒的博客">
 <meta property="og:description" content="ROS学习记录">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-07-18T08:43:45.000Z">
-<meta property="article:modified_time" content="2021-07-18T14:42:19.343Z">
+<meta property="article:published_time" content="2021-07-18T09:34:44.000Z">
+<meta property="article:modified_time" content="2021-07-21T05:59:48.485Z">
 <meta property="article:author" content="张恒">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://zhanghengsjtu.github.io/2021/07/18/ROS%E9%80%9A%E8%AE%AF/">
+<link rel="canonical" href="http://zhanghengsjtu.github.io/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>ROS通讯 | 张恒的博客</title>
+  <title>ROS基础：常用命令 | 张恒的博客</title>
   
 
 
@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://zhanghengsjtu.github.io/2021/07/18/ROS%E9%80%9A%E8%AE%AF/">
+    <link itemprop="mainEntityOfPage" href="http://zhanghengsjtu.github.io/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/zhangheng.jpg">
@@ -208,7 +208,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ROS通讯
+          ROS基础：常用命令
         </h1>
 
         <div class="post-meta">
@@ -217,10 +217,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-18 16:43:45 / 修改时间：22:42:19" itemprop="dateCreated datePublished" datetime="2021-07-18T16:43:45+08:00">2021-07-18</time>
+              <time title="创建时间：2021-07-18 17:34:44" itemprop="dateCreated datePublished" datetime="2021-07-18T17:34:44+08:00">2021-07-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-21 13:59:48" itemprop="dateModified" datetime="2021-07-21T13:59:48+08:00">2021-07-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -241,8 +247,8 @@
       <span class="post-meta-item-text">Changyan：</span>
     
     
-      <a title="changyan" href="/2021/07/18/ROS%E9%80%9A%E8%AE%AF/#SOHUCS" itemprop="discussionUrl">
-        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2021/07/18/ROS通讯/" itemprop="commentCount"></span>
+      <a title="changyan" href="/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2021/07/18/ROS基础：常用命令/" itemprop="commentCount"></span>
       </a>
     
   </span>
@@ -253,7 +259,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>756</span>
+              <span>783</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -273,33 +279,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>主要涉及到topic, service, rpc, action, tcp和udp（<strong>日后补充底层实现，先占坑</strong>）。</p>
-<h4 id="话题"><a href="#话题" class="headerlink" title="话题"></a>话题</h4><p>异步通讯，在ROS中广泛使用，如传感器数据传输等。底层依赖于rpc和tcp。步骤如下：</p>
-<ol>
-<li>talker注册（rpc）</li>
-<li>listener注册（rpc）</li>
-<li>ros master信息匹配，并将结果返回给listener（rpc）</li>
-<li>listener请求topic（rpc地址请求）</li>
-<li>talker确认连接请求（rpc回复，结果中包含talker的tcp地址）</li>
-<li>listener与talker建立网络连接（tcp）</li>
-<li>talker向listener发布数据（tcp）</li>
-</ol>
-<h4 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h4><p>同步通讯，实时性强一些，主要用在逻辑处理，步骤如下(比话题少了4和5)：</p>
-<ol>
-<li>talker注册（rpc）</li>
-<li>listener注册（rpc）</li>
-<li>ros master信息匹配，并将结果返回给listener（rpc）</li>
-<li>listener与talker建立网络连接（tcp）</li>
-<li>talker向listener发布数据（tcp）</li>
-</ol>
-<h4 id="参数管理机制"><a href="#参数管理机制" class="headerlink" title="参数管理机制"></a>参数管理机制</h4><p>可以理解成ROS中的全局变量，只需要rpc通讯，不用tcp，操作如下：</p>
-<ol>
-<li>talker设置参数</li>
-<li>listener查询参数</li>
-<li>master将查询结果返回给listener</li>
-</ol>
-<h4 id="动作"><a href="#动作" class="headerlink" title="动作"></a>动作</h4><p>带有响应机制的服务。相比于服务的阻塞特性，动作可以在服务端任务执行的过程中，反馈给客户端任务执行的状态，便于客户端查看进度并根据反馈结果作出合理响应。</p>
-<h4 id="优缺点和坑"><a href="#优缺点和坑" class="headerlink" title="优缺点和坑"></a>优缺点和坑</h4><p>整体来讲，topic适合数据传输，service适合逻辑处理，动作用需要监视的场景，如实际机器人的轨迹执行。一般使用时都不会有问题，毕竟ROS还是一个很好的工具。但是如果数据量比较大，比如传感器的点云数据，通讯的延时一般就不能忽略。比如设定了loop是50ms，假如传感器数据100ms才更新一次，有可能loop里面的代码执行就会出问题。</p>
+        <h3 id="基础命令的使用"><a href="#基础命令的使用" class="headerlink" title="基础命令的使用"></a>基础命令的使用</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rosmsg show msg_type        # 查看消息类型</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rossrv show srv_type        # 查看服务类型</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">rosrun tf tf_echo /frame1 /frame2   # 打印frame2相对frame1的变换</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -333,12 +313,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="prev" title="Markdown语法学习">
-      <i class="fa fa-chevron-left"></i> Markdown语法学习
+    <a href="/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E9%80%9A%E8%AE%AF/" rel="prev" title="ROS基础：通讯">
+      <i class="fa fa-chevron-left"></i> ROS基础：通讯
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/07/18/ROS%E7%BC%96%E7%A8%8B%E7%BB%86%E8%8A%82/" rel="next" title="ROS编程细节">
-      ROS编程细节 <i class="fa fa-chevron-right"></i>
+    <a href="/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Alaunch%E6%96%87%E4%BB%B6/" rel="next" title="ROS基础：launch文件">
+      ROS基础：launch文件 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -403,7 +383,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%9D%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">话题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text">参数管理机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">动作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E5%9D%91"><span class="nav-number">5.</span> <span class="nav-text">优缺点和坑</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">基础命令的使用</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -419,7 +399,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
