@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ROS仿真：Arbotix控制器</title>
-    <url>/2021/07/22/ROS%E4%BB%BF%E7%9C%9F%EF%BC%9AArbotix%E6%8E%A7%E5%88%B6%E5%99%A8/</url>
-    <content><![CDATA[<p>ArbotiX是一款控制电机、舵机的控制板，并提供相应的ROS功能包，但是这个功能包不仅可以驱动真实的ArbotiX控制板，还提供了仿真控制器。仿真中用到的包有以下两个：</p>
-<h4 id="arbotix-python"><a href="#arbotix-python" class="headerlink" title="arbotix_python"></a><a href="http://wiki.ros.org/arbotix_python">arbotix_python</a></h4><p>提供了两个控制器</p>
-<ol>
-<li><p><a href="http://wiki.ros.org/arbotix_python/diff_controller">differ_controller</a>: 差速控制移动机器人，接收<code>/cmd_vel</code>，并更新<code>odom → base_link</code>的坐标关系，典型配置如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">controllers: &#123;</span><br><span class="line">    base_controller: &#123;type: diff_controller, base_width: 0.381, ticks_meter: 81807, Kp: 10, Kd: 0, Ki: 0, Ko: 25&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p><a href="http://wiki.ros.org/arbotix_python/follow_controller">follow_controller</a>: 使用action交互的控制接口，可以当做moveit中FollowJointTrajectory这个action的server，典型的配置如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">joints: &#123;</span><br><span class="line">joint1: &#123;id: 1, neutral: 205, max_angle: 169.6, min_angle: -169.6, max_speed: 90&#125;,</span><br><span class="line">joint2: &#123;id: 2, max_angle: 134.6, min_angle: -134.6, max_speed: 90&#125;,</span><br><span class="line">joint3: &#123;id: 3, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint4: &#123;id: 4, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint5: &#123;id: 5, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint6: &#123;id: 6, max_angle: 360, min_angle: -360, max_speed: 90&#125;,</span><br><span class="line">finger_joint1: &#123;id: 7, max_speed: 90&#125;,</span><br><span class="line">&#125;</span><br><span class="line">controllers: &#123;</span><br><span class="line">    arm_controller: &#123;type: follow_controller, joints: [joint1, joint2, joint3, joint4, joint5, joint6], action_name: arm_controller/follow_joint_trajectory, onboard: False &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="arbotix-controller"><a href="#arbotix-controller" class="headerlink" title="arbotix_controller"></a><a href="http://wiki.ros.org/arbotix_controllers?distro=noetic">arbotix_controller</a></h4><p>主要用来控制gripper，包含三种控制器，了解即可。</p>
-<ol>
-<li>one_side_gripper_controller.py</li>
-<li>parallel_gripper_controller.py</li>
-<li>parallel_single_servo_controller.py</li>
-</ol>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo+Github搭建个人博客记录</title>
     <url>/2021/07/17/Hexo+Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<p>搭建博客的基本思路是先在本地创建，再部署到远端。首先本地创建时，使用Node.js + Hexo。然后远端部署时，这里使用GitHub。最后再利用比较流行的主题Next对个人博客进行美化，便于自己使用。</p>
@@ -87,54 +62,6 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS基础：catkin编译系统</title>
-    <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Acatkin%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<p>ROS使用catkin来管理包，它是对CMake的扩展。一个catkin软件包必须要有package.xml和CMakeLists.txt两个文件，前者包括了包的描述和依赖信息，后者是构建包的cmake文件。实际工作中，catkin工具会调用CMakeLists.txt，而生成makefile等文件。</p>
-<h4 id="package-xml基本结构"><a href="#package-xml基本结构" class="headerlink" title="package.xml基本结构"></a><a href="http://wiki.ros.org/catkin/package.xml">package.xml基本结构</a></h4><p>一个典型的package.xml文件如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;package format=&quot;2&quot;&gt;</span><br><span class="line">  &lt;name&gt;your_package&lt;/name&gt;</span><br><span class="line">  &lt;version&gt;1.2.4&lt;/version&gt;</span><br><span class="line">  &lt;description&gt;</span><br><span class="line">    This package adds extra features to rosawesome.</span><br><span class="line">  &lt;/description&gt;</span><br><span class="line">  &lt;maintainer email=&quot;you@example.com&quot;&gt;Your Name&lt;/maintainer&gt;</span><br><span class="line">  &lt;license&gt;BSD&lt;/license&gt;</span><br><span class="line">  &lt;buildtool_depend&gt;catkin&lt;/buildtool_depend&gt;</span><br><span class="line">  &lt;depend&gt;roscpp&lt;/depend&gt;</span><br><span class="line">  &lt;build_depend&gt;angles&lt;/build_depend&gt;</span><br><span class="line">  &lt;build_export_depend&gt;angles&lt;/build_export_depend&gt;</span><br><span class="line">  &lt;exec_depend&gt;openni_launch&lt;/exec_depend&gt;</span><br><span class="line">&lt;/package&gt;</span><br></pre></td></tr></table></figure>
-
-<p>几个重要的标签，解释如下：</p>
-<ol>
-<li><code>buildtool_depend</code>: 编译工具，默认<code>catkin</code>，一般不用修改。</li>
-<li><code>depend</code>：指定编译时的依赖项，包含<code>build_depend</code>，<code>build_export_depend</code>和<code>exec_depend</code>。</li>
-<li><code>build_depend</code>: 指定编译功能包需要的依赖，例如<code>angle</code>包提供了C++头文件和编译文件。</li>
-<li><code>build_export_depend</code>: 指定对功能包构建库需要的依赖，例如本功能包导出的头文件依赖了<code>&lt;angles/angles.h&gt;</code>，那么第三方包使用本包导出的头文件时，仍然需要<code>&lt;build_depend&gt;angles&lt;/build_depend&gt;</code>。</li>
-<li><code>exec_depend</code>: 指定运行该功能包需要的依赖。</li>
-<li><strong>建议</strong>：简单情况直接使用<code>depend</code>标签即可（一个顶仨），也不容易出错；如果是依赖的系统项，可以根据<a href="https://docs.ros.org/en/kinetic/api/catkin/html/howto/format2/index.html">官方建议</a>谨慎选择。</li>
-</ol>
-<h4 id="CMakeLists-txt的基本结构"><a href="#CMakeLists-txt的基本结构" class="headerlink" title="CMakeLists.txt的基本结构"></a><a href="http://wiki.ros.org/catkin/CMakeLists.txt">CMakeLists.txt的基本结构</a></h4><p>CMake是不知道package.xml中的依赖关系的，但是catkin知道，因此在CMakeLists.txt中需要对catkin合理配置，便于处理包的依赖关系。<br>CMakeLists.txt基本结构如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 2.8.3)</span><br><span class="line">project(robot_brain)</span><br><span class="line"># Get the information about this package&#x27;s buildtime dependencies</span><br><span class="line">find_package(catkin REQUIRED</span><br><span class="line">  COMPONENTS message_generation std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"># Declare the message files to be built</span><br><span class="line">add_message_files(FILES</span><br><span class="line">  MyMessage.msg</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Declare the service files to be built</span><br><span class="line">add_service_files(FILES</span><br><span class="line">  MyService.srv</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Actually generate the language-specific message and service files</span><br><span class="line">generate_messages(DEPENDENCIES std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"># Declare that this catkin package&#x27;s runtime dependencies</span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS message_runtime std_msgs sensor_msgs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">add_executable(message_program src/main.cpp)</span><br><span class="line">add_dependencies(message_program $&#123;$&#123;PROJECT_NAME&#125;_EXPORTED_TARGETS&#125; $&#123;catkin_EXPORTED_TARGETS)</span><br><span class="line">target_link_libraries(message_program $&#123;catkin_LIBRARIES&#125; other_lib)</span><br></pre></td></tr></table></figure>
-
-<p>重要的模块解释如下：</p>
-<ol>
-<li><code>find_package</code>: cmake宏，指定依赖的其他pacakge，实际是生成了一些环境变量，如NAME_FOUND，NAME_INCLUDE_DIRS, NAME_LIBRARYIS，此处catkin是必备依赖 其余的syd_msgs…为组件，这个里面的包在package.xml中一定要有<code>build_depend</code>标签。</li>
-<li><code>catkin_package</code>：catkin宏，生成当前package的cmake配置，供依赖本包的其他软件包调用，同时这个命令必须在add_library()或者add_executable()之前调用；注意这个里面的包在package.xml一定要有<code>build_export_depend</code>标签。</li>
-<li>其余为CMake自身语法，具体可以参考<a href="https://github.com/Akagi201/learning-cmake/blob/master/docs/cmake-practice.pdf">CMake学习资料</a>。</li>
-</ol>
-<h4 id="创建msg的注意事项"><a href="#创建msg的注意事项" class="headerlink" title="创建msg的注意事项"></a>创建msg的注意事项</h4><ul>
-<li>在package.xml中<ol>
-<li><code>&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</code></li>
-<li><code>&lt;build_export_depend&gt;message_runtime&lt;/build_export_depend&gt;</code></li>
-<li><code>&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</code></li>
-</ol>
-</li>
-<li>在CMakeLists.txt中<ol>
-<li>添加<code>find_package(messaga_generation)</code>，确保可以生成msg文件；</li>
-<li>添加<code>catkin_package(message_runtime)</code>：确保生成的msgs文件可以被外部使用；</li>
-<li>添加<code>add_message_file</code>，添加具体的文件名；</li>
-<li>添加<code>generate_message</code>中的依赖包，如依赖<code>std_msgs</code></li>
-</ol>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
       </tags>
   </entry>
   <entry>
@@ -210,6 +137,32 @@
       </tags>
   </entry>
   <entry>
+    <title>ROS仿真：Arbotix控制器</title>
+    <url>/2021/07/22/ROS%E4%BB%BF%E7%9C%9F%EF%BC%9AArbotix%E6%8E%A7%E5%88%B6%E5%99%A8/</url>
+    <content><![CDATA[<p>ArbotiX是一款控制电机、舵机的控制板，并提供相应的ROS功能包，但是这个功能包不仅可以驱动真实的ArbotiX控制板，还提供了仿真控制器。这样的话，就可以基于ArbotiX+Rviz实现机器人的仿真，当然更加复杂的仿真，还是推荐ros_control+Gazebo。</p>
+<p>ArbotiX主要包含以下两个功能包：</p>
+<h4 id="arbotix-python"><a href="#arbotix-python" class="headerlink" title="arbotix_python"></a><a href="http://wiki.ros.org/arbotix_python">arbotix_python</a></h4><p>提供了两个控制器</p>
+<ol>
+<li><p><a href="http://wiki.ros.org/arbotix_python/diff_controller">differ_controller</a>: 差速控制移动机器人，接收<code>/cmd_vel</code>，并更新<code>odom → base_link</code>的坐标关系，典型配置如下：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">controllers: &#123;</span><br><span class="line">    base_controller: &#123;type: diff_controller, base_width: 0.381, ticks_meter: 81807, Kp: 10, Kd: 0, Ki: 0, Ko: 25&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><a href="http://wiki.ros.org/arbotix_python/follow_controller">follow_controller</a>: 使用action交互的控制接口，可以当做moveit中FollowJointTrajectory这个action的server，典型的配置如下：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">joints: &#123;</span><br><span class="line">joint1: &#123;id: 1, neutral: 205, max_angle: 169.6, min_angle: -169.6, max_speed: 90&#125;,</span><br><span class="line">joint2: &#123;id: 2, max_angle: 134.6, min_angle: -134.6, max_speed: 90&#125;,</span><br><span class="line">joint3: &#123;id: 3, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint4: &#123;id: 4, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint5: &#123;id: 5, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint6: &#123;id: 6, max_angle: 360, min_angle: -360, max_speed: 90&#125;,</span><br><span class="line">finger_joint1: &#123;id: 7, max_speed: 90&#125;,</span><br><span class="line">&#125;</span><br><span class="line">controllers: &#123;</span><br><span class="line">    arm_controller: &#123;type: follow_controller, joints: [joint1, joint2, joint3, joint4, joint5, joint6], action_name: arm_controller/follow_joint_trajectory, onboard: False &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="arbotix-controller"><a href="#arbotix-controller" class="headerlink" title="arbotix_controller"></a><a href="http://wiki.ros.org/arbotix_controllers?distro=noetic">arbotix_controller</a></h4><p>主要用来控制gripper，包含三种控制器，了解即可。</p>
+<ol>
+<li>one_side_gripper_controller.py</li>
+<li>parallel_gripper_controller.py</li>
+<li>parallel_single_servo_controller.py</li>
+</ol>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ROS基础：launch文件</title>
     <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Alaunch%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<ul>
@@ -255,9 +208,45 @@
       </tags>
   </entry>
   <entry>
-    <title>ROS基础：常用命令</title>
-    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rosmsg show msg_type        # 查看消息类型</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rossrv show srv_type        # 查看服务类型</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">tf_monitor /frame1 /frame2  # 查看坐标系之间的关系</span><br><span class="line">tf_echo /frame1 /frame2     # 打印frame2相对frame1的变换</span><br><span class="line">static_transform_publisher x y z yaw pitch roll (或 qx qy qz qw) frame_id child_frame_id period_in_ms   # 静态发布两个坐标系之间的关系</span><br></pre></td></tr></table></figure>
+    <title>ROS基础：catkin编译系统</title>
+    <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Acatkin%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p>ROS使用catkin来管理包，它是对CMake的扩展。一个catkin软件包必须要有package.xml和CMakeLists.txt两个文件，前者包括了包的描述和依赖信息，后者是构建包的cmake文件。实际工作中，catkin工具会调用CMakeLists.txt，而生成makefile等文件。</p>
+<h4 id="package-xml基本结构"><a href="#package-xml基本结构" class="headerlink" title="package.xml基本结构"></a><a href="http://wiki.ros.org/catkin/package.xml">package.xml基本结构</a></h4><p>一个典型的package.xml文件如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;package format=&quot;2&quot;&gt;</span><br><span class="line">  &lt;name&gt;your_package&lt;/name&gt;</span><br><span class="line">  &lt;version&gt;1.2.4&lt;/version&gt;</span><br><span class="line">  &lt;description&gt;</span><br><span class="line">    This package adds extra features to rosawesome.</span><br><span class="line">  &lt;/description&gt;</span><br><span class="line">  &lt;maintainer email=&quot;you@example.com&quot;&gt;Your Name&lt;/maintainer&gt;</span><br><span class="line">  &lt;license&gt;BSD&lt;/license&gt;</span><br><span class="line">  &lt;buildtool_depend&gt;catkin&lt;/buildtool_depend&gt;</span><br><span class="line">  &lt;depend&gt;roscpp&lt;/depend&gt;</span><br><span class="line">  &lt;build_depend&gt;angles&lt;/build_depend&gt;</span><br><span class="line">  &lt;build_export_depend&gt;angles&lt;/build_export_depend&gt;</span><br><span class="line">  &lt;exec_depend&gt;openni_launch&lt;/exec_depend&gt;</span><br><span class="line">&lt;/package&gt;</span><br></pre></td></tr></table></figure>
+
+<p>几个重要的标签，解释如下：</p>
+<ol>
+<li><code>buildtool_depend</code>: 编译工具，默认<code>catkin</code>，一般不用修改。</li>
+<li><code>depend</code>：指定编译时的依赖项，包含<code>build_depend</code>，<code>build_export_depend</code>和<code>exec_depend</code>。</li>
+<li><code>build_depend</code>: 指定编译功能包需要的依赖，例如<code>angle</code>包提供了C++头文件和编译文件。</li>
+<li><code>build_export_depend</code>: 指定对功能包构建库需要的依赖，例如本功能包导出的头文件依赖了<code>&lt;angles/angles.h&gt;</code>，那么第三方包使用本包导出的头文件时，仍然需要<code>&lt;build_depend&gt;angles&lt;/build_depend&gt;</code>。</li>
+<li><code>exec_depend</code>: 指定运行该功能包需要的依赖。</li>
+<li><strong>建议</strong>：简单情况直接使用<code>depend</code>标签即可（一个顶仨），也不容易出错；如果是依赖的系统项，可以根据<a href="https://docs.ros.org/en/kinetic/api/catkin/html/howto/format2/index.html">官方建议</a>谨慎选择。</li>
+</ol>
+<h4 id="CMakeLists-txt的基本结构"><a href="#CMakeLists-txt的基本结构" class="headerlink" title="CMakeLists.txt的基本结构"></a><a href="http://wiki.ros.org/catkin/CMakeLists.txt">CMakeLists.txt的基本结构</a></h4><p>CMake是不知道package.xml中的依赖关系的，但是catkin知道，因此在CMakeLists.txt中需要对catkin合理配置，便于处理包的依赖关系。<br>CMakeLists.txt基本结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 2.8.3)</span><br><span class="line">project(robot_brain)</span><br><span class="line"># Get the information about this package&#x27;s buildtime dependencies</span><br><span class="line">find_package(catkin REQUIRED</span><br><span class="line">  COMPONENTS message_generation std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"># Declare the message files to be built</span><br><span class="line">add_message_files(FILES</span><br><span class="line">  MyMessage.msg</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Declare the service files to be built</span><br><span class="line">add_service_files(FILES</span><br><span class="line">  MyService.srv</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Actually generate the language-specific message and service files</span><br><span class="line">generate_messages(DEPENDENCIES std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"># Declare that this catkin package&#x27;s runtime dependencies</span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS message_runtime std_msgs sensor_msgs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">add_executable(message_program src/main.cpp)</span><br><span class="line">add_dependencies(message_program $&#123;$&#123;PROJECT_NAME&#125;_EXPORTED_TARGETS&#125; $&#123;catkin_EXPORTED_TARGETS)</span><br><span class="line">target_link_libraries(message_program $&#123;catkin_LIBRARIES&#125; other_lib)</span><br></pre></td></tr></table></figure>
+
+<p>重要的模块解释如下：</p>
+<ol>
+<li><code>find_package</code>: cmake宏，指定依赖的其他pacakge，实际是生成了一些环境变量，如NAME_FOUND，NAME_INCLUDE_DIRS, NAME_LIBRARYIS，此处catkin是必备依赖 其余的syd_msgs…为组件，这个里面的包在package.xml中一定要有<code>build_depend</code>标签。</li>
+<li><code>catkin_package</code>：catkin宏，生成当前package的cmake配置，供依赖本包的其他软件包调用，同时这个命令必须在add_library()或者add_executable()之前调用；注意这个里面的包在package.xml一定要有<code>build_export_depend</code>标签。</li>
+<li>其余为CMake自身语法，具体可以参考<a href="https://github.com/Akagi201/learning-cmake/blob/master/docs/cmake-practice.pdf">CMake学习资料</a>。</li>
+</ol>
+<h4 id="创建msg的注意事项"><a href="#创建msg的注意事项" class="headerlink" title="创建msg的注意事项"></a>创建msg的注意事项</h4><ul>
+<li>在package.xml中<ol>
+<li><code>&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</code></li>
+<li><code>&lt;build_export_depend&gt;message_runtime&lt;/build_export_depend&gt;</code></li>
+<li><code>&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</code></li>
+</ol>
+</li>
+<li>在CMakeLists.txt中<ol>
+<li>添加<code>find_package(messaga_generation)</code>，确保可以生成msg文件；</li>
+<li>添加<code>catkin_package(message_runtime)</code>：确保生成的msgs文件可以被外部使用；</li>
+<li>添加<code>add_message_file</code>，添加具体的文件名；</li>
+<li>添加<code>generate_message</code>中的依赖包，如依赖<code>std_msgs</code></li>
+</ol>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -315,6 +304,18 @@
 <p>ros::spinOnce调用后会及时返回，并且还可以继续执行之后的程序。它会在某个时间段内及时调用<strong>所有的回调函数</strong>。一般还需要其他辅助程序的执行，如定时任务，数据处理，用户界面等。</p>
 <h4 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h4><p>ros::MulitiThreadSpinner，阻塞执行轮转，与ros::spin类似，执行后无需返回，直到节点被关闭。</p>
 <p>ros::AsyncSpinner: 没有使用阻塞形式，而是包含了start和stop调用，这样编程人员可以随时打开或者停止在回调函数队列上的轮转，实际使用中，这个更有用。</p>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS基础：常用命令</title>
+    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rosmsg show msg_type        # 查看消息类型</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rossrv show srv_type        # 查看服务类型</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">tf_monitor /frame1 /frame2  # 查看坐标系之间的关系</span><br><span class="line">tf_echo /frame1 /frame2     # 打印frame2相对frame1的变换</span><br><span class="line">static_transform_publisher x y z yaw pitch roll (或 qx qy qz qw) frame_id child_frame_id period_in_ms   # 静态发布两个坐标系之间的关系</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>ROS</category>
