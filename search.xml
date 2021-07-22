@@ -199,9 +199,27 @@
       </tags>
   </entry>
   <entry>
-    <title>ROS基础：常用命令</title>
-    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rosmsg show msg_type        # 查看消息类型</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rossrv show srv_type        # 查看服务类型</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">rosrun tf tf_echo /frame1 /frame2   # 打印frame2相对frame1的变换</span><br></pre></td></tr></table></figure>
+    <title>ROS基础：命名空间和重映射</title>
+    <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E9%87%8D%E6%98%A0%E5%B0%84/</url>
+    <content><![CDATA[<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a><a href="http://wiki.ros.org/Names">命名空间</a></h3><p>主要有四种命名方式，分为基础，全局，相对和私有。</p>
+<ol>
+<li><strong>全局</strong>：开头有”/“的名称称为全局的命名空间，没有二义性；</li>
+<li><strong>相对</strong>：开头没有”/“的名称。ROS会为相对名称提供一个默认的命名空间(默认为”/“)，但你可以为每个节点设置默认命名空间。主要有以下两种方式设置命名空间：<ol>
+<li>rosrun turtlesim turtlesim_node __ns:=/my</li>
+<li>在launch文件中设置命名空间用到的属性是ns</li>
+</ol>
+</li>
+<li><strong>基础</strong>：用来描述资源自身，可以当做相对名称的一个子类；</li>
+<li><strong>私有</strong>：私有名称不能够完全确定它们自身所在的命名空间，和相对名称的区别是　私有名称使用的不是默认命名空间，而是用它们的节点名称作为命名空间。每个节点内部都有一些资源，这些资源只与本节点相关，不会与其他节点打交道，这时候为了安全我们使用私有名称。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210722092411.png" alt="ROS命名空间"></p>
+<p>可以看到节点名本身<code>“node_name”</code>并不作为全局和相对名称的一部分，只在私有名称中有效。这个<code>“node_name”</code>就是<code>ros::init(argc,argv,“node_name”)</code>中的<code>node_name</code>，可以通过launch文件覆盖。</p>
+<h3 id="命名映射"><a href="#命名映射" class="headerlink" title="命名映射"></a><a href="http://wiki.ros.org/Remapping%20Arguments">命名映射</a></h3><p>命名映射的基本语法是： <code>name:=new_name</code>。同样的，重映射的规则与名称的全局和相对特性有关系。规则参考如下：<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210718223225.png" alt="ros命名映射"></p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
+<li><a href="https://blog.csdn.net/jrc_january/article/details/76587630">https://blog.csdn.net/jrc_january/article/details/76587630</a></li>
+<li><a href="http://wiki.ros.org/Names">http://wiki.ros.org/Names</a></li>
+<li><a href="http://wiki.ros.org/Remapping%20Arguments">http://wiki.ros.org/Remapping%20Arguments</a></li>
+</ol>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -211,16 +229,9 @@
       </tags>
   </entry>
   <entry>
-    <title>ROS基础：命名空间和重映射</title>
-    <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E9%87%8D%E6%98%A0%E5%B0%84/</url>
-    <content><![CDATA[<h4 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h4><p>主要有四种命名方式，分为基础，全局，相对和私有。</p>
-<ul>
-<li><strong>基础</strong>：用来描述资源自身，可以当做相对名称的一个子类；</li>
-<li><strong>全局</strong>：如<code>/joint_sates</code>中的<code>/</code>或者在launch文件中，通过<code>ns=&quot;sim1&quot;</code>设置；</li>
-<li><strong>相对</strong>：在节点<code>node1</code>下面的话题<code>topic1</code>，如果其全局空间为<code>sim1</code>，则变成<code>/sim1/topic1</code></li>
-<li><strong>私有</strong>：在节点<code>node1</code>下面的话题<code>~topic1</code>，如果其全局空间为<code>sim1</code>，则变成<code>/sim1/node1/topic1</code>，注意和相对的区别</li>
-</ul>
-<h4 id="命名映射"><a href="#命名映射" class="headerlink" title="命名映射"></a>命名映射</h4><p>命名映射的基本语法是： <code>name:=new_name</code>。同样的，重映射的规则与名称的全局和相对特性有关系。规则参考如下：<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210718223225.png" alt="ros命名映射"></p>
+    <title>ROS基础：常用命令</title>
+    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rosmsg show msg_type        # 查看消息类型</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rossrv show srv_type        # 查看服务类型</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">rosrun tf tf_echo /frame1 /frame2   # 打印frame2相对frame1的变换</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>ROS</category>
