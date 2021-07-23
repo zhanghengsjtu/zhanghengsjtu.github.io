@@ -28,7 +28,7 @@
 <meta property="og:description" content="ROS学习记录">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-18T08:43:45.000Z">
-<meta property="article:modified_time" content="2021-07-22T01:03:06.467Z">
+<meta property="article:modified_time" content="2021-07-23T07:36:25.217Z">
 <meta property="article:author" content="张恒">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-22 09:03:06" itemprop="dateModified" datetime="2021-07-22T09:03:06+08:00">2021-07-22</time>
+                <time title="修改时间：2021-07-23 15:36:25" itemprop="dateModified" datetime="2021-07-23T15:36:25+08:00">2021-07-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
             <div class="post-description">ROS学习记录</div>
 
@@ -284,24 +284,24 @@
 <p>ROS提供多种类型的通讯机制，包括基于主题的异步数据流通信、基于服务的同步RPC（远程过程调用）通信以及基于参数服务的数据传递，支持实现不同需求的网络连接。</p>
 <h4 id="基于主题的异步数据流通信"><a href="#基于主题的异步数据流通信" class="headerlink" title="基于主题的异步数据流通信"></a>基于主题的异步数据流通信</h4><p>ROS中最主要的通信方式，它实现了节点间多对多的连接，并且采用单向数据流传输数据。通过主题可以实现发布者和订阅者之间的解耦。底层依赖于XMLRPC和TCP/UDP。步骤如下：</p>
 <ol>
-<li>talker注册（XMLRPC）</li>
-<li>listener注册（XMLRPC）</li>
-<li>ros master信息匹配，并将结果返回给listener（XMLRPC）</li>
-<li>listener请求talker（RPC地址请求）</li>
-<li>talker确认连接请求（RPC回复，结果中包含talker的TCP地址）</li>
-<li>listener与talker建立网络连接（TCP）</li>
-<li>talker向listener发布数据（TCP）</li>
+<li><strong>talker注册</strong>：使用RPC向master注册发布者的信息，包含发布消息的话题名；master将注册信息加入注册列表中；</li>
+<li><strong>listener注册</strong>：使用RPC向master注册订阅者的信息，包含需要订阅的话题名；</li>
+<li><strong>master信息匹配</strong>：根据listener的订阅信息查询注册列表，如果没找到，则等待发布者加入；如果找到了，通过RPC向listener发布talker的RPC地址；</li>
+<li><strong>listener发送连接请求</strong>：listener收到talker的RPC地址之后，尝试通过RPC向talker发送连接请求，传输订阅的话题名，消息类型以及通讯协议（TCP/UDP）</li>
+<li><strong>talker确认连接请求</strong>：talker收到listener发送的连接请求后，继续通过RPC向listener确认连接信息，其中包含自身的TCP地址信息；</li>
+<li><strong>listener与talker建立网络连接</strong>：尝试使用TCP或UDP建立网络连接；</li>
+<li><strong>talker向listener发布数据</strong>：成功建立连接之后，talker开始向listener发布数据；</li>
 </ol>
 <p>步骤1-5，使用的都是XMLRPC通信，其中步骤4和5，talker和listener会协商共同支持的协议（TCPROS或UDPROS），最后6-7才是真正的TCP或UDP通讯。</p>
 <p><strong>XMLRPC</strong>：ROS节点之间建立连接过程及其与master之间通信均使用XMLRPC（基于XML的远程过程调用），这些远程过程调用采用HTTP传输协议，XML作为传输数据的编码格式。XML的文本属性使得它独立于传输层的编码形式，直接封装在HTTP中传输。远程过程调用的主要作用是负责节点对计算图级中的信息进行获取、更改及一些全局变量的设置，不直接支持数据的流传输。</p>
 <p><strong>TCPROS和UDPROS</strong>：ROS主题通讯支持TCPROS和UDPROS两种通信协议，TCPROS采用标准的TCP/IP套接字，这是ROS默认的传输方式；UDPROS采用标准的UDP传输方式，它是一种低延时、高效率的传输方式，但可能产生数据丢失，所以它比较适用于远程操作任务。</p>
 <h4 id="基于服务的同步RPC通信"><a href="#基于服务的同步RPC通信" class="headerlink" title="基于服务的同步RPC通信"></a>基于服务的同步RPC通信</h4><p>可以实现一对一的连接，采用请求应答的模型。步骤如下：</p>
 <ol>
-<li>talker注册（XMLRPC）</li>
-<li>listener注册（XMLRPC）</li>
-<li>ros master信息匹配，并将结果返回给listener（XMLRPC）</li>
-<li>listener与talker建立网络连接（TCP）</li>
-<li>talker向listener发布数据（TCP）</li>
+<li><strong>talker注册</strong>：使用RPC向master注册，包含提供的服务名；master将注册信息加入注册列表中；</li>
+<li><strong>listener注册</strong>：同样通过RPC向master注册，包含需要查找的服务名；</li>
+<li><strong>master信息匹配</strong>：master查询注册列表，没找到，则等待服务加入；<strong>找到的话，则通过RPC向listener发送talker的TCP地址</strong>；</li>
+<li><strong>listener与talker建立网络连接</strong>：listener使用tcp尝试与talker建立网络连接，并发送服务请求数据；</li>
+<li><strong>talker向listener发布数据</strong>：talker收到服务请求和参数之后，开始执行服务功能，执行完成后，向listener发送应答数据。</li>
 </ol>
 <p>可以看到，相比基于主题的异步数据流通信，该过程少了双方协商协议的过程，因为同步RPC通讯只支持TCPROS，客户端不需要通过XMLRPC与服务端协商共同支持的协议。</p>
 <h4 id="参数服务器"><a href="#参数服务器" class="headerlink" title="参数服务器"></a>参数服务器</h4><p>参数服务器是一个可以通过网络访问的多元共享的参数字典，节点在运行时可以在参数服务器上存储或获取参数。参数服务器运行在节点管理器上，它的应用程序编程接口通过XMLRPC库进行访问。可以理解成ROS中的全局变量，只需要XMLRPC通讯，不用TCP，操作如下：</p>
@@ -321,9 +321,9 @@
 <li>全局回调函数队列，即节点的回调函数队列</li>
 </ol>
 <p>其中全局回调函数队列在创建节点时自动创建，前两种需要手动创建。当消息到达时，先查看订阅者回调队列，在查看NodeHandle回调队列，最后才查看全局回调队列。</p>
-<h4 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h4><p>ros::spin()会导致用户编写的所有回调函数都被调用，并且一旦被调用，将不会返回，除非被关闭。使用ros::spin时，一般在初始化时，都设置好了所有消息的回调函数，并且不需要其他辅助程序运行。</p>
+<h4 id="单线程轮询"><a href="#单线程轮询" class="headerlink" title="单线程轮询"></a>单线程轮询</h4><p>ros::spin()会导致用户编写的所有回调函数都被调用，并且一旦被调用，将不会返回，除非被关闭。使用ros::spin时，一般在初始化时，都设置好了所有消息的回调函数，并且不需要其他辅助程序运行。</p>
 <p>ros::spinOnce调用后会及时返回，并且还可以继续执行之后的程序。它会在某个时间段内及时调用<strong>所有的回调函数</strong>。一般还需要其他辅助程序的执行，如定时任务，数据处理，用户界面等。</p>
-<h4 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h4><p>ros::MulitiThreadSpinner，阻塞执行轮转，与ros::spin类似，执行后无需返回，直到节点被关闭。</p>
+<h4 id="多线程轮询"><a href="#多线程轮询" class="headerlink" title="多线程轮询"></a>多线程轮询</h4><p>ros::MulitiThreadSpinner，阻塞执行轮转，与ros::spin类似，执行后无需返回，直到节点被关闭。</p>
 <p>ros::AsyncSpinner: 没有使用阻塞形式，而是包含了start和stop调用，这样编程人员可以随时打开或者停止在回调函数队列上的轮转，实际使用中，这个更有用。</p>
 
     </div>
@@ -428,7 +428,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%AE%AF"><span class="nav-number">1.</span> <span class="nav-text">通讯</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%B8%BB%E9%A2%98%E7%9A%84%E5%BC%82%E6%AD%A5%E6%95%B0%E6%8D%AE%E6%B5%81%E9%80%9A%E4%BF%A1"><span class="nav-number">1.1.</span> <span class="nav-text">基于主题的异步数据流通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%90%8C%E6%AD%A5RPC%E9%80%9A%E4%BF%A1"><span class="nav-number">1.2.</span> <span class="nav-text">基于服务的同步RPC通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">参数服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9Caction%E9%80%9A%E8%AE%AF"><span class="nav-number">1.4.</span> <span class="nav-text">动作action通讯</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.5.</span> <span class="nav-text">优缺点和注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">回调函数和多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">单线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">多线程</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%AE%AF"><span class="nav-number">1.</span> <span class="nav-text">通讯</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%B8%BB%E9%A2%98%E7%9A%84%E5%BC%82%E6%AD%A5%E6%95%B0%E6%8D%AE%E6%B5%81%E9%80%9A%E4%BF%A1"><span class="nav-number">1.1.</span> <span class="nav-text">基于主题的异步数据流通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%90%8C%E6%AD%A5RPC%E9%80%9A%E4%BF%A1"><span class="nav-number">1.2.</span> <span class="nav-text">基于服务的同步RPC通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">参数服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E4%BD%9Caction%E9%80%9A%E8%AE%AF"><span class="nav-number">1.4.</span> <span class="nav-text">动作action通讯</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.5.</span> <span class="nav-text">优缺点和注意事项</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">回调函数和多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E8%BD%AE%E8%AF%A2"><span class="nav-number">2.1.</span> <span class="nav-text">单线程轮询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E8%BD%AE%E8%AF%A2"><span class="nav-number">2.2.</span> <span class="nav-text">多线程轮询</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
