@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210722223723.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210722223610.png">
 <meta property="article:published_time" content="2021-07-22T09:44:14.000Z">
-<meta property="article:modified_time" content="2021-07-22T14:55:41.618Z">
+<meta property="article:modified_time" content="2021-07-23T01:34:09.687Z">
 <meta property="article:author" content="张恒">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
@@ -220,10 +220,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-07-22 17:44:14 / 修改时间：22:55:41" itemprop="dateCreated datePublished" datetime="2021-07-22T17:44:14+08:00">2021-07-22</time>
+              <time title="创建时间：2021-07-22 17:44:14" itemprop="dateCreated datePublished" datetime="2021-07-22T17:44:14+08:00">2021-07-22</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-07-23 09:34:09" itemprop="dateModified" datetime="2021-07-23T09:34:09+08:00">2021-07-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -256,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.6k</span>
+              <span>8.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>8 分钟</span>
             </span>
             <div class="post-description">ROS学习记录</div>
 
@@ -292,16 +298,17 @@
 <p>基本上常见的传感器都可以在gazebo中找到对应的插件，使用的方法也很简单，直接在urdf中配置即可。比如</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;robot&gt;</span><br><span class="line">  ... robot description ...</span><br><span class="line">  &lt;link name=&quot;sensor_link&quot;&gt;</span><br><span class="line">    ... link description ...</span><br><span class="line">  &lt;/link&gt;</span><br><span class="line"></span><br><span class="line">  &lt;gazebo reference=&quot;sensor_link&quot;&gt;</span><br><span class="line">    &lt;sensor type=&quot;camera&quot; name=&quot;camera1&quot;&gt;</span><br><span class="line">      ... sensor parameters ...</span><br><span class="line">      &lt;plugin name=&quot;camera_controller&quot; filename=&quot;libgazebo_ros_camera.so&quot;&gt;</span><br><span class="line">        ... plugin parameters ..</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/sensor&gt;</span><br><span class="line">  &lt;/gazebo&gt;</span><br><span class="line"></span><br><span class="line">&lt;/robot&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="机器人仿真"><a href="#机器人仿真" class="headerlink" title="机器人仿真"></a>机器人仿真</h3><p>机器人在Gazebo中的仿真主要分为urdf文件的修改和launch文件中控制器的加载。其中urdf文件的修改如下：</p>
+<h3 id="机器人仿真"><a href="#机器人仿真" class="headerlink" title="机器人仿真"></a>机器人仿真</h3><p>机器人在Gazebo中的仿真主要分为urdf文件的修改和launch文件中ros_controller的加载。整体步骤如下：</p>
 <ul>
 <li>为link设置颜色，inertia标签；</li>
 <li>为joint设置阻尼，transmission传动接口等；</li>
 <li>为机器人加载gazebo插件；</li>
+<li>配置<a target="_blank" rel="noopener" href="http://wiki.ros.org/ros_control">ros_controller</a>；</li>
 </ul>
-<p>修改完urdf之后，在launch文件中配置<a target="_blank" rel="noopener" href="http://wiki.ros.org/ros_control">ros_control</a>来控制gazebo中的机器人。</p>
+<p>以上步骤在移动机器人和机械臂的仿真配置中略有差别，移动机器人复杂在<code>为机器人加载gazebo插件</code>，机械臂复杂在<code>transmission传动接口</code>和<code>配置ros_controller</code>。</p>
 <h4 id="移动机器人仿真"><a href="#移动机器人仿真" class="headerlink" title="移动机器人仿真"></a>移动机器人仿真</h4><ol>
-<li>transmission传动：移动机器人关节的transmission为velocity控制，代码如下：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;transmission name=&quot;wheel_joint_trans&quot;&gt;</span><br><span class="line">    &lt;type&gt;transmission_interface/SimpleTransmission&lt;/type&gt;</span><br><span class="line">    &lt;joint name=&quot;wheel_joint&quot;&gt;</span><br><span class="line">        &lt;hardwareInterface&gt;VelocityJointInterface&lt;/hardwareInterface&gt;</span><br><span class="line">    &lt;/joint&gt;</span><br><span class="line">    &lt;actuator name=&quot;wheel_joint_motor&quot;&gt;</span><br><span class="line">        &lt;hardwareInterface&gt;VelocityJointInterface&lt;/hardwareInterface&gt; # indigo及之后的版本可以不指定</span><br><span class="line">        &lt;mechanicalReduction&gt;1&lt;/mechanicalReduction&gt;</span><br><span class="line">    &lt;/actuator&gt;</span><br><span class="line">&lt;/transmission&gt;</span><br></pre></td></tr></table></figure></li>
-<li>gazebo控制插件，有差分，四驱和全向移动机器人。</li>
+<li><strong>transmission传动接口</strong>：移动机器人关节的transmission为velocity控制，代码如下：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;transmission name=&quot;wheel_joint_trans&quot;&gt;</span><br><span class="line">    &lt;type&gt;transmission_interface/SimpleTransmission&lt;/type&gt;</span><br><span class="line">    &lt;joint name=&quot;wheel_joint&quot;&gt;</span><br><span class="line">        &lt;hardwareInterface&gt;VelocityJointInterface&lt;/hardwareInterface&gt;</span><br><span class="line">    &lt;/joint&gt;</span><br><span class="line">    &lt;actuator name=&quot;wheel_joint_motor&quot;&gt;</span><br><span class="line">        &lt;hardwareInterface&gt;VelocityJointInterface&lt;/hardwareInterface&gt; # indigo及之后的版本可以不指定</span><br><span class="line">        &lt;mechanicalReduction&gt;1&lt;/mechanicalReduction&gt;</span><br><span class="line">    &lt;/actuator&gt;</span><br><span class="line">&lt;/transmission&gt;</span><br></pre></td></tr></table></figure></li>
+<li><strong>gazebo插件</strong>：有差分，四驱和全向移动机器人。</li>
 </ol>
 <ul>
 <li><p><strong>差分移动机器人</strong></p>
@@ -312,16 +319,42 @@
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;robot name=&quot;test_model&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- root link, on the ground just below the model origin --&gt;</span><br><span class="line">&lt;link name=&quot;base_footprint&quot;&gt;</span><br><span class="line">&lt;visual&gt;</span><br><span class="line">    &lt;origin xyz=&quot;0 0 0&quot; rpy=&quot;0 0 0&quot; /&gt;</span><br><span class="line">    &lt;geometry&gt;</span><br><span class="line">        &lt;box size=&quot;0.001 0.001 0.001&quot; /&gt;</span><br><span class="line">    &lt;/geometry&gt;</span><br><span class="line">    &lt;/visual&gt;</span><br><span class="line">&lt;/link&gt;</span><br><span class="line"></span><br><span class="line">&lt;joint name=&quot;base_link_joint&quot; type=&quot;fixed&quot;&gt;</span><br><span class="line">    &lt;origin xyz=&quot;0.0 0 1.25&quot; rpy=&quot;0 0 0&quot; /&gt;</span><br><span class="line">    &lt;parent link=&quot;base_footprint&quot;/&gt;</span><br><span class="line">    &lt;child link=&quot;base_link&quot; /&gt;</span><br><span class="line">&lt;/joint&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- the model --&gt;</span><br><span class="line">&lt;link name=&quot;base_link&quot;&gt;</span><br><span class="line">    &lt;inertial&gt;</span><br><span class="line">    &lt;mass value=&quot;50&quot; /&gt;</span><br><span class="line">    &lt;origin xyz=&quot;0 0 -1.25&quot; /&gt;</span><br><span class="line">    &lt;inertia ixx=&quot;50.0&quot; ixy=&quot;0.0&quot; ixz=&quot;0.0&quot;</span><br><span class="line">        iyy=&quot;50.0&quot; iyz=&quot;0.0&quot;</span><br><span class="line">        izz=&quot;50.0&quot; /&gt;</span><br><span class="line">    &lt;/inertial&gt;</span><br><span class="line">    &lt;visual&gt;</span><br><span class="line">    &lt;geometry&gt;</span><br><span class="line">        &lt;box size=&quot;0.5 0.5 1.0&quot; /&gt; &lt;!-- does not need to match collision --&gt;</span><br><span class="line">    &lt;/geometry&gt;</span><br><span class="line">    &lt;/visual&gt;</span><br><span class="line">    &lt;collision&gt;</span><br><span class="line">    &lt;origin xyz=&quot;0 0 -1.0&quot; /&gt;</span><br><span class="line">    &lt;geometry&gt;</span><br><span class="line">        &lt;cylinder length=&quot;0.5&quot; radius=&quot;0.25&quot; /&gt;</span><br><span class="line">    &lt;/geometry&gt;</span><br><span class="line">    &lt;/collision&gt;</span><br><span class="line">&lt;/link&gt;</span><br><span class="line"></span><br><span class="line">&lt;gazebo&gt;</span><br><span class="line">    &lt;plugin name=&quot;object_controller&quot; filename=&quot;libgazebo_ros_planar_move.so&quot;&gt;</span><br><span class="line">    &lt;commandTopic&gt;cmd_vel&lt;/commandTopic&gt;</span><br><span class="line">    &lt;odometryTopic&gt;odom&lt;/odometryTopic&gt;</span><br><span class="line">    &lt;odometryFrame&gt;odom&lt;/odometryFrame&gt;</span><br><span class="line">    &lt;odometryRate&gt;20.0&lt;/odometryRate&gt;</span><br><span class="line">    &lt;robotBaseFrame&gt;base_footprint&lt;/robotBaseFrame&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">&lt;/gazebo&gt;</span><br><span class="line"></span><br><span class="line">&lt;/robot&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <p>移动机器人仿真不需要额外加载ros_controller，因为gazebo插件可以直接解析模型（不同的.so就是针对不同类型的移动机器人设置的），直接通过/cmd_vel发送速度指令控制机器人了。</p>
-<h4 id="机械臂仿真"><a href="#机械臂仿真" class="headerlink" title="机械臂仿真"></a>机械臂仿真</h4><p>机械臂仿真的流程和移动机器人类似，但是关节的transmission和ros_control略微复杂。</p>
+<h4 id="机械臂仿真"><a href="#机械臂仿真" class="headerlink" title="机械臂仿真"></a>机械臂仿真</h4><p>机械臂仿真的流程和移动机器人类似，但是关节的transmission和ros_controller配置略微复杂。</p>
 <ol>
 <li><p>关节transmission：transmission的类型目前只有SimpleTransmission。hardwareInterface支持的列表如下<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210722223723.png" alt="hardwareInterface"><br>下面展示了PositionJointInterface的配置方法。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;transmission name=&quot;tran1&quot;&gt;</span><br><span class="line">    &lt;type&gt;transmission_interface/SimpleTransmission&lt;/type&gt;</span><br><span class="line">    &lt;joint name=&quot;$&#123;joint_name&#125;&quot;&gt;</span><br><span class="line">        &lt;hardwareInterface&gt;PositionJointInterface&lt;/hardwareInterface&gt;</span><br><span class="line">    &lt;/joint&gt;</span><br><span class="line">    &lt;actuator name=&quot;motor1&quot;&gt;</span><br><span class="line">        &lt;hardwareInterface&gt;PositionJointInterface&lt;/hardwareInterface&gt;</span><br><span class="line">        &lt;mechanicalReduction&gt;1&lt;/mechanicalReduction&gt;</span><br><span class="line">    &lt;/actuator&gt;</span><br><span class="line">&lt;/transmission&gt;</span><br></pre></td></tr></table></figure></li>
 <li><p>gazebo插件：直接加载gazebo_ros_control即可</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;gazebo&gt;</span><br><span class="line">    &lt;plugin name=&quot;gazebo_ros_control&quot; filename=&quot;libgazebo_ros_control.so&quot;&gt;</span><br><span class="line">        &lt;robotNamespace&gt;/arm&lt;/robotNamespace&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">&lt;/gazebo&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p>ros_control: 支持的控制器列表如下<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210722223610.png" alt="ros_controller"> </p>
+<li><p>ros_controller: 支持的控制器列表如下<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210722223610.png" alt="ros_controller"> </p>
 </li>
 </ol>
-<p>一般机械臂仿真中，<code>hardwareInterface</code>直接设置<code>PositionJointInterface</code>，然后ros_controller可以选择<code>position_controller/JointPositionController</code>或者<code>position_controller/JointGroupPositionController</code>或者<code>position_controller/JointTrajectoryController</code>。</p>
+<p>可以看到hardwareInterface的类别和ros_controller支持的种类相互对应。hardwareInterface主要有以下四种（代表的是输出数据类型）：</p>
+<ul>
+<li>PositionJointInterface</li>
+<li>VelocityJointInterface</li>
+<li>EffortJointInterface</li>
+<li>JointStateInterface</li>
+</ul>
+<p>而ros_controller也主要包含四种（代表的仍是输出数据类型）：</p>
+<ul>
+<li>position_controller: JointPositionController, JointGroupPositionController</li>
+<li>velocity_controller: JointVelocityController, JointGroupVelocityController</li>
+<li>effort_controller: JointEffortController, JointVelocityController, JointPositionController</li>
+<li>joint_state_controller</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>传感器仿真比较简单，先为传感器建立urdf，然后再增加传感器插件和对应的参数即可。</p>
+<p>机器人仿真略微麻烦，而且不同的控制器配置的形式也不太一样。整体步骤就是：</p>
+<ul>
+<li>为link设置颜色，inertia标签；</li>
+<li>为joint设置阻尼，transmission传动接口等；</li>
+<li>为机器人加载gazebo插件；</li>
+<li>配置ros_controller；</li>
+</ul>
+<p>后面三个的配置形式和机器人相关：</p>
+<ul>
+<li>移动机器人：目前支持的transmission/hardwareInterface只有VelocityJointInterface；然后gazebo插件一定是libgazebo_ros_diff_drive.so，libgazebo_ros_skid_steer_drive.so或libgazebo_ros_planar_move.so；最后因为插件是为移动机器人定制的，就不需要额外配置ros_controller了，控制功能直接在对应的插件中集成好了，通过/cmd_vel即可控制机器人；</li>
+<li>机械臂：因为机械臂形式多样，控制接口也更加复杂，所以在ros中采用了和移动机器人不一样的思路，即简化插件，增加hardwareInterface和ros_controller。所以插件只有libgazebo_ros_control.so；需要根据不同的需求配置hardwareInterface和ros_controller。</li>
+</ul>
 
     </div>
 
@@ -422,7 +455,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E6%84%9F%E5%99%A8%E4%BB%BF%E7%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">传感器仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">机器人仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.1.</span> <span class="nav-text">移动机器人仿真</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%BA%E6%A2%B0%E8%87%82%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.2.</span> <span class="nav-text">机械臂仿真</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E6%84%9F%E5%99%A8%E4%BB%BF%E7%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">传感器仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">机器人仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.1.</span> <span class="nav-text">移动机器人仿真</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%BA%E6%A2%B0%E8%87%82%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.2.</span> <span class="nav-text">机械臂仿真</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
