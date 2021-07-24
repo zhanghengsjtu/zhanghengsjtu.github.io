@@ -8,34 +8,51 @@
 <p>Markdown的编辑器比较多，选择自己喜欢的即可，在这里我选择使用VSCode+Markdown插件，当然Typora也是非常好用的编辑器。不过还是刚刚讲的，使用Markdown是回归内容本身，选择自己用着顺手的编辑器即可。</p>
 <h3 id="基础语法"><a href="#基础语法" class="headerlink" title="基础语法"></a>基础语法</h3><p>语法主要包含以下几个方面：</p>
 <ol>
-<li><strong>标题</strong>：使用多个#表示不同的标题级别；</li>
-<li><strong>列表</strong>：<ul>
+<li><p><strong>标题</strong>：使用多个#表示不同的标题级别；</p>
+</li>
+<li><p><strong>列表</strong>：</p>
+<ul>
 <li>无序列表：使用-+*表示；</li>
 <li>有序列表：使用1，2，3表示；</li>
 <li>列表分级：上下级之间用三个空格；</li>
 </ul>
 </li>
-<li><strong>字体</strong>：语法如下<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*斜体*</span><br><span class="line">**粗体**</span><br><span class="line">***斜体加粗***</span><br><span class="line">~~删除线~~</span><br></pre></td></tr></table></figure>
-结果如下：<br> <em>斜体</em><br> <strong>粗体</strong><br> <em><strong>斜体加粗</strong></em><br> <del>删除线</del></li>
-<li><strong>超链接</strong>：形式为 <code>[超链接名](超链接地址 &quot;超链接title&quot;)</code>，如<code>[个人博客]（https://zhanghengsjtu.github.io/）</code></li>
-<li><strong>代码</strong><ul>
+<li><p><strong>字体</strong>：语法如下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">*斜体*</span><br><span class="line">**粗体**</span><br><span class="line">***斜体加粗***</span><br><span class="line">~~删除线~~</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：<br> <em>斜体</em><br> <strong>粗体</strong><br> <em><strong>斜体加粗</strong></em><br> <del>删除线</del></p>
+</li>
+<li><p><strong>超链接</strong>：形式为 <code>[超链接名](超链接地址 &quot;超链接title&quot;)</code>，如<code>[个人博客]（https://zhanghengsjtu.github.io/）</code></p>
+</li>
+<li><p><strong>代码</strong></p>
+<ul>
 <li>单行代码：左右各一个反引号`</li>
 <li>代码块：左右各三个反引号`，且两边的三个反引号独占一行</li>
 </ul>
 </li>
-<li><strong>图片和图床</strong>：基础语法<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![图注](图片地址 &#x27;&#x27;悬浮标题&#x27;&#x27;)</span><br><span class="line">图注就是显示在图片下面的文字，相当于对图片内容的解释。</span><br><span class="line">悬浮标题是图片的标题，当鼠标移到图片上时显示的内容。悬浮标题可加可不加</span><br></pre></td></tr></table></figure>
-比如<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![NBA全明星](https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210717215222.png &quot;NBA全明星&quot;)</span><br></pre></td></tr></table></figure>
-效果如下<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210717215222.png" alt="NBA全明星" title="NBA全明星"><br>需要注意的是，为了保证多平台统一，图片存储时需要使用图床，提供统一的外部链接，推荐一个简单免费的图床工具。<br><strong>GitHub+Picgo搭建图床主要步骤如下：</strong><ul>
+<li><p><strong>图片和图床</strong>：基础语法</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![图注](图片地址 &#x27;&#x27;悬浮标题&#x27;&#x27;)</span><br><span class="line">图注就是显示在图片下面的文字，相当于对图片内容的解释。</span><br><span class="line">悬浮标题是图片的标题，当鼠标移到图片上时显示的内容。悬浮标题可加可不加</span><br></pre></td></tr></table></figure>
+
+<p>比如</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">![NBA全明星](https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210717215222.png &quot;NBA全明星&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>效果如下<br><img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210717215222.png" alt="NBA全明星" title="NBA全明星"><br>需要注意的是，为了保证多平台统一，图片存储时需要使用图床，提供统一的外部链接，推荐一个简单免费的图床工具。<br><strong>GitHub+Picgo搭建图床主要步骤如下：</strong></p>
+<ul>
 <li>建立GitHub图片仓库</li>
 <li>创建并获取token</li>
 <li>下载Picgo客户端</li>
 <li>配置客户端</li>
 </ul>
 </li>
-<li><strong>分割线</strong>：三个或者三个以上的-*都可以</li>
-<li><strong>引用</strong>：在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&gt;&gt;三个&gt;&gt;&gt;</li>
-<li><strong>表格</strong>： <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">表头|表头|表头</span><br><span class="line">---|:--:|---:</span><br><span class="line">内容|内容|内容</span><br><span class="line">内容|内容|内容</span><br><span class="line"></span><br><span class="line">第二行分割表头和内容。</span><br><span class="line">- 有一个就行，为了对齐，多加了几个</span><br><span class="line">文字默认居左</span><br><span class="line">-两边加：表示文字居中</span><br><span class="line">-右边加：表示文字居右</span><br><span class="line">注：原生的语法两边都要用 | 包起来。此处省略</span><br></pre></td></tr></table></figure>
- 效果如下：<table>
+<li><p><strong>分割线</strong>：三个或者三个以上的-*都可以</p>
+</li>
+<li><p><strong>引用</strong>：在引用的文字前加&gt;即可。引用也可以嵌套，如加两个&gt;&gt;三个&gt;&gt;&gt;</p>
+</li>
+<li><p><strong>表格</strong>：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">表头|表头|表头</span><br><span class="line">---|:--:|---:</span><br><span class="line">内容|内容|内容</span><br><span class="line">内容|内容|内容</span><br><span class="line"></span><br><span class="line">第二行分割表头和内容。</span><br><span class="line">- 有一个就行，为了对齐，多加了几个</span><br><span class="line">文字默认居左</span><br><span class="line">-两边加：表示文字居中</span><br><span class="line">-右边加：表示文字居右</span><br><span class="line">注：原生的语法两边都要用 | 包起来。此处省略</span><br></pre></td></tr></table></figure>
+
+<p> 效果如下：</p>
+<table>
 <thead>
 <tr>
 <th>表头</th>
@@ -78,33 +95,35 @@
     <content><![CDATA[<p>搭建博客的基本思路是先在本地创建，再部署到远端。首先本地创建时，使用Node.js + Hexo。然后远端部署时，这里使用GitHub。最后再利用比较流行的主题Next对个人博客进行美化，便于自己使用。</p>
 <h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>Hexo依赖于Node.js，下载地址为<a href="https://nodejs.org/en/download/">Download | Node.js</a>，不过win10默认已经安装了，可以先在命令行输入： node -V和 npm -V，如果已经安装成功，则该步骤可以跳过。node和npm就是安装Hexo的基础环境。</p>
 <h3 id="Hexo博客搭建"><a href="#Hexo博客搭建" class="headerlink" title="Hexo博客搭建"></a>Hexo博客搭建</h3><ol>
-<li><p>在D盘创建blog文件夹，然后在该文件夹下面运行：<code>npm install -g hexo-cli </code>即完成了Hexo的安装；</p>
+<li><p>在D盘创建blog文件夹，然后在该文件夹下面运行：<code>npm install -g hexo-cli</code>即完成了Hexo的安装；</p>
 </li>
 <li><p>在D:\blog下面运行：<code>hexo init blog</code>，完成本地博客的初始化；</p>
 </li>
 <li><p>运行以下命令，并在浏览器输入<code>localhost:4000</code>即可看到最简单的博客</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo g    # 生成博客</span><br><span class="line">hexo s    # 在服务端显示</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo g    <span class="comment"># 生成博客</span></span><br><span class="line">hexo s    <span class="comment"># 在服务端显示</span></span><br></pre></td></tr></table></figure></li>
 <li><p>到此为止，本地博客最简单的版本就算搭建完成了，此时会在blog文件下面生成一系列文件，主要文件有以下几个：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">blog/_config.yml            # 站点配置文件，和后面同名的主题配置文件区分</span><br><span class="line">blog/source/_posts/*.md     # 生成博客的Markdown文件</span><br><span class="line">blog/themes                 # 主题文件夹，后面会介绍，可以更换并配置主题</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">blog/_config.yml            <span class="comment"># 站点配置文件，和后面同名的主题配置文件区分</span></span><br><span class="line">blog/<span class="built_in">source</span>/_posts/*.md     <span class="comment"># 生成博客的Markdown文件</span></span><br><span class="line">blog/themes                 <span class="comment"># 主题文件夹，后面会介绍，可以更换并配置主题</span></span><br></pre></td></tr></table></figure></li>
 <li><p>另外，hexo常见的操作如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo -g #安装Hexo</span><br><span class="line">npm update hexo -g #升级</span><br><span class="line">hexo init #初始化博客</span><br><span class="line"># 上述命令基本上一次性使用</span><br><span class="line"># 下面四条最常用</span><br><span class="line">hexo n &quot;我的博客&quot; == hexo new &quot;我的博客&quot; #新建文章</span><br><span class="line">hexo g == hexo generate #生成</span><br><span class="line">hexo s == hexo server #启动服务预览</span><br><span class="line">hexo d == hexo deploy #部署</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo -g         <span class="comment">#安装Hexo</span></span><br><span class="line">npm update hexo -g          <span class="comment">#升级</span></span><br><span class="line">hexo init                   <span class="comment">#初始化博客</span></span><br><span class="line"><span class="comment"># 上述命令基本上一次性使用</span></span><br><span class="line"><span class="comment"># 下面四条最常用</span></span><br><span class="line">hexo n <span class="string">&quot;我的博客&quot;</span> == hexo new <span class="string">&quot;我的博客&quot;</span> <span class="comment">#新建文章</span></span><br><span class="line">hexo g == hexo generate     <span class="comment">#生成</span></span><br><span class="line">hexo s == hexo server       <span class="comment">#启动服务预览</span></span><br><span class="line">hexo d == hexo deploy       <span class="comment">#部署</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Hexo-Github线上运行"><a href="#Hexo-Github线上运行" class="headerlink" title="Hexo+Github线上运行"></a>Hexo+Github线上运行</h3><p>我们搭建博客的目的肯定不是为了只在本地运行，所以需要通过一定的技术手段将博客上传到远端。具体操作时，可以花钱购买域名，也可以使用免费的版本，这里我使用了常见的GitHub作为远端服务器。<br>在这里多说一句，GitHub在国内有时候访问速度很不理想，比如我们实验室，平时下载东西的速度能到30Mb/s，但是访问GitHub有时候就很慢，所以推荐大家购买一个靠谱的vpn并且对GitHub的访问进行合理配置，科学上网。我经常使用的vpn是<a href="https://www.myunlu.com/signin">myunlu</a>，整体使用下来还是很稳定的，我的邀请码是 5A9334B8EA51BAC53A2F8561FB156427。最后在命令行配置GitHub代理即可。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy socks5://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy socks5://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy socks5://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy socks5://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
+
 <p>接下来就是正式的操作：</p>
 <ol>
 <li><p><strong>创建GitHub仓库</strong>，仓库名一定是<strong>username.github.io</strong></p>
 </li>
 <li><p><strong>安装git</strong>：win下直接下载客户端就行，其他系统同理，安装完成之后，在git bash中执行以下命令：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1. git config --global user.name &quot;你的GitHub用户名&quot;</span><br><span class="line">2. git config --global user.email &quot;你的GitHub注册邮箱&quot;</span><br><span class="line">3. ssh-keygen -t rsa -C &quot;你的GitHub注册邮箱&quot;</span><br><span class="line">4. 复制生成的id_rsa.pub中的密匙，然后到GitHub-&gt;Setting-&gt;new SSH Key中配置</span><br><span class="line">5. ssh git@github.com   # Hi, ***! You&#x27;ve successfully authenticated, but*** 说明成功了</span><br></pre></td></tr></table></figure>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1. git config --global user.name <span class="string">&quot;你的GitHub用户名&quot;</span></span><br><span class="line">2. git config --global user.email <span class="string">&quot;你的GitHub注册邮箱&quot;</span></span><br><span class="line">3. ssh-keygen -t rsa -C <span class="string">&quot;你的GitHub注册邮箱&quot;</span></span><br><span class="line">4. 复制生成的id_rsa.pub中的密匙，然后到GitHub-&gt;Setting-&gt;new SSH Key中配置</span><br><span class="line">5. ssh git@github.com   <span class="comment"># Hi, ***! You&#x27;ve successfully authenticated, but*** 说明成功了</span></span><br></pre></td></tr></table></figure>
+
 <p> 上面的一通操作只要知道其目的就行，实质就是通过非对称加密的公钥与私钥来完成加密，公钥放置在GitHub上，私钥放置在自己的电脑里。GitHub要求每次推送代码都是合法用户，所以每次推送都需要输入账号密码验证推送用户是否是合法用户，为了省去每次输入密码的步骤，采用了ssh，当你推送的时候，git就会匹配你的私钥跟GitHub上面的公钥是否是配对的，若是匹配就认为你是合法用户，则允许推送。这样可以保证每次的推送都是正确合法的。</p>
 </li>
 <li><p><strong>安装git和Hexo联合部署工具</strong>：这个可以理解成GitHub对hexo的一个插件，这样使用简单的hexo命令，就可以完成GitHub部署了，该插件的安装命令为： <code>npm install hexo-deployer-git --save</code></p>
 </li>
 <li><p><strong>修改站点配置文件blog/_config.yam</strong></p>
-   <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: https://github.com/[yourusername]/[yourusername].github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></li>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: git</span><br><span class="line">repo: https://github.com/[yourusername]/[yourusername].github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></li>
 <li><p><strong>部署到远端</strong>：使用以下命令，即可将本地的博客内容部署到远端。此后，只需要用到下面的几条命令以及<a href="https://zhanghengsjtu.github.io/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/">Markdown语法</a>。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean  # 清理</span><br><span class="line">hexo g      # 生成</span><br><span class="line">hexo s      # 本地端口4000预览</span><br><span class="line">hexo d      # 推到远端，所以需要上面GitHub关联，和git+hexo联合部署工具</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean  <span class="comment"># 清理</span></span><br><span class="line">hexo g      <span class="comment"># 生成</span></span><br><span class="line">hexo s      <span class="comment"># 本地端口4000预览</span></span><br><span class="line">hexo d      <span class="comment"># 推到远端，所以需要上面GitHub关联，和git+hexo联合部署工具</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Next主题配置"><a href="#Next主题配置" class="headerlink" title="Next主题配置"></a>Next主题配置</h3><p>上述三部分的功能是核心，保证了我们能够搭建最基础的博客。但是默认生成的博客页面大家可能不喜欢，在这里推荐一个比较常见的主题<a href="https://github.com/theme-next/hexo-theme-next">Next</a>。之所以推荐这个主题，和我当初选择Hexo的原因很类似：选择一个成熟好用的框架，这样有问题之后方便交流，毕竟我们的目的不是深入研究网页开发。</p>
 <ol>
@@ -144,9 +163,9 @@
 <h4 id="arbotix-python"><a href="#arbotix-python" class="headerlink" title="arbotix_python"></a><a href="http://wiki.ros.org/arbotix_python">arbotix_python</a></h4><p>提供了两个控制器</p>
 <ol>
 <li><p><a href="http://wiki.ros.org/arbotix_python/diff_controller">differ_controller</a>: 差速控制移动机器人，接收<code>/cmd_vel</code>，并更新<code>odom → base_link</code>的坐标关系，典型配置如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">controllers: &#123;</span><br><span class="line">    base_controller: &#123;type: diff_controller, base_width: 0.381, ticks_meter: 81807, Kp: 10, Kd: 0, Ki: 0, Ko: 25&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">controllers: &#123;</span><br><span class="line">    base_controller: &#123;type: diff_controller, base_width: 0.381, ticks_meter: 81807, Kp: 10, Kd: 0, Ki: 0, Ko: 25&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p><a href="http://wiki.ros.org/arbotix_python/follow_controller">follow_controller</a>: 使用action交互的控制接口，可以当做moveit中FollowJointTrajectory这个action的server，典型的配置如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">joints: &#123;</span><br><span class="line">joint1: &#123;id: 1, neutral: 205, max_angle: 169.6, min_angle: -169.6, max_speed: 90&#125;,</span><br><span class="line">joint2: &#123;id: 2, max_angle: 134.6, min_angle: -134.6, max_speed: 90&#125;,</span><br><span class="line">joint3: &#123;id: 3, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint4: &#123;id: 4, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint5: &#123;id: 5, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint6: &#123;id: 6, max_angle: 360, min_angle: -360, max_speed: 90&#125;,</span><br><span class="line">finger_joint1: &#123;id: 7, max_speed: 90&#125;,</span><br><span class="line">&#125;</span><br><span class="line">controllers: &#123;</span><br><span class="line">    arm_controller: &#123;type: follow_controller, joints: [joint1, joint2, joint3, joint4, joint5, joint6], action_name: arm_controller/follow_joint_trajectory, onboard: False &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">joints: &#123;</span><br><span class="line">joint1: &#123;id: 1, neutral: 205, max_angle: 169.6, min_angle: -169.6, max_speed: 90&#125;,</span><br><span class="line">joint2: &#123;id: 2, max_angle: 134.6, min_angle: -134.6, max_speed: 90&#125;,</span><br><span class="line">joint3: &#123;id: 3, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint4: &#123;id: 4, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint5: &#123;id: 5, max_angle: 150.1, min_angle: -150.1, max_speed: 90&#125;,</span><br><span class="line">joint6: &#123;id: 6, max_angle: 360, min_angle: -360, max_speed: 90&#125;,</span><br><span class="line">finger_joint1: &#123;id: 7, max_speed: 90&#125;,</span><br><span class="line">&#125;</span><br><span class="line">controllers: &#123;</span><br><span class="line">    arm_controller: &#123;type: follow_controller, joints: [joint1, joint2, joint3, joint4, joint5, joint6], action_name: arm_controller/follow_joint_trajectory, onboard: False &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h4 id="arbotix-controller"><a href="#arbotix-controller" class="headerlink" title="arbotix_controller"></a><a href="http://wiki.ros.org/arbotix_controllers?distro=noetic">arbotix_controller</a></h4><p>主要用来控制gripper，包含三种控制器，了解即可。</p>
 <ol>
@@ -163,11 +182,23 @@
       </tags>
   </entry>
   <entry>
+    <title>ROS基础：常用命令</title>
+    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$ROS_PACKAGE_PATH</span>  </span><br><span class="line"><span class="comment"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span></span><br><span class="line"><span class="comment"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span></span><br><span class="line"><span class="comment"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译相关</span></span><br><span class="line">catkin_init_workspace       <span class="comment"># 在一个空的文件夹下面初始化一个工作空间</span></span><br><span class="line">catkin_make                 <span class="comment"># 编译对应的工作空间</span></span><br><span class="line">catkin build -j4            <span class="comment"># 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span></span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   <span class="comment"># 创建包，并指定依赖</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 话题相关</span></span><br><span class="line">rosmsg show msg_type        <span class="comment"># 查看消息类型</span></span><br><span class="line">rostopic list               <span class="comment"># 查看话题名称</span></span><br><span class="line">rostopic <span class="built_in">type</span> topic_name    <span class="comment"># 查看话题数据类型</span></span><br><span class="line">rostopic hz topic_name      <span class="comment"># 查看话题数据频率</span></span><br><span class="line">rostopic <span class="built_in">echo</span> topic_name    <span class="comment"># 打印数据信息</span></span><br><span class="line">rostopic pub -r 10 topic_name data_type data    <span class="comment"># 发布数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务相关</span></span><br><span class="line">rossrv show srv_type        <span class="comment"># 查看服务类型</span></span><br><span class="line">rosservice list             <span class="comment"># 查看服务名称</span></span><br><span class="line">rosservice <span class="built_in">type</span> srv_name    <span class="comment"># 查看服务数据类型    </span></span><br><span class="line">rosservice call srv_name srv-args  <span class="comment"># 命令行请求服务</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rqt相关</span></span><br><span class="line">rqt_graph                   <span class="comment"># 显示节点话题服务关系</span></span><br><span class="line">rqt_plot                    <span class="comment"># 打印数据</span></span><br><span class="line">rosrun rqt_tf_tree rqt_tf_tree  <span class="comment"># 打印当前机器人的tf树</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tf相关</span></span><br><span class="line">tf_monitor /frame1 /frame2  <span class="comment"># 查看坐标系之间的关系</span></span><br><span class="line">tf_echo /frame1 /frame2     <span class="comment"># 打印frame2相对frame1的变换</span></span><br><span class="line">static_transform_publisher x y z yaw pitch roll (或 qx qy qz qw) frame_id child_frame_id period_in_ms   <span class="comment"># 静态发布两个坐标系之间的关系</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ROS基础：catkin编译系统</title>
     <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Acatkin%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<p>ROS使用catkin来管理包，它是对CMake的扩展。一个catkin软件包必须要有package.xml和CMakeLists.txt两个文件，前者包括了包的描述和依赖信息，后者是构建包的cmake文件。实际工作中，catkin工具会调用CMakeLists.txt，而生成makefile等文件。</p>
 <h4 id="package-xml基本结构"><a href="#package-xml基本结构" class="headerlink" title="package.xml基本结构"></a><a href="http://wiki.ros.org/catkin/package.xml">package.xml基本结构</a></h4><p>一个典型的package.xml文件如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;package format=&quot;2&quot;&gt;</span><br><span class="line">  &lt;name&gt;your_package&lt;/name&gt;</span><br><span class="line">  &lt;version&gt;1.2.4&lt;/version&gt;</span><br><span class="line">  &lt;description&gt;</span><br><span class="line">    This package adds extra features to rosawesome.</span><br><span class="line">  &lt;/description&gt;</span><br><span class="line">  &lt;maintainer email=&quot;you@example.com&quot;&gt;Your Name&lt;/maintainer&gt;</span><br><span class="line">  &lt;license&gt;BSD&lt;/license&gt;</span><br><span class="line">  &lt;buildtool_depend&gt;catkin&lt;/buildtool_depend&gt;</span><br><span class="line">  &lt;depend&gt;roscpp&lt;/depend&gt;</span><br><span class="line">  &lt;build_depend&gt;angles&lt;/build_depend&gt;</span><br><span class="line">  &lt;build_export_depend&gt;angles&lt;/build_export_depend&gt;</span><br><span class="line">  &lt;exec_depend&gt;openni_launch&lt;/exec_depend&gt;</span><br><span class="line">&lt;/package&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">format</span>=<span class="string">&quot;2&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>your_package<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line">    This package adds extra features to rosawesome.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">maintainer</span> <span class="attr">email</span>=<span class="string">&quot;you@example.com&quot;</span>&gt;</span>Your Name<span class="tag">&lt;/<span class="name">maintainer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">license</span>&gt;</span>BSD<span class="tag">&lt;/<span class="name">license</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">buildtool_depend</span>&gt;</span>catkin<span class="tag">&lt;/<span class="name">buildtool_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">depend</span>&gt;</span>roscpp<span class="tag">&lt;/<span class="name">depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>angles<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build_export_depend</span>&gt;</span>angles<span class="tag">&lt;/<span class="name">build_export_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>openni_launch<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>几个重要的标签，解释如下：</p>
 <ol>
@@ -179,7 +210,7 @@
 <li><strong>建议</strong>：简单情况直接使用<code>depend</code>标签即可（一个顶仨），也不容易出错；如果是依赖的系统项，可以根据<a href="https://docs.ros.org/en/kinetic/api/catkin/html/howto/format2/index.html">官方建议</a>谨慎选择。</li>
 </ol>
 <h4 id="CMakeLists-txt的基本结构"><a href="#CMakeLists-txt的基本结构" class="headerlink" title="CMakeLists.txt的基本结构"></a><a href="http://wiki.ros.org/catkin/CMakeLists.txt">CMakeLists.txt的基本结构</a></h4><p>CMake是不知道package.xml中的依赖关系的，但是catkin知道，因此在CMakeLists.txt中需要对catkin合理配置，便于处理包的依赖关系。<br>CMakeLists.txt基本结构如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 2.8.3)</span><br><span class="line">project(robot_brain)</span><br><span class="line"># Get the information about this package&#x27;s buildtime dependencies</span><br><span class="line">find_package(catkin REQUIRED</span><br><span class="line">  COMPONENTS message_generation std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"># Declare the message files to be built</span><br><span class="line">add_message_files(FILES</span><br><span class="line">  MyMessage.msg</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Declare the service files to be built</span><br><span class="line">add_service_files(FILES</span><br><span class="line">  MyService.srv</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"># Actually generate the language-specific message and service files</span><br><span class="line">generate_messages(DEPENDENCIES std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"># Declare that this catkin package&#x27;s runtime dependencies</span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS message_runtime std_msgs sensor_msgs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">add_executable(message_program src/main.cpp)</span><br><span class="line">add_dependencies(message_program $&#123;$&#123;PROJECT_NAME&#125;_EXPORTED_TARGETS&#125; $&#123;catkin_EXPORTED_TARGETS)</span><br><span class="line">target_link_libraries(message_program $&#123;catkin_LIBRARIES&#125; other_lib)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>.<span class="number">3</span>)</span><br><span class="line"><span class="keyword">project</span>(robot_brain)</span><br><span class="line"><span class="comment"># Get the information about this package&#x27;s buildtime dependencies</span></span><br><span class="line"><span class="keyword">find_package</span>(catkin REQUIRED</span><br><span class="line">  COMPONENTS message_generation std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the message files to be built</span></span><br><span class="line">add_message_files(FILES</span><br><span class="line">  MyMessage.msg</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the service files to be built</span></span><br><span class="line">add_service_files(FILES</span><br><span class="line">  MyService.srv</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Actually generate the language-specific message and service files</span></span><br><span class="line">generate_messages(DEPENDENCIES std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare that this catkin package&#x27;s runtime dependencies</span></span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS message_runtime std_msgs sensor_msgs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(message_program src/main.cpp)</span><br><span class="line"><span class="keyword">add_dependencies</span>(message_program <span class="variable">$&#123;$&#123;PROJECT_NAME&#125;</span>_EXPORTED_TARGETS&#125; <span class="variable">$&#123;catkin_EXPORTED_TARGETS)</span></span><br><span class="line"><span class="variable">target_link_libraries(message_program $&#123;catkin_LIBRARIES&#125;</span> other_lib)</span><br></pre></td></tr></table></figure>
 
 <p>重要的模块解释如下：</p>
 <ol>
@@ -202,6 +233,49 @@
 </ol>
 </li>
 </ul>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS基础：launch文件</title>
+    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Alaunch%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<p>roslaunch的主要作用时启动多个节点，同时在参数服务器上设置参数。使用roslaunch时，会自动启动roscore。</p>
+<h3 id="常见语法"><a href="#常见语法" class="headerlink" title="常见语法"></a>常见语法</h3><ol>
+<li><code>$(find pkg)</code>: 获得包的相对路径；</li>
+<li><code>$(arg foo)</code>: 计算<code>foo</code>的值，arg可以理解成launch文件的内部变量，args是node中传递给节点的参数；</li>
+<li><code>if</code>和<code>unless</code>：所有标签都支持<code>if</code>和<code>unless</code>标签，用来作为条件判断；</li>
+</ol>
+<h3 id="launch标签"><a href="#launch标签" class="headerlink" title="launch标签"></a>launch标签</h3><ol>
+<li><p>launch: 最大的标签，唯一的作用是作为launch容器，包含其他标签；</p>
+</li>
+<li><p>node: 启动节点的标签。launch文件不能保证里面指定的节点的启动顺序，这个是故意设计的，因为在外部无法知道一个节点何时完全初始化了，所以在写节点的时候，要充分考虑节点的启动顺序带来的安全性问题。</p>
+ <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">node</span> <span class="attr">name</span>=<span class="string">&quot;listener1&quot;</span> <span class="attr">pkg</span>=<span class="string">&quot;rospy_tutorials&quot;</span> <span class="attr">type</span>=<span class="string">&quot;listener&quot;</span> <span class="attr">args</span>=<span class="string">&quot;--test&quot;</span> <span class="attr">respawn</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>include：加入另一个launch文件；</p>
+ <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;$(find ur_description)/launch/ur5_bringup.launch&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>remap：参数重映射，可以参考<a href="https://zhanghengsjtu.github.io/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E9%87%8D%E6%98%A0%E5%B0%84/">重映射博客</a>;</p>
+ <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">remap</span> <span class="attr">from</span>=<span class="string">&quot;/different_topic&quot;</span> <span class="attr">to</span>=<span class="string">&quot;/needed_topic&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>param: 设置参数服务器上的参数，可以使用<code>value, textfile, binfile, command</code>命令加载具体参数。如果该标签放在<code>node</code>下面，将被当做私有参数。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;publish_frequency&quot;</span> <span class="attr">type</span>=<span class="string">&quot;double&quot;</span> <span class="attr">value</span>=<span class="string">&quot;10.0&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>rosparam: 将yaml文件设置为参数为参数服务器上的参数，同样的，如果该标签出现在<code>node</code>里面，将作为私有参数；</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rosparam</span> <span class="attr">command</span>=<span class="string">&quot;load&quot;</span> <span class="attr">file</span>=<span class="string">&quot;$(find ur_description)/config/kinematics.yaml&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>arg: 作为launch文件的局部变量使用，使得launch文件的扩展性更强。一般利用arg在多个launch文件传递参数，或者为param设置值。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"># my_file.launch</span><br><span class="line"><span class="tag">&lt;<span class="name">include</span> <span class="attr">file</span>=<span class="string">&quot;included.launch&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- all vars that included.launch requires must be set --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;hoge&quot;</span> <span class="attr">value</span>=<span class="string">&quot;fuga&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># included.launch:</span><br><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- declare arg to be passed in --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arg</span> <span class="attr">name</span>=<span class="string">&quot;hoge&quot;</span> /&gt;</span> </span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- read value of arg --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param</span> <span class="attr">name</span>=<span class="string">&quot;param&quot;</span> <span class="attr">value</span>=<span class="string">&quot;$(arg hoge)&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>group: 将节点归组，方便统一处理，比如设置命名空间等；</p>
+</li>
+<li><p>ns：设置命名空间，可以用在<code>node, include,group</code>中。</p>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>launch文件在ros中使用非常频繁，语法琐碎且简单。使用时，建议直接从例程代码中直接修改，同时知道各个标签的含义，便于自己修改和定制化。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
+<li><a href="http://wiki.ros.org/roslaunch">http://wiki.ros.org/roslaunch</a></li>
+<li><a href="http://wiki.ros.org/roslaunch/Architecture">http://wiki.ros.org/roslaunch/Architecture</a></li>
+<li><a href="http://wiki.ros.org/roslaunch/XML">http://wiki.ros.org/roslaunch/XML</a></li>
+</ol>
 ]]></content>
       <categories>
         <category>ROS</category>
@@ -297,49 +371,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ROS基础：launch文件</title>
-    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Alaunch%E6%96%87%E4%BB%B6/</url>
-    <content><![CDATA[<p>roslaunch的主要作用时启动多个节点，同时在参数服务器上设置参数。使用roslaunch时，会自动启动roscore。</p>
-<h3 id="常见语法"><a href="#常见语法" class="headerlink" title="常见语法"></a>常见语法</h3><ol>
-<li><code>$(find pkg)</code>: 获得包的相对路径；</li>
-<li><code>$(arg foo)</code>: 计算<code>foo</code>的值，arg可以理解成launch文件的内部变量，args是node中传递给节点的参数；</li>
-<li><code>if</code>和<code>unless</code>：所有标签都支持<code>if</code>和<code>unless</code>标签，用来作为条件判断；</li>
-</ol>
-<h3 id="launch标签"><a href="#launch标签" class="headerlink" title="launch标签"></a>launch标签</h3><ol>
-<li><p><code>launch</code>: 最大的标签，唯一的作用是作为launch容器，包含其他标签；</p>
-</li>
-<li><p><code>node</code>: 启动节点的标签。launch文件不能保证里面指定的节点的启动顺序，这个是故意设计的，因为在外部无法知道一个节点何时完全初始化了，所以在写节点的时候，要充分考虑节点的启动顺序带来的安全性问题。</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;node name=&quot;listener1&quot; pkg=&quot;rospy_tutorials&quot; type=&quot;listener&quot; args=&quot;--test&quot; respawn=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>include</code>：加入另一个launch文件；</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;include file=&quot;$(find ur_description)/launch/ur5_bringup.launch&quot; /&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>remap</code>：参数重映射，可以参考<a href="https://zhanghengsjtu.github.io/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E9%87%8D%E6%98%A0%E5%B0%84/">重映射博客</a>;</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;remap from=&quot;/different_topic&quot; to=&quot;/needed_topic&quot;/&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>param</code>: 设置参数服务器上的参数，可以使用<code>value, textfile, binfile, command</code>命令加载具体参数。如果该标签放在<code>node</code>下面，将被当做私有参数。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;param name=&quot;publish_frequency&quot; type=&quot;double&quot; value=&quot;10.0&quot; /&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>rosparam</code>: 将yaml文件设置为参数为参数服务器上的参数，同样的，如果该标签出现在<code>node</code>里面，将作为私有参数；</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;rosparam command=&quot;load&quot; file=&quot;$(find ur_description)/config/kinematics.yaml&quot; /&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p><code>arg</code>: 作为launch文件的局部变量使用，使得launch文件的扩展性更强。一般利用arg在多个launch文件传递参数，或者为param设置值。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># my_file.launch</span><br><span class="line">&lt;include file=&quot;included.launch&quot;&gt;</span><br><span class="line">    &lt;!-- all vars that included.launch requires must be set --&gt;</span><br><span class="line">    &lt;arg name=&quot;hoge&quot; value=&quot;fuga&quot; /&gt;</span><br><span class="line">&lt;/include&gt;</span><br><span class="line"></span><br><span class="line"># included.launch:</span><br><span class="line">&lt;launch&gt;</span><br><span class="line">    &lt;!-- declare arg to be passed in --&gt;</span><br><span class="line">    &lt;arg name=&quot;hoge&quot; /&gt; </span><br><span class="line"></span><br><span class="line">    &lt;!-- read value of arg --&gt;</span><br><span class="line">    &lt;param name=&quot;param&quot; value=&quot;$(arg hoge)&quot;/&gt;</span><br><span class="line">&lt;/launch&gt;</span><br></pre></td></tr></table></figure></li>
-<li><p> <code>group</code>: 将节点归组，方便统一处理，比如设置命名空间等；</p>
-</li>
-<li><p><code>ns</code>：设置命名空间，可以用在<code>node, include,group</code>中。</p>
-</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>launch文件在ros中使用非常频繁，语法琐碎且简单。使用时，建议直接从例程代码中直接修改，同时知道各个标签的含义，便于自己修改和定制化。</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
-<li><a href="http://wiki.ros.org/roslaunch">http://wiki.ros.org/roslaunch</a></li>
-<li><a href="http://wiki.ros.org/roslaunch/Architecture">http://wiki.ros.org/roslaunch/Architecture</a></li>
-<li><a href="http://wiki.ros.org/roslaunch/XML">http://wiki.ros.org/roslaunch/XML</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS基础：命名空间和重映射</title>
     <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E9%87%8D%E6%98%A0%E5%B0%84/</url>
     <content><![CDATA[<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a><a href="http://wiki.ros.org/Names">命名空间</a></h3><p>ROS中主要有四种命名方式，分为基础，全局，相对和私有。</p>
@@ -362,18 +393,6 @@
 <li><a href="http://wiki.ros.org/Names">http://wiki.ros.org/Names</a></li>
 <li><a href="http://wiki.ros.org/Remapping%20Arguments">http://wiki.ros.org/Remapping%20Arguments</a></li>
 </ol>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS基础：常用命令</title>
-    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo $ROS_PACKAGE_PATH  </span><br><span class="line"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span><br><span class="line"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span><br><span class="line"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span><br><span class="line"></span><br><span class="line"># 编译相关</span><br><span class="line">catkin_init_workspace       # 在一个空的文件夹下面初始化一个工作空间</span><br><span class="line">catkin_make                 # 编译对应的工作空间</span><br><span class="line">catkin build -j4            # 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   # 创建包，并指定依赖</span><br><span class="line"></span><br><span class="line"># 话题相关</span><br><span class="line">rosmsg show msg_type        # 查看消息类型</span><br><span class="line">rostopic list               # 查看话题名称</span><br><span class="line">rostopic type topic_name    # 查看话题数据类型</span><br><span class="line">rostopic hz topic_name      # 查看话题数据频率</span><br><span class="line">rostopic echo topic_name    # 打印数据信息</span><br><span class="line">rostopic pub -r 10 topic_name data_type data    # 发布数据</span><br><span class="line"></span><br><span class="line"># 服务相关</span><br><span class="line">rossrv show srv_type        # 查看服务类型</span><br><span class="line">rosservice list             # 查看服务名称</span><br><span class="line">rosservice type srv_name    # 查看服务数据类型    </span><br><span class="line">rosservice call srv_name srv-args  # 命令行请求服务</span><br><span class="line"></span><br><span class="line"># rqt相关</span><br><span class="line">rqt_graph                   # 显示节点话题服务关系</span><br><span class="line">rqt_plot                    # 打印数据</span><br><span class="line">rosrun rqt_tf_tree rqt_tf_tree  # 打印当前机器人的tf树</span><br><span class="line"></span><br><span class="line"># tf相关</span><br><span class="line">tf_monitor /frame1 /frame2  # 查看坐标系之间的关系</span><br><span class="line">tf_echo /frame1 /frame2     # 打印frame2相对frame1的变换</span><br><span class="line">static_transform_publisher x y z yaw pitch roll (或 qx qy qz qw) frame_id child_frame_id period_in_ms   # 静态发布两个坐标系之间的关系</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>ROS</category>
