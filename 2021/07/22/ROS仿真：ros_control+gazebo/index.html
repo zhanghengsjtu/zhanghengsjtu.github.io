@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210722223723.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724141141.png">
 <meta property="article:published_time" content="2021-07-22T09:44:14.000Z">
-<meta property="article:modified_time" content="2021-07-24T07:39:54.834Z">
+<meta property="article:modified_time" content="2021-07-24T09:51:45.113Z">
 <meta property="article:author" content="张恒">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-24 15:39:54" itemprop="dateModified" datetime="2021-07-24T15:39:54+08:00">2021-07-24</time>
+                <time title="修改时间：2021-07-24 17:51:45" itemprop="dateModified" datetime="2021-07-24T17:51:45+08:00">2021-07-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,7 +284,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>用ROS仿真机器人时，无外乎三种硬件：传感器，机械臂和移动机器人，而这些硬件在gazebo中都集成了很好的插件。</p>
+        <p>用ROS仿真机器人时，无外乎传感器和机器人，而这些硬件在gazebo中都集成了很好的插件。</p>
 <h2 id="传感器仿真"><a href="#传感器仿真" class="headerlink" title="传感器仿真"></a><a target="_blank" rel="noopener" href="http://gazebosim.org/tutorials?tut=ros_gzplugins">传感器仿真</a></h2><p>传感器仿真分为两步，首先在urdf中建立传感器的模型，并固定到机器人上，然后在urdf中指定传感器对应的gazebo插件即可（注意在gazebo中传感器是依附在某一个连杆上的）。</p>
 <p>基本上常见的传感器都可以在gazebo中找到对应的插件，使用的方法也很简单，直接在urdf中配置即可。比如</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;robot&gt;</span><br><span class="line">  ... robot description ...</span><br><span class="line">  &lt;link name=&quot;sensor_link&quot;&gt;</span><br><span class="line">    ... link description ...</span><br><span class="line">  &lt;/link&gt;</span><br><span class="line"></span><br><span class="line">  &lt;gazebo reference=&quot;sensor_link&quot;&gt;</span><br><span class="line">    &lt;sensor type=&quot;camera&quot; name=&quot;camera1&quot;&gt;</span><br><span class="line">      ... sensor parameters ...</span><br><span class="line">      &lt;plugin name=&quot;camera_controller&quot; filename=&quot;libgazebo_ros_camera.so&quot;&gt;</span><br><span class="line">        ... plugin parameters ..</span><br><span class="line">      &lt;/plugin&gt;</span><br><span class="line">    &lt;/sensor&gt;</span><br><span class="line">  &lt;/gazebo&gt;</span><br><span class="line"></span><br><span class="line">&lt;/robot&gt;</span><br></pre></td></tr></table></figure>
@@ -300,8 +300,8 @@
 <li><strong>Force</strong>: ROS interface for applying Wrench (geometry_msgs) on a body in simulation.</li>
 <li><strong>IMU</strong>: simulates IMU sensor. Measurements are computed by the ROS plugin or by Gazebo.</li>
 </ol>
-<h2 id="机器人仿真"><a href="#机器人仿真" class="headerlink" title="机器人仿真"></a>机器人仿真</h2><h3 id="ROS-CONTROL"><a href="#ROS-CONTROL" class="headerlink" title="ROS_CONTROL"></a>ROS_CONTROL</h3><p>讲机器人仿真之前，先来介绍一下ros_control，因为这个模块和机器人仿真有非常大的关系。</p>
-<p>ros_control是ros为机器人开发者提供的机器人控制中间件，包含一系列控制器接口，传动装置接口，硬件接口，控制器工具等，帮助机器人应用快速落地，提高开发效率。整体框架如下：<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724145002.png" alt="ros_control框架"></p>
+<h2 id="机器人仿真"><a href="#机器人仿真" class="headerlink" title="机器人仿真"></a>机器人仿真</h2><p>讲机器人仿真之前，先来介绍一下ros_control，因为这个模块和机器人仿真有非常大的关系。</p>
+<h3 id="ROS-CONTROL"><a href="#ROS-CONTROL" class="headerlink" title="ROS_CONTROL"></a>ROS_CONTROL</h3><p>ros_control是ros为机器人开发者提供的机器人控制中间件，包含一系列控制器接口，传动装置接口，硬件接口，控制器工具等，帮助机器人应用快速落地，提高开发效率。整体框架如下：<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724145002.png" alt="ros_control框架"></p>
 <p>可以看到整个ros_control分成了五个部分，每个部分的功能解释如下：</p>
 <ol>
 <li><strong>controller magager控制器管理器</strong>: 作用就是在多个控制器之间切换；</li>
