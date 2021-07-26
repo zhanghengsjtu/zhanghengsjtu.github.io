@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210726115435.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724141141.png">
 <meta property="article:published_time" content="2021-07-22T09:44:14.000Z">
-<meta property="article:modified_time" content="2021-07-26T19:23:22.612Z">
+<meta property="article:modified_time" content="2021-07-26T19:27:52.422Z">
 <meta property="article:author" content="张恒">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-27 03:23:22" itemprop="dateModified" datetime="2021-07-27T03:23:22+08:00">2021-07-27</time>
+                <time title="修改时间：2021-07-27 03:27:52" itemprop="dateModified" datetime="2021-07-27T03:27:52+08:00">2021-07-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -349,7 +349,7 @@
 <li><p><strong>hardware interface硬件抽象</strong>: 该层的作用是兼容硬件多样性，同时为上层控制器提供与硬件交互的统一接口，具体功能可以是控制关节约束，力矩转换和状态转换等功能；</p>
 </li>
 <li><p><strong>hardware硬件</strong>: 具体的机器人硬件；</p>
-<p> <strong>这里讲解ros_control架构的时候，是自上而下介绍的，上层的输出一般也代表下层的输入。比如ros_controller的输入是用户的上层应用，如moveit用FollowJointTrajectory来控制机械臂，或者用户想让某个关节以某种速度运行；ros_controller控制器的输出就是<code>hardware_interface</code>指定的类型，要么就是力矩，速度，位置，经过一些后处理发送给实际的机器人或者gazebo</strong></p>
+<p> <strong>这里讲解ros_control架构的时候，是自上而下介绍的，上层的输出一般代表下层的输入。比如ros_controller的输入是用户上层应用，如moveit用FollowJointTrajectory来控制机械臂，或者用户想控制某个关节速度；ros_controller控制器的输出就是<code>hardware_interface</code>指定的类型，要么就是力矩，速度，位置，经过一些后处理发送给实际的机器人或者gazebo。</strong></p>
 </li>
 </ol>
 <h3 id="ROS-CONTROL-GAZEBO"><a href="#ROS-CONTROL-GAZEBO" class="headerlink" title="ROS_CONTROL + GAZEBO"></a>ROS_CONTROL + GAZEBO</h3><p>有了上面对ros_control的理解之后，再来看一下其如何与gazebo仿真建立联系，两者之间的关系图如下<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724141141.png" alt="gazebo+ros_control"></p>
