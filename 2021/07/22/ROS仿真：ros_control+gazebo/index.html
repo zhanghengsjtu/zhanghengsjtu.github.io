@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210726115435.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724141141.png">
 <meta property="article:published_time" content="2021-07-22T09:44:14.000Z">
-<meta property="article:modified_time" content="2021-07-26T05:18:36.308Z">
+<meta property="article:modified_time" content="2021-07-26T05:25:41.841Z">
 <meta property="article:author" content="张恒">
 <meta property="article:tag" content="ROS">
 <meta name="twitter:card" content="summary">
@@ -229,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-07-26 13:18:36" itemprop="dateModified" datetime="2021-07-26T13:18:36+08:00">2021-07-26</time>
+                <time title="修改时间：2021-07-26 13:25:41" itemprop="dateModified" datetime="2021-07-26T13:25:41+08:00">2021-07-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -397,6 +397,15 @@
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>传感器仿真比较简单，先为传感器建立urdf，然后再增加传感器插件和对应的参数即可。</p>
 <p>一般机器人的仿真是建立在对ros_control理解的基础上的，通过对ros_control的配置，可以实现一般机器人的仿真。</p>
 <p>移动机器人作为一种特殊的机器人，控制模式较为单一，构型也不复杂，因此ros提供了几种常见的插件来对其控制，相比ros_control的方式，使用定制化的插件配置简单，但劣势是一个插件只对一个固定构型的移动机器人有用。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://wiki.ros.org/ros_control">http://wiki.ros.org/ros_control</a></li>
+<li><a target="_blank" rel="noopener" href="http://wiki.ros.org/ros_controllers">http://wiki.ros.org/ros_controllers</a></li>
+<li><a target="_blank" rel="noopener" href="http://wiki.ros.org/joint_trajectory_controller?distro=noetic">http://wiki.ros.org/joint_trajectory_controller?distro=noetic</a></li>
+<li><a target="_blank" rel="noopener" href="http://wiki.ros.org/urdf/XML/Transmission">http://wiki.ros.org/urdf/XML/Transmission</a></li>
+<li><a target="_blank" rel="noopener" href="http://gazebosim.org/tutorials/?tut=ros_control">http://gazebosim.org/tutorials/?tut=ros_control</a></li>
+<li><a target="_blank" rel="noopener" href="http://gazebosim.org/tutorials?tut=ros_gzplugins&amp;cat=connect_ros">http://gazebosim.org/tutorials?tut=ros_gzplugins&amp;cat=connect_ros</a></li>
+<li><a target="_blank" rel="noopener" href="http://docs.ros.org/en/jade/api/control_toolbox/html/classcontrol__toolbox_1_1Pid.html">http://docs.ros.org/en/jade/api/control_toolbox/html/classcontrol__toolbox_1_1Pid.html</a></li>
+</ol>
 
     </div>
 
@@ -500,7 +509,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E6%84%9F%E5%99%A8%E4%BB%BF%E7%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">传感器仿真</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">机器人仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ROS-CONTROL"><span class="nav-number">2.1.</span> <span class="nav-text">ROS_CONTROL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROS-CONTROL-GAZEBO"><span class="nav-number">2.2.</span> <span class="nav-text">ROS_CONTROL + GAZEBO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.3.</span> <span class="nav-text">一般机器人仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.4.</span> <span class="nav-text">移动机器人仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BAgazebo%E6%8F%92%E4%BB%B6"><span class="nav-number">2.4.1.</span> <span class="nav-text">移动机器人gazebo插件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E6%84%9F%E5%99%A8%E4%BB%BF%E7%9C%9F"><span class="nav-number">1.</span> <span class="nav-text">传感器仿真</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">机器人仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ROS-CONTROL"><span class="nav-number">2.1.</span> <span class="nav-text">ROS_CONTROL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROS-CONTROL-GAZEBO"><span class="nav-number">2.2.</span> <span class="nav-text">ROS_CONTROL + GAZEBO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.3.</span> <span class="nav-text">一般机器人仿真</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%BB%BF%E7%9C%9F"><span class="nav-number">2.4.</span> <span class="nav-text">移动机器人仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%9C%BA%E5%99%A8%E4%BA%BAgazebo%E6%8F%92%E4%BB%B6"><span class="nav-number">2.4.1.</span> <span class="nav-text">移动机器人gazebo插件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">4.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
