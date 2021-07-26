@@ -1,6 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo+Github搭建个人博客记录</title>
+    <url>/2021/07/17/Hexo+Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<p>搭建博客的基本思路是先在本地创建，再部署到远端。首先本地创建时，使用Node.js + Hexo。然后远端部署时，这里使用GitHub。最后再利用比较流行的主题Next对个人博客进行美化，便于自己使用。</p>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>Hexo依赖于Node.js，下载地址为<a href="https://nodejs.org/en/download/">Download | Node.js</a>，不过win10默认已经安装了，可以先在命令行输入： node -V和 npm -V，如果已经安装成功，则该步骤可以跳过。node和npm就是安装Hexo的基础环境。</p>
+<h3 id="Hexo博客搭建"><a href="#Hexo博客搭建" class="headerlink" title="Hexo博客搭建"></a>Hexo博客搭建</h3><ol>
+<li><p>在D盘创建blog文件夹，然后在该文件夹下面运行：<code>npm install -g hexo-cli</code>即完成了Hexo的安装；</p>
+</li>
+<li><p>在D:\blog下面运行：<code>hexo init blog</code>，完成本地博客的初始化；</p>
+</li>
+<li><p>运行以下命令，并在浏览器输入<code>localhost:4000</code>即可看到最简单的博客</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo g    <span class="comment"># 生成博客</span></span><br><span class="line">hexo s    <span class="comment"># 在服务端显示</span></span><br></pre></td></tr></table></figure></li>
+<li><p>到此为止，本地博客最简单的版本就算搭建完成了，此时会在blog文件下面生成一系列文件，主要文件有以下几个：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">blog/_config.yml            <span class="comment"># 站点配置文件，和后面同名的主题配置文件区分</span></span><br><span class="line">blog/<span class="built_in">source</span>/_posts/*.md     <span class="comment"># 生成博客的Markdown文件</span></span><br><span class="line">blog/themes                 <span class="comment"># 主题文件夹，后面会介绍，可以更换并配置主题</span></span><br></pre></td></tr></table></figure></li>
+<li><p>另外，hexo常见的操作如下：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo -g         <span class="comment">#安装Hexo</span></span><br><span class="line">npm update hexo -g          <span class="comment">#升级</span></span><br><span class="line">hexo init                   <span class="comment">#初始化博客</span></span><br><span class="line"><span class="comment"># 上述命令基本上一次性使用</span></span><br><span class="line"><span class="comment"># 下面四条最常用</span></span><br><span class="line">hexo n <span class="string">&quot;我的博客&quot;</span> == hexo new <span class="string">&quot;我的博客&quot;</span> <span class="comment">#新建文章</span></span><br><span class="line">hexo g == hexo generate     <span class="comment">#生成</span></span><br><span class="line">hexo s == hexo server       <span class="comment">#启动服务预览</span></span><br><span class="line">hexo d == hexo deploy       <span class="comment">#部署</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Hexo-Github线上运行"><a href="#Hexo-Github线上运行" class="headerlink" title="Hexo+Github线上运行"></a>Hexo+Github线上运行</h3><p>我们搭建博客的目的肯定不是为了只在本地运行，所以需要通过一定的技术手段将博客上传到远端。具体操作时，可以花钱购买域名，也可以使用免费的版本，这里我使用了常见的GitHub作为远端服务器。<br>在这里多说一句，GitHub在国内有时候访问速度很不理想，比如我们实验室，平时下载东西的速度能到30Mb/s，但是访问GitHub有时候就很慢，所以推荐大家购买一个靠谱的vpn并且对GitHub的访问进行合理配置，科学上网。我经常使用的vpn是<a href="https://www.myunlu.com/signin">myunlu</a>，整体使用下来还是很稳定的，我的邀请码是 5A9334B8EA51BAC53A2F8561FB156427。最后在命令行配置GitHub代理即可。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy socks5://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy socks5://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是正式的操作：</p>
+<ol>
+<li><p><strong>创建GitHub仓库</strong>，仓库名一定是<strong>username.github.io</strong></p>
+</li>
+<li><p><strong>安装git</strong>：win下直接下载客户端就行，其他系统同理，安装完成之后，在git bash中执行以下命令：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1. git config --global user.name <span class="string">&quot;你的GitHub用户名&quot;</span></span><br><span class="line">2. git config --global user.email <span class="string">&quot;你的GitHub注册邮箱&quot;</span></span><br><span class="line">3. ssh-keygen -t rsa -C <span class="string">&quot;你的GitHub注册邮箱&quot;</span></span><br><span class="line">4. 复制生成的id_rsa.pub中的密匙，然后到GitHub-&gt;Setting-&gt;new SSH Key中配置</span><br><span class="line">5. ssh git@github.com   <span class="comment"># Hi, ***! You&#x27;ve successfully authenticated, but*** 说明成功了</span></span><br></pre></td></tr></table></figure>
+
+<p> 上面的一通操作只要知道其目的就行，实质就是通过非对称加密的公钥与私钥来完成加密，公钥放置在GitHub上，私钥放置在自己的电脑里。GitHub要求每次推送代码都是合法用户，所以每次推送都需要输入账号密码验证推送用户是否是合法用户，为了省去每次输入密码的步骤，采用了ssh，当你推送的时候，git就会匹配你的私钥跟GitHub上面的公钥是否是配对的，若是匹配就认为你是合法用户，则允许推送。这样可以保证每次的推送都是正确合法的。</p>
+</li>
+<li><p><strong>安装git和Hexo联合部署工具</strong>：这个可以理解成GitHub对hexo的一个插件，这样使用简单的hexo命令，就可以完成GitHub部署了，该插件的安装命令为： <code>npm install hexo-deployer-git --save</code></p>
+</li>
+<li><p><strong>修改站点配置文件blog/_config.yam</strong></p>
+   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: git</span><br><span class="line">repo: https://github.com/[yourusername]/[yourusername].github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>部署到远端</strong>：使用以下命令，即可将本地的博客内容部署到远端。此后，只需要用到下面的几条命令以及<a href="https://zhanghengsjtu.github.io/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/">Markdown语法</a>。</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean  <span class="comment"># 清理</span></span><br><span class="line">hexo g      <span class="comment"># 生成</span></span><br><span class="line">hexo s      <span class="comment"># 本地端口4000预览</span></span><br><span class="line">hexo d      <span class="comment"># 推到远端，所以需要上面GitHub关联，和git+hexo联合部署工具</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Next主题配置"><a href="#Next主题配置" class="headerlink" title="Next主题配置"></a>Next主题配置</h3><p>上述三部分的功能是核心，保证了我们能够搭建最基础的博客。但是默认生成的博客页面大家可能不喜欢，在这里推荐一个比较常见的主题<a href="https://github.com/theme-next/hexo-theme-next">Next</a>。之所以推荐这个主题，和我当初选择Hexo的原因很类似：选择一个成熟好用的框架，这样有问题之后方便交流，毕竟我们的目的不是深入研究网页开发。</p>
+<ol>
+<li><p><strong>下载Next主题</strong>： 在blog目录下，运行命令<br><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code><br>即可将next主题下载到blog/themes/next下面，其中最重要的文件为blog/themes/next/_config.yam，我们把这个文件叫 <em><strong>主题配置文件</strong></em>，注意和上面的 <em><strong>站点配置文件</strong></em> 的区别。</p>
+</li>
+<li><p><strong>Next主题定制</strong><br>接下来就是根据个人喜好定制Next主题了，在这里推荐<a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">博客1</a>，<a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">博客2</a>，比较有用的操作主要有以下几个：</p>
+<ul>
+<li>修改基本信息</li>
+<li>修改头像</li>
+<li>修改语言</li>
+<li>菜单设置</li>
+<li>系统评论</li>
+<li>访问量和统计功能</li>
+<li>搜索功能</li>
+</ul>
+</li>
+</ol>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>经过以上几个步骤，就可以搭建一个正常使用的博客了，如果对博客的搭建本身很有兴趣，可以继续查阅相关资料。在我看来，够用就好，把更多的经历放在记录上。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a></li>
+<li><a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/</a></li>
+<li><a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ROS基础：catkin编译系统</title>
+    <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Acatkin%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p>ROS使用catkin来管理包，它是对CMake的扩展。一个catkin软件包必须要有package.xml和CMakeLists.txt两个文件，前者包括了包的描述和依赖信息，后者是构建包的cmake文件。实际工作中，catkin工具会调用CMakeLists.txt，而生成makefile等文件。</p>
+<h4 id="package-xml基本结构"><a href="#package-xml基本结构" class="headerlink" title="package.xml基本结构"></a><a href="http://wiki.ros.org/catkin/package.xml">package.xml基本结构</a></h4><p>一个典型的package.xml文件如下：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">format</span>=<span class="string">&quot;2&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>your_package<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line">    This package adds extra features to rosawesome.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">maintainer</span> <span class="attr">email</span>=<span class="string">&quot;you@example.com&quot;</span>&gt;</span>Your Name<span class="tag">&lt;/<span class="name">maintainer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">license</span>&gt;</span>BSD<span class="tag">&lt;/<span class="name">license</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">buildtool_depend</span>&gt;</span>catkin<span class="tag">&lt;/<span class="name">buildtool_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">depend</span>&gt;</span>roscpp<span class="tag">&lt;/<span class="name">depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>angles<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build_export_depend</span>&gt;</span>angles<span class="tag">&lt;/<span class="name">build_export_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>openni_launch<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>几个重要的标签，解释如下：</p>
+<ol>
+<li><code>buildtool_depend</code>: 编译工具，默认<code>catkin</code>，一般不用修改。</li>
+<li><code>depend</code>：指定编译时的依赖项，包含<code>build_depend</code>，<code>build_export_depend</code>和<code>exec_depend</code>。</li>
+<li><code>build_depend</code>: 指定编译功能包需要的依赖，例如<code>angle</code>包提供了C++头文件和编译文件。</li>
+<li><code>build_export_depend</code>: 指定对功能包构建库需要的依赖，例如本功能包导出的头文件依赖了<code>&lt;angles/angles.h&gt;</code>，那么第三方包使用本包导出的头文件时，仍然需要<code>&lt;build_depend&gt;angles&lt;/build_depend&gt;</code>。</li>
+<li><code>exec_depend</code>: 指定运行该功能包需要的依赖。</li>
+<li><strong>建议</strong>：简单情况直接使用<code>depend</code>标签即可（一个顶仨），也不容易出错；如果是依赖的系统项，可以根据<a href="https://docs.ros.org/en/kinetic/api/catkin/html/howto/format2/index.html">官方建议</a>谨慎选择。</li>
+</ol>
+<h4 id="CMakeLists-txt的基本结构"><a href="#CMakeLists-txt的基本结构" class="headerlink" title="CMakeLists.txt的基本结构"></a><a href="http://wiki.ros.org/catkin/CMakeLists.txt">CMakeLists.txt的基本结构</a></h4><p>CMake是不知道package.xml中的依赖关系的，但是catkin知道，因此在CMakeLists.txt中需要对catkin合理配置，便于处理包的依赖关系。<br>CMakeLists.txt基本结构如下：</p>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>.<span class="number">3</span>)</span><br><span class="line"><span class="keyword">project</span>(robot_brain)</span><br><span class="line"><span class="comment"># Get the information about this package&#x27;s buildtime dependencies</span></span><br><span class="line"><span class="keyword">find_package</span>(catkin REQUIRED</span><br><span class="line">  COMPONENTS message_generation std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the message files to be built</span></span><br><span class="line">add_message_files(FILES</span><br><span class="line">  MyMessage.msg</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the service files to be built</span></span><br><span class="line">add_service_files(FILES</span><br><span class="line">  MyService.srv</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Actually generate the language-specific message and service files</span></span><br><span class="line">generate_messages(DEPENDENCIES std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare that this catkin package&#x27;s runtime dependencies</span></span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS message_runtime std_msgs sensor_msgs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(message_program src/main.cpp)</span><br><span class="line"><span class="keyword">add_dependencies</span>(message_program <span class="variable">$&#123;$&#123;PROJECT_NAME&#125;</span>_EXPORTED_TARGETS&#125; <span class="variable">$&#123;catkin_EXPORTED_TARGETS)</span></span><br><span class="line"><span class="variable">target_link_libraries(message_program $&#123;catkin_LIBRARIES&#125;</span> other_lib)</span><br></pre></td></tr></table></figure>
+
+<p>重要的模块解释如下：</p>
+<ol>
+<li><code>find_package</code>: cmake宏，指定依赖的其他pacakge，实际是生成了一些环境变量，如NAME_FOUND，NAME_INCLUDE_DIRS, NAME_LIBRARYIS，此处catkin是必备依赖 其余的syd_msgs…为组件，这个里面的包在package.xml中一定要有<code>build_depend</code>标签。</li>
+<li><code>catkin_package</code>：catkin宏，生成当前package的cmake配置，供依赖本包的其他软件包调用，同时这个命令必须在add_library()或者add_executable()之前调用；注意这个里面的包在package.xml一定要有<code>build_export_depend</code>标签。</li>
+<li>其余为CMake自身语法，具体可以参考<a href="https://github.com/Akagi201/learning-cmake/blob/master/docs/cmake-practice.pdf">CMake学习资料</a>。</li>
+</ol>
+<h4 id="创建msg的注意事项"><a href="#创建msg的注意事项" class="headerlink" title="创建msg的注意事项"></a>创建msg的注意事项</h4><ul>
+<li>在package.xml中<ol>
+<li><code>&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</code></li>
+<li><code>&lt;build_export_depend&gt;message_runtime&lt;/build_export_depend&gt;</code></li>
+<li><code>&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</code></li>
+</ol>
+</li>
+<li>在CMakeLists.txt中<ol>
+<li>添加<code>find_package(messaga_generation)</code>，确保可以生成msg文件；</li>
+<li>添加<code>catkin_package(message_runtime)</code>：确保生成的msgs文件可以被外部使用；</li>
+<li>添加<code>add_message_file</code>，添加具体的文件名；</li>
+<li>添加<code>generate_message</code>中的依赖包，如依赖<code>std_msgs</code></li>
+</ol>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Markdown语法学习</title>
     <url>/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h3 id="为什么选择Markdown"><a href="#为什么选择Markdown" class="headerlink" title="为什么选择Markdown"></a>为什么选择Markdown</h3><p>Markdown是一种纯文本格式的标记语言。通过简单的标记语法，它可以使普通文本内容具有一定的格式。</p>
@@ -90,72 +204,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo+Github搭建个人博客记录</title>
-    <url>/2021/07/17/Hexo+Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
-    <content><![CDATA[<p>搭建博客的基本思路是先在本地创建，再部署到远端。首先本地创建时，使用Node.js + Hexo。然后远端部署时，这里使用GitHub。最后再利用比较流行的主题Next对个人博客进行美化，便于自己使用。</p>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>Hexo依赖于Node.js，下载地址为<a href="https://nodejs.org/en/download/">Download | Node.js</a>，不过win10默认已经安装了，可以先在命令行输入： node -V和 npm -V，如果已经安装成功，则该步骤可以跳过。node和npm就是安装Hexo的基础环境。</p>
-<h3 id="Hexo博客搭建"><a href="#Hexo博客搭建" class="headerlink" title="Hexo博客搭建"></a>Hexo博客搭建</h3><ol>
-<li><p>在D盘创建blog文件夹，然后在该文件夹下面运行：<code>npm install -g hexo-cli</code>即完成了Hexo的安装；</p>
-</li>
-<li><p>在D:\blog下面运行：<code>hexo init blog</code>，完成本地博客的初始化；</p>
-</li>
-<li><p>运行以下命令，并在浏览器输入<code>localhost:4000</code>即可看到最简单的博客</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo g    <span class="comment"># 生成博客</span></span><br><span class="line">hexo s    <span class="comment"># 在服务端显示</span></span><br></pre></td></tr></table></figure></li>
-<li><p>到此为止，本地博客最简单的版本就算搭建完成了，此时会在blog文件下面生成一系列文件，主要文件有以下几个：</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">blog/_config.yml            <span class="comment"># 站点配置文件，和后面同名的主题配置文件区分</span></span><br><span class="line">blog/<span class="built_in">source</span>/_posts/*.md     <span class="comment"># 生成博客的Markdown文件</span></span><br><span class="line">blog/themes                 <span class="comment"># 主题文件夹，后面会介绍，可以更换并配置主题</span></span><br></pre></td></tr></table></figure></li>
-<li><p>另外，hexo常见的操作如下：</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo -g         <span class="comment">#安装Hexo</span></span><br><span class="line">npm update hexo -g          <span class="comment">#升级</span></span><br><span class="line">hexo init                   <span class="comment">#初始化博客</span></span><br><span class="line"><span class="comment"># 上述命令基本上一次性使用</span></span><br><span class="line"><span class="comment"># 下面四条最常用</span></span><br><span class="line">hexo n <span class="string">&quot;我的博客&quot;</span> == hexo new <span class="string">&quot;我的博客&quot;</span> <span class="comment">#新建文章</span></span><br><span class="line">hexo g == hexo generate     <span class="comment">#生成</span></span><br><span class="line">hexo s == hexo server       <span class="comment">#启动服务预览</span></span><br><span class="line">hexo d == hexo deploy       <span class="comment">#部署</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Hexo-Github线上运行"><a href="#Hexo-Github线上运行" class="headerlink" title="Hexo+Github线上运行"></a>Hexo+Github线上运行</h3><p>我们搭建博客的目的肯定不是为了只在本地运行，所以需要通过一定的技术手段将博客上传到远端。具体操作时，可以花钱购买域名，也可以使用免费的版本，这里我使用了常见的GitHub作为远端服务器。<br>在这里多说一句，GitHub在国内有时候访问速度很不理想，比如我们实验室，平时下载东西的速度能到30Mb/s，但是访问GitHub有时候就很慢，所以推荐大家购买一个靠谱的vpn并且对GitHub的访问进行合理配置，科学上网。我经常使用的vpn是<a href="https://www.myunlu.com/signin">myunlu</a>，整体使用下来还是很稳定的，我的邀请码是 5A9334B8EA51BAC53A2F8561FB156427。最后在命令行配置GitHub代理即可。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global http.proxy socks5://127.0.0.1:1080</span><br><span class="line">git config --global https.proxy socks5://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
-
-<p>接下来就是正式的操作：</p>
-<ol>
-<li><p><strong>创建GitHub仓库</strong>，仓库名一定是<strong>username.github.io</strong></p>
-</li>
-<li><p><strong>安装git</strong>：win下直接下载客户端就行，其他系统同理，安装完成之后，在git bash中执行以下命令：</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">1. git config --global user.name <span class="string">&quot;你的GitHub用户名&quot;</span></span><br><span class="line">2. git config --global user.email <span class="string">&quot;你的GitHub注册邮箱&quot;</span></span><br><span class="line">3. ssh-keygen -t rsa -C <span class="string">&quot;你的GitHub注册邮箱&quot;</span></span><br><span class="line">4. 复制生成的id_rsa.pub中的密匙，然后到GitHub-&gt;Setting-&gt;new SSH Key中配置</span><br><span class="line">5. ssh git@github.com   <span class="comment"># Hi, ***! You&#x27;ve successfully authenticated, but*** 说明成功了</span></span><br></pre></td></tr></table></figure>
-
-<p> 上面的一通操作只要知道其目的就行，实质就是通过非对称加密的公钥与私钥来完成加密，公钥放置在GitHub上，私钥放置在自己的电脑里。GitHub要求每次推送代码都是合法用户，所以每次推送都需要输入账号密码验证推送用户是否是合法用户，为了省去每次输入密码的步骤，采用了ssh，当你推送的时候，git就会匹配你的私钥跟GitHub上面的公钥是否是配对的，若是匹配就认为你是合法用户，则允许推送。这样可以保证每次的推送都是正确合法的。</p>
-</li>
-<li><p><strong>安装git和Hexo联合部署工具</strong>：这个可以理解成GitHub对hexo的一个插件，这样使用简单的hexo命令，就可以完成GitHub部署了，该插件的安装命令为： <code>npm install hexo-deployer-git --save</code></p>
-</li>
-<li><p><strong>修改站点配置文件blog/_config.yam</strong></p>
-   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: git</span><br><span class="line">repo: https://github.com/[yourusername]/[yourusername].github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure></li>
-<li><p><strong>部署到远端</strong>：使用以下命令，即可将本地的博客内容部署到远端。此后，只需要用到下面的几条命令以及<a href="https://zhanghengsjtu.github.io/2021/07/17/Markdown%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0/">Markdown语法</a>。</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean  <span class="comment"># 清理</span></span><br><span class="line">hexo g      <span class="comment"># 生成</span></span><br><span class="line">hexo s      <span class="comment"># 本地端口4000预览</span></span><br><span class="line">hexo d      <span class="comment"># 推到远端，所以需要上面GitHub关联，和git+hexo联合部署工具</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Next主题配置"><a href="#Next主题配置" class="headerlink" title="Next主题配置"></a>Next主题配置</h3><p>上述三部分的功能是核心，保证了我们能够搭建最基础的博客。但是默认生成的博客页面大家可能不喜欢，在这里推荐一个比较常见的主题<a href="https://github.com/theme-next/hexo-theme-next">Next</a>。之所以推荐这个主题，和我当初选择Hexo的原因很类似：选择一个成熟好用的框架，这样有问题之后方便交流，毕竟我们的目的不是深入研究网页开发。</p>
-<ol>
-<li><p><strong>下载Next主题</strong>： 在blog目录下，运行命令<br><code>git clone https://github.com/iissnan/hexo-theme-next themes/next</code><br>即可将next主题下载到blog/themes/next下面，其中最重要的文件为blog/themes/next/_config.yam，我们把这个文件叫 <em><strong>主题配置文件</strong></em>，注意和上面的 <em><strong>站点配置文件</strong></em> 的区别。</p>
-</li>
-<li><p><strong>Next主题定制</strong><br>接下来就是根据个人喜好定制Next主题了，在这里推荐<a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">博客1</a>，<a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">博客2</a>，比较有用的操作主要有以下几个：</p>
-<ul>
-<li>修改基本信息</li>
-<li>修改头像</li>
-<li>修改语言</li>
-<li>菜单设置</li>
-<li>系统评论</li>
-<li>访问量和统计功能</li>
-<li>搜索功能</li>
-</ul>
-</li>
-</ol>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>经过以上几个步骤，就可以搭建一个正常使用的博客了，如果对博客的搭建本身很有兴趣，可以继续查阅相关资料。在我看来，够用就好，把更多的经历放在记录上。</p>
-<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a></li>
-<li><a href="https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/">https://blog.mrzorg.top/Hexo/2020-02-12-hero-next-theme-settings/</a></li>
-<li><a href="http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/">http://jeffyang.top/Hexo/Hexo%E4%B8%BB%E9%A2%98Next%E7%BE%8E%E5%8C%96/</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>ROS仿真：Arbotix控制器</title>
     <url>/2021/07/22/ROS%E4%BB%BF%E7%9C%9F%EF%BC%9AArbotix%E6%8E%A7%E5%88%B6%E5%99%A8/</url>
     <content><![CDATA[<p>ArbotiX是一款控制电机、舵机的控制板，并提供相应的ROS功能包，但是这个功能包不仅可以驱动真实的ArbotiX控制板，还提供了仿真控制器。这样的话，就可以基于ArbotiX+Rviz实现机器人的仿真，当然更加复杂的仿真，还是推荐ros_control+gazebo。</p>
@@ -202,7 +250,7 @@
 </ol>
 <h2 id="机器人仿真"><a href="#机器人仿真" class="headerlink" title="机器人仿真"></a>机器人仿真</h2><p>讲机器人仿真之前，先来介绍一下ros_control，因为这个模块和机器人仿真有非常大的关系。</p>
 <h3 id="ROS-CONTROL"><a href="#ROS-CONTROL" class="headerlink" title="ROS_CONTROL"></a>ROS_CONTROL</h3><p>ros_control是ros为机器人开发者提供的机器人控制中间件，包含一系列控制器接口，传动装置接口，硬件接口，控制器工具等，帮助机器人应用快速落地，提高开发效率。整体框架如下：<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724145002.png" alt="ros_control框架"></p>
-<p>可以看到整个ros_control分成了五个部分，每个部分的功能解释如下：</p>
+<p>可以看到整个ros_control分成了五个部分，每个部分的功能解释如下。</p>
 <ol>
 <li><p><strong>controller magager控制器管理器</strong>: 作用就是加载控制器以及控制器对应的参数；比如通过yaml和launch文件可以加载一个二连杆机械臂的控制器。其中yaml文件指定了控制器的名称和参数，launch文件中通过<code>node name=&quot;controller_spawner&quot; pkg=&quot;controller_manager&quot; type=&quot;spawner&quot; args=&quot;...&quot;/&gt;</code>来加载yaml中指定的控制器。</p>
  <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># MYROBOT_control/config/rrbot_control.yaml</span></span><br><span class="line"><span class="attr">rrbot:</span></span><br><span class="line">    <span class="comment"># Publish all joint states -----------------------------------</span></span><br><span class="line">    <span class="attr">joint_state_controller:</span></span><br><span class="line">        <span class="attr">type:</span> <span class="string">joint_state_controller/JointStateController</span></span><br><span class="line">        <span class="attr">publish_rate:</span> <span class="number">50</span>  </span><br><span class="line"></span><br><span class="line">    <span class="comment"># Position Controllers ---------------------------------------</span></span><br><span class="line">    <span class="attr">joint1_position_controller:</span></span><br><span class="line">        <span class="attr">type:</span> <span class="string">effort_controllers/JointPositionController</span></span><br><span class="line">        <span class="attr">joint:</span> <span class="string">joint1</span></span><br><span class="line">        <span class="attr">pid:</span> &#123;<span class="attr">p:</span> <span class="number">100.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">d:</span> <span class="number">10.0</span>&#125;</span><br><span class="line">    <span class="attr">joint2_position_controller:</span></span><br><span class="line">        <span class="attr">type:</span> <span class="string">effort_controllers/JointPositionController</span></span><br><span class="line">        <span class="attr">joint:</span> <span class="string">joint2</span></span><br><span class="line">        <span class="attr">pid:</span> &#123;<span class="attr">p:</span> <span class="number">100.0</span>, <span class="attr">i:</span> <span class="number">0.01</span>, <span class="attr">d:</span> <span class="number">10.0</span>&#125;</span><br></pre></td></tr></table></figure>
@@ -218,7 +266,7 @@
 <ul>
 <li>velocity_controller/JointVelocityController: 输入关节速度，输出关节速度；</li>
 <li>velocity_controller/JointGroupVelocityController: 输入关节组速度，输出关节组速度；</li>
-<li>velocity_controller/JointPositionController: 输入关节速度，输出关节位置，输入输出之间用PID调节；</li>
+<li>velocity_controller/JointPositionController: 输入关节位置，输出关节速度，输入输出之间用PID调节；</li>
 </ul>
 <p> <strong>力矩控制器</strong>:</p>
 <ul>
@@ -232,7 +280,7 @@
 <ul>
 <li>joint_state_controller/JointStateController: 关节状态控制器，作用是获取关节状态；</li>
 </ul>
-<p> <strong>关节轨迹控制器</strong>：可以理解成对关节位置，速度，力矩控制器的二次封装，作用是控制整个机器人关节组，作用和上面的JointGroup***Controller类似，但是上面的控制器提供的接口都是topic，而关节轨迹控制器提供的接口既有action，又有topic，便于和moveit等交互</p>
+<p> <strong>关节轨迹控制器</strong>：可以理解成对关节位置，速度，力矩控制器的二次封装，作用是控制整个机器人关节组，和上面的JointGroup***Controller类似，但是上面的控制器提供的接口都是topic，而关节轨迹控制器提供的接口既有action，又有topic，便于和moveit等交互</p>
 <ul>
 <li>position_controller/JointTrajectoryController: 关节组轨迹位置控制器，输入关节组轨迹位置，输出关节组位置；</li>
 <li>velocity_controller/JointTrajectoryController: 关节组轨迹速度控制器，输入关节组轨迹位置和速度，输出关节组速度，中间用PID+feedforward；</li>
@@ -240,28 +288,39 @@
 </ul>
 <p> <strong>其他控制器</strong>：其他还有ackermann_steering_controller（专门针对汽车的），diff_drive_controller（差分移动机器人的）等，具体可以看各自的wiki介绍。</p>
 </li>
-<li><p><strong>hardware resource interface layer硬件接口</strong>: 这一层是软硬件的分界线，使得软硬件解耦。一方面接收硬件的信息如关节数据，另一方面可以将控制器计算出来的关节控制指令如力矩发送给硬件，目前ros提供的hardwareInterface接口如下，其实就是对应电机的三种运动模式：</p>
+<li><p><strong>hardware resource interface layer硬件接口</strong>: 这一层是软硬件的分界线，使得软硬件解耦。一方面接收硬件的信息如关节数据，另一方面可以将控制器计算出来的关节控制指令如力矩发送给硬件，目前ros提供的hardwareInterface接口如下，其实就是对应电机的三种运动模式（这个代表电机输入的信号类型，和上面的ros_controller的输出类型要一致）：</p>
 <ul>
-<li>hardwareInterface/EffortJointInterface</li>
-<li>hardwareInterface/VelocityJointInterface</li>
-<li>hardwareInterface/PositionJointInterface</li>
+<li>hardware_interface/EffortJointInterface</li>
+<li>hardware_interface/VelocityJointInterface</li>
+<li>hardware_interface/PositionJointInterface</li>
 </ul>
 </li>
 <li><p><strong>hardware interface硬件抽象</strong>: 该层的作用是兼容硬件多样性，同时为上层控制器提供与硬件交互的统一接口，具体功能可以是控制关节约束，力矩转换和状态转换等功能；</p>
 </li>
 <li><p><strong>hardware硬件</strong>: 具体的机器人硬件；</p>
+<p> <strong>这里讲解ros_control架构的时候，是自上而下介绍的，上层的输出一般也代表下层的输入。比如ros_controller的输入是用户的上层应用，如moveit用FollowJointTrajectory来控制机械臂，或者用户想让某个关节以某种速度运行；ros_controller控制器的输出就是<code>hardware_interface</code>指定的类型，要么就是力矩，速度，位置，经过一些后处理发送给实际的机器人或者gazebo</strong></p>
 </li>
 </ol>
 <h3 id="ROS-CONTROL-GAZEBO"><a href="#ROS-CONTROL-GAZEBO" class="headerlink" title="ROS_CONTROL + GAZEBO"></a>ROS_CONTROL + GAZEBO</h3><p>有了上面对ros_control的理解之后，再来看一下其如何与gazebo仿真建立联系，两者之间的关系图如下<img src="https://raw.githubusercontent.com/zhanghengsjtu/figureBed/main/img/20210724141141.png" alt="gazebo+ros_control"></p>
 <p>可以看到实际硬件和gazebo仿真的差异体现在4和5，即硬件抽象和具体硬件层。在仿真中，gazebo里面的机器人就代表硬件，左边的模块4为ros和gazebo之间沟通的桥梁。在该模块中，通过插件将ros和gazebo连接起来，具体的配置在下面会介绍。</p>
-<h3 id="一般机器人仿真"><a href="#一般机器人仿真" class="headerlink" title="一般机器人仿真"></a>一般机器人仿真</h3><p>机器人仿真的过程也就是配置ros_control+gazebo的过程，具体如下：</p>
+<h3 id="一般机器人仿真"><a href="#一般机器人仿真" class="headerlink" title="一般机器人仿真"></a>一般机器人仿真</h3><p>机器人仿真的过程也就是配置ros_control+gazebo的过程。配置过程和<code>ros_control</code>的讲解过程相反，是自下而上的，具体如下：</p>
 <ul>
 <li><p><strong>设置link标签</strong>：gazebo要求每个实际的link都要有inertial标签，同时link中的visual标签在gazebo中没用，需要单独配置零件的颜色；</p>
   <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Base Link --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">name</span>=<span class="string">&quot;link1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">collision</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 $&#123;height1/2&#125;&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;$&#123;width&#125; $&#123;width&#125; $&#123;height1&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">collision</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">visual</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 $&#123;height1/2&#125;&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">geometry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">box</span> <span class="attr">size</span>=<span class="string">&quot;$&#123;width&#125; $&#123;width&#125; $&#123;height1&#125;&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">geometry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">material</span> <span class="attr">name</span>=<span class="string">&quot;orange&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">visual</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">inertial</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 0 1&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mass</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">inertia</span></span></span><br><span class="line"><span class="tag">            <span class="attr">ixx</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">ixy</span>=<span class="string">&quot;0.0&quot;</span> <span class="attr">ixz</span>=<span class="string">&quot;0.0&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">iyy</span>=<span class="string">&quot;1.0&quot;</span> <span class="attr">iyz</span>=<span class="string">&quot;0.0&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">izz</span>=<span class="string">&quot;1.0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">inertial</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">gazebo</span> <span class="attr">reference</span>=<span class="string">&quot;link1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">material</span>&gt;</span>Gazebo/Orange<span class="tag">&lt;/<span class="name">material</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
 <li><p><strong>设置joint标签</strong>：设置关节的阻尼等参数，以便进行动力学仿真；同时设置<code>transmission</code>标签，用来表示电机和关节的关系；为每个关节和电机配置<code>hardwareInterface</code>硬件接口，即上图中的模块3；</p>
   <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;joint2&quot;</span> <span class="attr">type</span>=<span class="string">&quot;continuous&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span> <span class="attr">link</span>=<span class="string">&quot;base_link&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">child</span> <span class="attr">link</span>=<span class="string">&quot;link1&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">origin</span> <span class="attr">xyz</span>=<span class="string">&quot;0 $&#123;width&#125; $&#123;height2 - axel_offset*2&#125;&quot;</span> <span class="attr">rpy</span>=<span class="string">&quot;0 0 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">axis</span> <span class="attr">xyz</span>=<span class="string">&quot;0 1 0&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dynamics</span> <span class="attr">damping</span>=<span class="string">&quot;0.7&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">transmission</span> <span class="attr">name</span>=<span class="string">&quot;tran1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">type</span>&gt;</span>transmission_interface/SimpleTransmission<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">joint</span> <span class="attr">name</span>=<span class="string">&quot;$link1&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>hardwareInterface/PositionJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">joint</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">actuator</span> <span class="attr">name</span>=<span class="string">&quot;motor1&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">hardwareInterface</span>&gt;</span>hardwareInterface/PositionJointInterface<span class="tag">&lt;/<span class="name">hardwareInterface</span>&gt;</span> # indigo之后的版本可以不对电机设置，但必须对joint设置</span><br><span class="line">        <span class="tag">&lt;<span class="name">mechanicalReduction</span>&gt;</span>1<span class="tag">&lt;/<span class="name">mechanicalReduction</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">actuator</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">transmission</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-<li><p><strong>加载<code>libgazebo_ros_control.so</code>插件</strong>：即上面的模块4的一部分，插件的作用一方面是解析在urdf设置的<code>transmission</code>和<code>hardwareInterface</code>标签，加载合适的硬件接口，另一方面和ros_controller进行通信，可以理解成沟通的桥梁；</p>
-  <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/arm<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>加载<code>libgazebo_ros_control.so</code>插件</strong>：即上面的模块4的一部分，插件的作用一方面是解析在urdf设置的<code>transmission</code>和<code>hardwareInterface</code>标签，加载合适的硬件接口，另一方面是ros和gazebo通讯的桥梁；之前研究过<code>libgazebo_ros_control.so</code><a href="https://github.com/ros-simulation/gazebo_ros_pkgs/blob/noetic-devel/gazebo_ros_control/src/default_robot_hw_sim.cpp">插件的源码</a>，里面把关节运动模式分成：EFFORT，POSITION，VELOCITY，POSITION_PID，VELOCITY_PID五种</p>
+<ul>
+<li><p>EFFORT：ros_controller输出的是力矩，该插件原封不动的用该力矩在gazebo中驱动关节；</p>
+</li>
+<li><p>POSITION_PID和VELOCITY_PID：ros_controller输出的是关节速度或者位置，同时为<code>libgazebo_ros_control.so</code>插件配置了PID参数，则将输入的关节位置和速度通过PID算法转换成关节力矩，再去驱动gazebo中的关节；注意这里的PID参数不是ros_controller的yaml文件中的参数；</p>
+</li>
+<li><p>POSITION和VELOCITY：ros_controller输出的是关节速度或者位置，同时没有为<code>libgazebo_ros_control.so</code>插件配置PID参数，此时关节会以最大扭矩驱动，迅速达到指定的速度或位置，这个最大扭矩是urdf中joint标签中设置的；</p>
+</li>
+<li><p><strong>默认情况下没有为<code>libgazebo_ros_control.so</code>插件配置关节速度和关节位置PID参数，因此第二种情况是进不去的。所以在仿真中我们就会发现，如果为关节指定了速度或者位置接口，仿真效果都比较理想，那是因为无论我们输入什么速度或位置，关节都以最大扭矩驱动（在urdf中往往也会为关节设置一个很大的扭矩），效果当然也就比较好；但是当为关节设置力矩接口时，机器人响应可能就不理想，那是因为ros_controller输出什么力矩，gazebo就以该扭矩驱动关节，所以压力就到ros_controller了。因此在这种情况下，需要花费精力调整ros_controller中的PID参数。</strong></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">gazebo</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span> <span class="attr">name</span>=<span class="string">&quot;gazebo_ros_control&quot;</span> <span class="attr">filename</span>=<span class="string">&quot;libgazebo_ros_control.so&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">robotNamespace</span>&gt;</span>/arm<span class="tag">&lt;/<span class="name">robotNamespace</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">gazebo</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
 <li><p><strong>加载ros_controller</strong>：最后就是通过配置yaml和launch文件来加载ros_controller，注意加载的控制器需要和<code>hardwareInterface</code>适配，即如果<code>hardwareInterface</code>中配置的是位置控制接口，那么ros_controller也要加载位置控制器，具体可以参考<a href="http://gazebosim.org/tutorials?tut=ros_control&cat=connect_ros">官方例程</a>。</p>
 </li>
 </ul>
@@ -272,7 +331,7 @@
 <ol>
 <li><p>标准模式：使用标准的<code>libgazebo_ros_control.so</code>插件管理通信和解析硬件接口，然后为每个轮子加载一个速度控制器，此时用户需要手动管理移动机器人正逆运动学，里程计等信息（因为这个时候只能控制轮子）；</p>
 </li>
-<li><p>定制化<strong>控制器</strong>：通信和硬件接口解析，仍然使用标准的<code>libgazebo_ros_control.so</code>，但是在每个轮子的关节速度控制的基础上做了二次集成，开发了新的控制器。比如ros对移动机器人提供了ackermann_steering_controller和diff_drive_controller，这样就可以直接管理车子的速度和里程计信息了，而不是只控制轮子运动；</p>
+<li><p>定制化<strong>控制器</strong>：通信和硬件接口解析，仍然使用标准的<code>libgazebo_ros_control.so</code>，但是在每个轮子的关节速度控制的基础上做了二次集成，开发了新的控制器。比如ros对移动机器人提供了ackermann_steering_controller和diff_drive_controller（简单测试了一下，不好用），这样就可以直接管理车子的速度和里程计信息了，而不是只控制轮子运动；</p>
 </li>
 <li><p><strong>定制化插件</strong>：在这种模式下，通信和硬件接口解析以及机器人控制器都在一个插件中完成了，这种方式集成度最高。此时，我们就不需要在urdf中加载<code>libgazebo_ros_control.so</code>，也不需要启动控制器管理器了，只需要在urdf中加载新的插件并进行响应的配置即可。目前ros对移动机器人提供了三个插件，介绍如下：</p>
 </li>
@@ -359,6 +418,18 @@
       </tags>
   </entry>
   <entry>
+    <title>ROS基础：常用命令</title>
+    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$ROS_PACKAGE_PATH</span>  </span><br><span class="line"><span class="comment"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span></span><br><span class="line"><span class="comment"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span></span><br><span class="line"><span class="comment"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译相关</span></span><br><span class="line">catkin_init_workspace       <span class="comment"># 在一个空的文件夹下面初始化一个工作空间</span></span><br><span class="line">catkin_make                 <span class="comment"># 编译对应的工作空间</span></span><br><span class="line">catkin build -j4            <span class="comment"># 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span></span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   <span class="comment"># 创建包，并指定依赖</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 话题相关</span></span><br><span class="line">rosmsg show msg_type        <span class="comment"># 查看消息类型</span></span><br><span class="line">rostopic list               <span class="comment"># 查看话题名称</span></span><br><span class="line">rostopic <span class="built_in">type</span> topic_name    <span class="comment"># 查看话题数据类型</span></span><br><span class="line">rostopic hz topic_name      <span class="comment"># 查看话题数据频率</span></span><br><span class="line">rostopic <span class="built_in">echo</span> topic_name    <span class="comment"># 打印数据信息</span></span><br><span class="line">rostopic pub -r 10 topic_name data_type data    <span class="comment"># 发布数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务相关</span></span><br><span class="line">rossrv show srv_type        <span class="comment"># 查看服务类型</span></span><br><span class="line">rosservice list             <span class="comment"># 查看服务名称</span></span><br><span class="line">rosservice <span class="built_in">type</span> srv_name    <span class="comment"># 查看服务数据类型    </span></span><br><span class="line">rosservice call srv_name srv-args  <span class="comment"># 命令行请求服务</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rqt相关</span></span><br><span class="line">rqt_graph                   <span class="comment"># 显示节点话题服务关系</span></span><br><span class="line">rqt_plot                    <span class="comment"># 打印数据</span></span><br><span class="line">rosrun rqt_tf_tree rqt_tf_tree  <span class="comment"># 打印当前机器人的tf树</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tf相关</span></span><br><span class="line">tf_monitor /frame1 /frame2  <span class="comment"># 查看坐标系之间的关系</span></span><br><span class="line">tf_echo /frame1 /frame2     <span class="comment"># 打印frame2相对frame1的变换</span></span><br><span class="line">static_transform_publisher x y z yaw pitch roll (或 qx qy qz qw) frame_id child_frame_id period_in_ms   <span class="comment"># 静态发布两个坐标系之间的关系</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>ROS</category>
+      </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ROS基础：命名空间和重映射</title>
     <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%92%8C%E9%87%8D%E6%98%A0%E5%B0%84/</url>
     <content><![CDATA[<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a><a href="http://wiki.ros.org/Names">命名空间</a></h3><p>ROS中主要有四种命名方式，分为基础，全局，相对和私有。</p>
@@ -385,75 +456,6 @@
       <categories>
         <category>ROS</category>
       </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS基础：catkin编译系统</title>
-    <url>/2021/07/21/ROS%E5%9F%BA%E7%A1%80%EF%BC%9Acatkin%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F/</url>
-    <content><![CDATA[<p>ROS使用catkin来管理包，它是对CMake的扩展。一个catkin软件包必须要有package.xml和CMakeLists.txt两个文件，前者包括了包的描述和依赖信息，后者是构建包的cmake文件。实际工作中，catkin工具会调用CMakeLists.txt，而生成makefile等文件。</p>
-<h4 id="package-xml基本结构"><a href="#package-xml基本结构" class="headerlink" title="package.xml基本结构"></a><a href="http://wiki.ros.org/catkin/package.xml">package.xml基本结构</a></h4><p>一个典型的package.xml文件如下：</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">package</span> <span class="attr">format</span>=<span class="string">&quot;2&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>your_package<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span></span><br><span class="line">    This package adds extra features to rosawesome.</span><br><span class="line">  <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">maintainer</span> <span class="attr">email</span>=<span class="string">&quot;you@example.com&quot;</span>&gt;</span>Your Name<span class="tag">&lt;/<span class="name">maintainer</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">license</span>&gt;</span>BSD<span class="tag">&lt;/<span class="name">license</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">buildtool_depend</span>&gt;</span>catkin<span class="tag">&lt;/<span class="name">buildtool_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">depend</span>&gt;</span>roscpp<span class="tag">&lt;/<span class="name">depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>angles<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">build_export_depend</span>&gt;</span>angles<span class="tag">&lt;/<span class="name">build_export_depend</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>openni_launch<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">package</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>几个重要的标签，解释如下：</p>
-<ol>
-<li><code>buildtool_depend</code>: 编译工具，默认<code>catkin</code>，一般不用修改。</li>
-<li><code>depend</code>：指定编译时的依赖项，包含<code>build_depend</code>，<code>build_export_depend</code>和<code>exec_depend</code>。</li>
-<li><code>build_depend</code>: 指定编译功能包需要的依赖，例如<code>angle</code>包提供了C++头文件和编译文件。</li>
-<li><code>build_export_depend</code>: 指定对功能包构建库需要的依赖，例如本功能包导出的头文件依赖了<code>&lt;angles/angles.h&gt;</code>，那么第三方包使用本包导出的头文件时，仍然需要<code>&lt;build_depend&gt;angles&lt;/build_depend&gt;</code>。</li>
-<li><code>exec_depend</code>: 指定运行该功能包需要的依赖。</li>
-<li><strong>建议</strong>：简单情况直接使用<code>depend</code>标签即可（一个顶仨），也不容易出错；如果是依赖的系统项，可以根据<a href="https://docs.ros.org/en/kinetic/api/catkin/html/howto/format2/index.html">官方建议</a>谨慎选择。</li>
-</ol>
-<h4 id="CMakeLists-txt的基本结构"><a href="#CMakeLists-txt的基本结构" class="headerlink" title="CMakeLists.txt的基本结构"></a><a href="http://wiki.ros.org/catkin/CMakeLists.txt">CMakeLists.txt的基本结构</a></h4><p>CMake是不知道package.xml中的依赖关系的，但是catkin知道，因此在CMakeLists.txt中需要对catkin合理配置，便于处理包的依赖关系。<br>CMakeLists.txt基本结构如下：</p>
-<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">2.8</span>.<span class="number">3</span>)</span><br><span class="line"><span class="keyword">project</span>(robot_brain)</span><br><span class="line"><span class="comment"># Get the information about this package&#x27;s buildtime dependencies</span></span><br><span class="line"><span class="keyword">find_package</span>(catkin REQUIRED</span><br><span class="line">  COMPONENTS message_generation std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the message files to be built</span></span><br><span class="line">add_message_files(FILES</span><br><span class="line">  MyMessage.msg</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the service files to be built</span></span><br><span class="line">add_service_files(FILES</span><br><span class="line">  MyService.srv</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Actually generate the language-specific message and service files</span></span><br><span class="line">generate_messages(DEPENDENCIES std_msgs sensor_msgs)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare that this catkin package&#x27;s runtime dependencies</span></span><br><span class="line">catkin_package(</span><br><span class="line">  CATKIN_DEPENDS message_runtime std_msgs sensor_msgs</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(message_program src/main.cpp)</span><br><span class="line"><span class="keyword">add_dependencies</span>(message_program <span class="variable">$&#123;$&#123;PROJECT_NAME&#125;</span>_EXPORTED_TARGETS&#125; <span class="variable">$&#123;catkin_EXPORTED_TARGETS)</span></span><br><span class="line"><span class="variable">target_link_libraries(message_program $&#123;catkin_LIBRARIES&#125;</span> other_lib)</span><br></pre></td></tr></table></figure>
-
-<p>重要的模块解释如下：</p>
-<ol>
-<li><code>find_package</code>: cmake宏，指定依赖的其他pacakge，实际是生成了一些环境变量，如NAME_FOUND，NAME_INCLUDE_DIRS, NAME_LIBRARYIS，此处catkin是必备依赖 其余的syd_msgs…为组件，这个里面的包在package.xml中一定要有<code>build_depend</code>标签。</li>
-<li><code>catkin_package</code>：catkin宏，生成当前package的cmake配置，供依赖本包的其他软件包调用，同时这个命令必须在add_library()或者add_executable()之前调用；注意这个里面的包在package.xml一定要有<code>build_export_depend</code>标签。</li>
-<li>其余为CMake自身语法，具体可以参考<a href="https://github.com/Akagi201/learning-cmake/blob/master/docs/cmake-practice.pdf">CMake学习资料</a>。</li>
-</ol>
-<h4 id="创建msg的注意事项"><a href="#创建msg的注意事项" class="headerlink" title="创建msg的注意事项"></a>创建msg的注意事项</h4><ul>
-<li>在package.xml中<ol>
-<li><code>&lt;build_depend&gt;message_generation&lt;/build_depend&gt;</code></li>
-<li><code>&lt;build_export_depend&gt;message_runtime&lt;/build_export_depend&gt;</code></li>
-<li><code>&lt;exec_depend&gt;message_runtime&lt;/exec_depend&gt;</code></li>
-</ol>
-</li>
-<li>在CMakeLists.txt中<ol>
-<li>添加<code>find_package(messaga_generation)</code>，确保可以生成msg文件；</li>
-<li>添加<code>catkin_package(message_runtime)</code>：确保生成的msgs文件可以被外部使用；</li>
-<li>添加<code>add_message_file</code>，添加具体的文件名；</li>
-<li>添加<code>generate_message</code>中的依赖包，如依赖<code>std_msgs</code></li>
-</ol>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ROS基础：常用命令</title>
-    <url>/2021/07/18/ROS%E5%9F%BA%E7%A1%80%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$ROS_PACKAGE_PATH</span>  </span><br><span class="line"><span class="comment"># 打印ros环境变量，确保/opt/ros/kinetic/share和自己的工作空间在里面</span></span><br><span class="line"><span class="comment"># 同时注意ROS中存在工作空间覆盖的机制，即后设置的路径会放在ROS_PACKAGE_PATH前面</span></span><br><span class="line"><span class="comment"># 实际工作时，系统在ROS_PACKAGE_PATH中从前向后查找对应的包，找到即停止</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译相关</span></span><br><span class="line">catkin_init_workspace       <span class="comment"># 在一个空的文件夹下面初始化一个工作空间</span></span><br><span class="line">catkin_make                 <span class="comment"># 编译对应的工作空间</span></span><br><span class="line">catkin build -j4            <span class="comment"># 编译对应的工作空间，-j4指定用4个核，相比catkin_make，输出信息更丰富</span></span><br><span class="line">catkin_create_pkg pkg_name dep1 dep2 dep3   <span class="comment"># 创建包，并指定依赖</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 话题相关</span></span><br><span class="line">rosmsg show msg_type        <span class="comment"># 查看消息类型</span></span><br><span class="line">rostopic list               <span class="comment"># 查看话题名称</span></span><br><span class="line">rostopic <span class="built_in">type</span> topic_name    <span class="comment"># 查看话题数据类型</span></span><br><span class="line">rostopic hz topic_name      <span class="comment"># 查看话题数据频率</span></span><br><span class="line">rostopic <span class="built_in">echo</span> topic_name    <span class="comment"># 打印数据信息</span></span><br><span class="line">rostopic pub -r 10 topic_name data_type data    <span class="comment"># 发布数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务相关</span></span><br><span class="line">rossrv show srv_type        <span class="comment"># 查看服务类型</span></span><br><span class="line">rosservice list             <span class="comment"># 查看服务名称</span></span><br><span class="line">rosservice <span class="built_in">type</span> srv_name    <span class="comment"># 查看服务数据类型    </span></span><br><span class="line">rosservice call srv_name srv-args  <span class="comment"># 命令行请求服务</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># rqt相关</span></span><br><span class="line">rqt_graph                   <span class="comment"># 显示节点话题服务关系</span></span><br><span class="line">rqt_plot                    <span class="comment"># 打印数据</span></span><br><span class="line">rosrun rqt_tf_tree rqt_tf_tree  <span class="comment"># 打印当前机器人的tf树</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tf相关</span></span><br><span class="line">tf_monitor /frame1 /frame2  <span class="comment"># 查看坐标系之间的关系</span></span><br><span class="line">tf_echo /frame1 /frame2     <span class="comment"># 打印frame2相对frame1的变换</span></span><br><span class="line">static_transform_publisher x y z yaw pitch roll (或 qx qy qz qw) frame_id child_frame_id period_in_ms   <span class="comment"># 静态发布两个坐标系之间的关系</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>ROS</category>
-      </categories>
-      <tags>
-        <tag>ROS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>moveit仿真</title>
-    <url>/2021/07/25/moveit%E4%BB%BF%E7%9C%9F/</url>
-    <content><![CDATA[<p>moveit学习</p>
-]]></content>
       <tags>
         <tag>ROS</tag>
       </tags>
@@ -511,6 +513,15 @@
       <categories>
         <category>ROS</category>
       </categories>
+      <tags>
+        <tag>ROS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>moveit仿真</title>
+    <url>/2021/07/25/moveit%E4%BB%BF%E7%9C%9F/</url>
+    <content><![CDATA[<p>moveit学习</p>
+]]></content>
       <tags>
         <tag>ROS</tag>
       </tags>
